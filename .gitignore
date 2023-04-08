@@ -1,0 +1,11 @@
+# .gitignore file for the project
+
+# build files
+/backend/bin/
+/backend/cmake-build-debug/
+/frontend/bin/
+/frontend/cmake-build-debug/
+
+# ide configuration files
+/.idea/
+/*/.idea/
