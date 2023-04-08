@@ -1,0 +1,21 @@
+<database>
+    <users>
+        <user>
+            <account_id>1</account_id>
+            <firstname>John</firstname>
+            <lastname>Doe</lastname>
+            <email>john@example.com</email>
+            <password>1234</password>
+            <balances>
+                <balance>
+                    <balance_type>CZK</balance_type>
+                    <balance>10000</balance>
+                </balance>
+                <balance>
+                    <balance_type>USD</balance_type>
+                    <balance>1000</balance>
+                </balance>
+            </balances>
+        </user>
+    </users>>
+</database>
