@@ -2,9 +2,9 @@ name: Backend
 
 on:
   push:
-    branches: [ "cicd_test", "basic_layout", "master" ]
+    branches: [ "cicd_test", "basic_layout", "master", "feature/*" ]
   pull_request:
-    branches: [ "cicd_test", "basic_layout", "master" ]
+    branches: [ "cicd_test", "basic_layout", "master", "feature/*" ]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)

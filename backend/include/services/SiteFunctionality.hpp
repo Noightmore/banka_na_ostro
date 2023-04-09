@@ -1,0 +1,11 @@
+#ifndef BACKEND_SITEFUNCTIONALITY_H
+#define BACKEND_SITEFUNCTIONALITY_H
+
+
+class SiteFunctionality
+{
+
+};
+
+
+#endif //BACKEND_SITEFUNCTIONALITY_H
