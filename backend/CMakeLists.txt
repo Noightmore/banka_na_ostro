@@ -4,6 +4,23 @@ project(backend)
 # Set the output folder for the executable
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 
+# vcpkg integration
+set(CMAKE_TOOLCHAIN_FILE "/usr/local/bin/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
+set(VCPKG_TARGET_TRIPLET "" CACHE STRING "")
+
+# Read the package names from vcpkg.json
+file(READ "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg.json" VCPKG_JSON)
+string(JSON VCPKG_PACKAGES_STRING "${VCPKG_JSON}" "dependencies")
+string(REPLACE "\n" "" VCPKG_PACKAGES_STRING "${VCPKG_PACKAGES_STRING}")
+string(REPLACE " " "" VCPKG_PACKAGES_STRING "${VCPKG_PACKAGES_STRING}")
+string(REPLACE "\"" "" VCPKG_PACKAGES_STRING "${VCPKG_PACKAGES_STRING}")
+string(REPLACE ":" ";" VCPKG_PACKAGES "${VCPKG_PACKAGES_STRING}")
+
+# Install the packages using vcpkg_install_packages()
+include("${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake")
+vcpkg_install_packages(${VCPKG_PACKAGES})
+
+
 set(CMAKE_CXX_STANDARD 23)
 
 add_executable(backend.cgi
@@ -14,4 +31,6 @@ add_executable(backend.cgi
         lib/services/BusinessLogic.cpp
         src/Api.hpp
         src/Api.cpp
-        include/models/Balance.hpp include/models/Payment.hpp lib/models/Payment.cpp)
+        include/models/Balance.hpp
+        include/models/Payment.hpp
+        lib/models/Payment.cpp)

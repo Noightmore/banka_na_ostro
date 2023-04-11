@@ -20,7 +20,7 @@ function ubuntu_install_deps()
   ubuntu_clean_up
 
   # install vcpkg libraries
-  ubuntu_install_vcpkg_libs
+  #ubuntu_install_vcpkg_libs
 }
 
 function ubuntu_verify_deps()
@@ -43,12 +43,12 @@ function ubuntu_clean_up()
   sudo rm -rf vcpkg.tar.gz
 }
 
-function ubuntu_install_vcpkg_libs()
-{
-  # install vcpkg libraries
-  echo "Installing vcpkg libraries"
-  /usr/local/bin/vcpkg install icu
-}
+#function ubuntu_install_vcpkg_libs()
+#{
+#  # install vcpkg libraries
+#  echo "Installing vcpkg libraries"
+#  /usr/local/bin/vcpkg install icu
+#}
 
 function main()
 {
