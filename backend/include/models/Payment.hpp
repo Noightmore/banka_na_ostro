@@ -17,7 +17,7 @@ namespace bank::models
         {
 
         private:
-                Date date;
+                // Date of the payment - todo to add
                 // the type of payment
                 PaymentType* type;
                 // the account that is being paid/received from
@@ -34,9 +34,8 @@ namespace bank::models
 
             ~Payment();
 
-            std::string*
+            std::string* toString();
         };
-
 
 }
 
