@@ -5,7 +5,16 @@ project(backend)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 
 # vcpkg integration
-set(CMAKE_TOOLCHAIN_FILE "/usr/local/bin/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
+set(VCPKG_ROOT "/usr/local/bin/vcpkg")
+
+# Include vcpkg.cmake
+if(EXISTS "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
+    set(CMAKE_TOOLCHAIN_FILE "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
+    message(STATUS "Using vcpkg toolchain file: ${CMAKE_TOOLCHAIN_FILE}")
+else()
+    message(FATAL_ERROR "vcpkg.cmake not found in ${VCPKG_ROOT}/scripts/buildsystems/")
+endif()
+
 set(VCPKG_TARGET_TRIPLET "" CACHE STRING "")
 
 # Read the package names from vcpkg.json
