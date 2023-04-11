@@ -54,6 +54,9 @@ function ubuntu_configure_vcpkg()
   echo "Configuring vcpkg"
   /usr/local/bin/vcpkg update
   /usr/local/bin/vcpkg install icu
+  cat /usr/local/share/vcpkg/buildtrees/icu/config-x64-linux-dbg-config.log
+  cat /usr/local/share/vcpkg/buildtrees/icu/config-x64-linux-dbg-out.log
+  cat /usr/local/share/vcpkg/buildtrees/icu/config-x64-linux-dbg-err.log
 }
 
 function main()
