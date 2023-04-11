@@ -22,7 +22,7 @@ endif()
 include("${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
 #vcpkg_install_packages(${VCPKG_PACKAGES})
 
-find_package(icu REQUIRED)
+find_package(boost-datetime REQUIRED)
 
 set(CMAKE_CXX_STANDARD 23)
 
