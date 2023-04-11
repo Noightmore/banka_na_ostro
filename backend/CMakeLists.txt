@@ -4,7 +4,7 @@ project(backend)
 # Set the output folder for the executable
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 
-# vcpkg integration
+# vcpkg integration (/home/rob/.clion-vcpkg/vcpkg - for gentoo)
 set(VCPKG_ROOT "/usr/local/share/vcpkg") # vcpkg lib folder path
 
 # Include vcpkg.cmake
