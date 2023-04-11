@@ -15,13 +15,11 @@ else()
     message(FATAL_ERROR "vcpkg.cmake not found in ${VCPKG_ROOT}/scripts/buildsystems/")
 endif()
 
-set(VCPKG_TARGET_TRIPLET "x64-linux" CACHE STRING "")
-
-set(VCPKG_PACKAGES "icu[full]" CACHE STRING "")
-
-# Install the packages using vcpkg_install_packages()
+# Install packages listed in vcpkg.json
+file(READ "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg.json" VCPKG_JSON)
+string(JSON VCPKG_PACKAGES version-string VCPKG_JSON)
+message("Installing packages: ${VCPKG_PACKAGES}")
 include("${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
-set(ENV{VCPKG_APPLOCAL_DEPS} 1)
 vcpkg_install_packages(${VCPKG_PACKAGES})
 
 set(CMAKE_CXX_STANDARD 23)
