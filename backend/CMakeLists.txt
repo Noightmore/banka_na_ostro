@@ -5,7 +5,7 @@ project(backend)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 
 # vcpkg integration
-set(VCPKG_ROOT "/usr/local")
+set(VCPKG_ROOT "/usr/local/share/vcpkg") # vcpkg lib folder path
 
 # Include vcpkg.cmake
 if(EXISTS "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
