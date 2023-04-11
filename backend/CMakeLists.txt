@@ -17,13 +17,7 @@ endif()
 
 set(VCPKG_TARGET_TRIPLET "x64-linux" CACHE STRING "")
 
-# Read the package names from vcpkg.json
-file(READ "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg.json" VCPKG_JSON)
-string(JSON VCPKG_PACKAGES_STRING "${VCPKG_JSON}" "dependencies")
-string(REPLACE "\n" "" VCPKG_PACKAGES_STRING "${VCPKG_PACKAGES_STRING}")
-string(REPLACE " " "" VCPKG_PACKAGES_STRING "${VCPKG_PACKAGES_STRING}")
-string(REPLACE "\"" "" VCPKG_PACKAGES_STRING "${VCPKG_PACKAGES_STRING}")
-string(REPLACE ":" ";" VCPKG_PACKAGES "${VCPKG_PACKAGES_STRING}")
+set(VCPKG_PACKAGES "icu[full]" CACHE STRING "")
 
 # Install the packages using vcpkg_install_packages()
 include("${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
