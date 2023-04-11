@@ -21,7 +21,7 @@ set(VCPKG_PACKAGES "icu[full]" CACHE STRING "")
 
 # Install the packages using vcpkg_install_packages()
 include("${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
-set(CMAKE_TOOLCHAIN_FILE "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
+set(ENV{VCPKG_APPLOCAL_DEPS} 1)
 vcpkg_install_packages(${VCPKG_PACKAGES})
 
 set(CMAKE_CXX_STANDARD 23)
