@@ -16,6 +16,15 @@
                     <balance>1000</balance>
                 </balance>
             </balances>
+            <payments>
+                <payment>
+                    <payment_date>2019-01-14</payment_date>
+                    <payment_type>INCOMING</payment_type>
+                    <payment_receiver_sender_id>1</payment_receiver_sender_id>
+                    <payment_amount>1000</payment_amount>
+                    <payment_currency>USD</payment_currency>
+                </payment>
+            </payments>
         </user>
         <user>
             <account_id>2</account_id>

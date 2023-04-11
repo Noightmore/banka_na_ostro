@@ -1,0 +1,9 @@
+{
+  "name" : "backend",
+  "version-string" : "1.0.0",
+  "builtin-baseline" : "dafff8267e0685baa86140e5a5dcf4d9d7383592",
+  "dependencies" : [ {
+    "name" : "icu",
+    "version>=" : "72.1#3"
+  } ]
+}

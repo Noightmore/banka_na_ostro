@@ -12,6 +12,6 @@ add_executable(backend.cgi
         lib/models/UserAccount.cpp
         include/services/SiteFunctionality.hpp
         lib/services/BusinessLogic.cpp
-        src/App.hpp
-        src/App.cpp
-        include/models/Balance.hpp)
+        src/Api.hpp
+        src/Api.cpp
+        include/models/Balance.hpp include/models/Payment.hpp lib/models/Payment.cpp)

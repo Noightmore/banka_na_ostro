@@ -18,6 +18,7 @@ namespace bank::models
             std::string* email;
             std::vector<Balance*>* balances;
 
+
             void deleteBalances();
 
         public:
