@@ -26,7 +26,7 @@ string(REPLACE "\"" "" VCPKG_PACKAGES_STRING "${VCPKG_PACKAGES_STRING}")
 string(REPLACE ":" ";" VCPKG_PACKAGES "${VCPKG_PACKAGES_STRING}")
 
 # Install the packages using vcpkg_install_packages()
-include("${VCPKG_ROOT}/vcpkg/scripts/buildsystems/vcpkg.cmake")
+include("${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
 vcpkg_install_packages(${VCPKG_PACKAGES})
 
 
