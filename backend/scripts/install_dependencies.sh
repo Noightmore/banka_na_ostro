@@ -53,7 +53,7 @@ function ubuntu_configure_vcpkg()
   # install vcpkg libraries
   echo "Configuring vcpkg"
   /usr/local/bin/vcpkg update
-
+  /usr/local/bin/vcpkg install icu
 }
 
 function main()

@@ -16,11 +16,13 @@ else()
 endif()
 
 # Install packages listed in vcpkg.json
-file(READ "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg.json" VCPKG_JSON)
-string(JSON VCPKG_PACKAGES version-string VCPKG_JSON)
-message("Installing packages: ${VCPKG_PACKAGES}")
+#file(READ "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg.json" VCPKG_JSON)
+#string(JSON VCPKG_PACKAGES version-string VCPKG_JSON)
+#message("Installing packages: ${VCPKG_PACKAGES}")
 include("${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
-vcpkg_install_packages(${VCPKG_PACKAGES})
+#vcpkg_install_packages(${VCPKG_PACKAGES})
+
+find_package(icu REQUIRED)
 
 set(CMAKE_CXX_STANDARD 23)
 
