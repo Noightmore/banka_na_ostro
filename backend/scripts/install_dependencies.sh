@@ -19,6 +19,8 @@ function ubuntu_install_deps()
   ubuntu_verify_deps
   ubuntu_clean_up
 
+  ubuntu_configure_vcpkg
+
   # where lib folder?
   #vcpkg integrate install
 
@@ -46,12 +48,13 @@ function ubuntu_clean_up()
   sudo rm -rf vcpkg.tar.gz
 }
 
-#function ubuntu_install_vcpkg_libs()
-#{
-#  # install vcpkg libraries
-#  echo "Installing vcpkg libraries"
-#  /usr/local/bin/vcpkg install icu
-#}
+function ubuntu_configure_vcpkg()
+{
+  # install vcpkg libraries
+  echo "Configuring vcpkg"
+  /usr/local/bin/vcpkg update
+  /usr/local/bin/vcpkg remove --clean --outdated
+}
 
 function main()
 {
