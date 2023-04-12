@@ -22,7 +22,8 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 #include("${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
 #vcpkg_install_packages(${VCPKG_PACKAGES})
 
-#find_package(boost-datetime REQUIRED)
+# load already installed packages
+#find_package(7zip REQUIRED)
 
 set(CMAKE_CXX_STANDARD 23)
 

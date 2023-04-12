@@ -14,12 +14,11 @@ function ubuntu_install_deps()
   # install vcpkg
   sudo /opt/vcpkg/bootstrap-vcpkg.sh
   sudo ln -s /opt/vcpkg/vcpkg /usr/local/bin/vcpkg
+  # todo: link the vcpkg folder libraries to /usr/local/share/vcpkg (default vcpkg folder on ubuntu)
 
   # verify whether dependencies are installed
   ubuntu_verify_deps
   ubuntu_clean_up
-
-  ubuntu_configure_vcpkg
 
   # where lib folder?
   #vcpkg integrate install
@@ -48,12 +47,13 @@ function ubuntu_clean_up()
   sudo rm -rf vcpkg.tar.gz
 }
 
-function ubuntu_configure_vcpkg()
+function ubuntu_install_vcpkg_libs()
 {
-  # install vcpkg libraries
+  # install vcpkg libraries, just update vcpkg for now
+  # TODO: this may get completely removed in the future
   echo "Configuring vcpkg"
   /usr/local/bin/vcpkg update
-  /usr/local/bin/vcpkg install 7zip
+  #/usr/local/bin/vcpkg install 7zip
 }
 
 function main()
