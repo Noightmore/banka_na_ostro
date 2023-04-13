@@ -2,7 +2,6 @@
 #define BACKEND_PAYMENT_HPP
 
 #include <memory>
-#include <boost/date_time.hpp>
 #include "Balance.hpp"
 
 namespace bank::models
