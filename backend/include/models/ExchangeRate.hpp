@@ -6,12 +6,19 @@
 
 namespace bank::models
 {
-    class ExchangeRate : public Money
+    /**
+     * @brief this class represents exchange rate of a chosen currency to CZK currency
+     * @details exchange rates are taken from the Czech National Bank site:
+     * https://www.cnb.cz/cs/financni-trhy/devizovy-trh/kurzy-devizoveho-trhu/kurzy-devizoveho-trhu/
+     */
+    class ExchangeRate : public Money<unsigned int>
     {
-        // https://www.cnb.cz/cs/financni-trhy/devizovy-trh/kurzy-devizoveho-trhu/kurzy-devizoveho-trhu/
-        std::string* countryName;
-        unsigned int* amount;
-        double* rate;
+
+        private:
+                double* rate;
+
+        public:
+
     };
 }
 

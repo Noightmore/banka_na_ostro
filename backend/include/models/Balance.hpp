@@ -7,20 +7,32 @@
 
 namespace bank::models
 {
-
-        class Balance : public Money
+        /**
+         * @brief Balance class
+         * @details This class is used to represent 1 balance record of a user.
+         * @note This class is a child of Money class.
+         * amount is the amount of money in the current balance
+         */
+        class Balance : public Money<std::string, double>
         {
-            private:
-                double* amount;
 
             public:
-                Balance(std::string* name, double* amount);
+                Balance();
                 ~Balance();
 
-                std::unique_ptr<Balance> createInstance(std::unique_ptr<std::string> _name,
-                                                        std::unique_ptr<double> _amount);
+                /**
+                 * @brief method for creating new instance of Balance class
+                 *
+                 * @param _name currency name (e.g. USD, EUR, etc.)
+                 * @param _amount amount of money
+                 * @return new instance of Balance class
+                 */
+                static std::unique_ptr<Balance> createInstance(std::unique_ptr<std::string> _name,
+                                                               std::unique_ptr<double> _amount);
+
         };
 
+        //std::unique_ptr<Balance> bal = Balance::createInstance(std::make_unique<std::string>("USD"), std::make_unique<double>(100));
 }
 
 #endif //BACKEND_BALANCE_HPP

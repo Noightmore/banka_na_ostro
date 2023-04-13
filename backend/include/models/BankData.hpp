@@ -4,6 +4,7 @@
 
 #include <vector>
 #include "UserAccount.hpp"
+#include "ExchangeRate.hpp"
 
 namespace bank::models
 {
@@ -12,16 +13,20 @@ namespace bank::models
         private:
 
             std::vector<UserAccount*> *loggedInUsers;
+            std::vector<ExchangeRate*> *currentExchangeRates;
 
-            explicit BankData(std::vector<UserAccount*> *loggedInUsers);
+            void deleteLoggedInUsers();
 
-        public:
+            void deleteCurrentExchangeRates();
 
-            // TODO: add factory method
+    public:
+            BankData(std::vector<UserAccount*> *loggedInUsers, std::vector<ExchangeRate*> *currentExchangeRates);
+
+            std::unique_ptr<BankData> static createInstance();
 
             ~BankData();
+
     };
 }
-
 
 #endif //BACKEND_BANKDATA_HPP
