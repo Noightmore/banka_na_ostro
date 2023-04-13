@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<user>
+    <account_id>3</account_id>
+    <firstname>Bob</firstname>
+    <lastname>Johnson</lastname>
+    <email>bob@example.com</email>
+    <password>abc123</password>
+    <balances>
+        <balance>
+            <balance_type>CZK</balance_type>
+            <balance>10000</balance>
+        </balance>
+        <balance>
+            <balance_type>USD</balance_type>
+            <balance>1000</balance>
+        </balance>
+    </balances>
+    <payments>
+        <payment>
+            <payment_date>2019-03-01</payment_date>
+            <payment_type>INCOMING</payment_type>
+            <payment_receiver_sender_id>3</payment_receiver_sender_id>
+            <payment_amount>100</payment_amount>
+            <payment_currency>USD</payment_currency>
+        </payment>
+    </payments>
+</user>

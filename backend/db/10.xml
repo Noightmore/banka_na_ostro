@@ -1,0 +1,15 @@
+<user>
+    <account_id>10</account_id>
+    <firstname>Emily</firstname>
+    <lastname>Johnson</lastname>
+    <email>emily@example.com</email>
+    <password>vwx456</password>
+    <balances>
+        <balance>
+            <balance_type>KRW</balance_type>
+            <balance>15000</balance>
+        </balance>
+    </balances>
+    <payments>
+    </payments>
+</user>
