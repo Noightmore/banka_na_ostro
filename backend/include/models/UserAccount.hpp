@@ -5,6 +5,7 @@
 #include <vector>
 #include <memory>
 #include "Balance.hpp"
+#include "Payment.hpp"
 
 namespace bank::models
 {
@@ -19,19 +20,27 @@ namespace bank::models
             std::string* email;
             std::string* password;
             std::vector<Balance*>* balances;
+            std::vector<Payment*>* payments;
 
+            void deleteBalances();
+
+            void deletePayments();
+
+        public:
             UserAccount(unsigned int* id,
                         std::string* firstName,
                         std::string* lastName,
                         std::string* email,
                         std::string* password,
-                        std::vector<Balance*>* balances);
+                        std::vector<Balance*>* balances,
+                        std::vector<Payment*>* payments
+            );
 
-            void deleteBalances();
-
-        public:
-
-            // TODO: add static factory method
+            std::unique_ptr<UserAccount> static createInstance(std::unique_ptr<unsigned int> id,
+                                                               std::unique_ptr<std::string> firstName,
+                                                               std::unique_ptr<std::string> lastName,
+                                                               std::unique_ptr<std::string> email,
+                                                               std::unique_ptr<std::string> password);
 
             ~UserAccount();
 
@@ -39,7 +48,10 @@ namespace bank::models
 
             void addBalance(std::unique_ptr<std::string> currency, std::unique_ptr<double> amount);
 
+            void addPayment(std::unique_ptr<Payment> payment);
+
             bool doPasswordsMatch(std::string& _password);
+
         };
 }
 

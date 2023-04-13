@@ -25,13 +25,17 @@ namespace bank::models
                 // the amount of money that is being paid/received + currency
                 Balance* balance;
 
-                Payment(time_t* date,
-                        PaymentType* type,
-                        unsigned int* accountId,
-                        Balance* balance);
         public:
 
-            // TODO: add static factory method
+            Payment(time_t* date,
+                    PaymentType* type,
+                    unsigned int* accountId,
+                    Balance* balance);
+
+            std::unique_ptr<Payment> static createInstance(std::unique_ptr<time_t> date,
+                                                           std::unique_ptr<PaymentType> type,
+                                                           std::unique_ptr<unsigned int> accountId,
+                                                           std::unique_ptr<Balance> balance);
 
             ~Payment();
 
