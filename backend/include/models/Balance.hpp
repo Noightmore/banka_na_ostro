@@ -3,14 +3,14 @@
 
 #include <string>
 #include <memory>
+#include "Money.hpp"
 
 namespace bank::models
 {
 
-        class Balance
+        class Balance : public Money
         {
             private:
-                std::string* name;
                 double* amount;
 
             public:
