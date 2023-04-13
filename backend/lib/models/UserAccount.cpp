@@ -1,4 +1,3 @@
-#include <regex>
 #include "../../include/models/UserAccount.hpp"
 // Path: backend/lib/models/UserAccount.cpp
 
@@ -39,8 +38,6 @@ namespace bank::models
     {
         for (auto balance : *this->balances)
         {
-            delete balance->name;
-            delete balance->amount;
             delete balance;
         }
         delete this->balances;
@@ -122,8 +119,8 @@ namespace bank::models
         this->payments->push_back(payment.release());
     }
 
-    void UserAccount::addBalance(std::unique_ptr<std::string> currency, std::unique_ptr<double> amount)
+    void UserAccount::addBalance(std::unique_ptr<Balance> balance)
     {
-        this->balances->push_back(new Balance(currency.release(), amount.release()));
+        this->balances->push_back(balance.release());
     }
 }

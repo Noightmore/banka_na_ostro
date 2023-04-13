@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <regex>
+
 #include "Balance.hpp"
 #include "Payment.hpp"
 
@@ -46,7 +48,7 @@ namespace bank::models
 
             unsigned int getId();
 
-            void addBalance(std::unique_ptr<std::string> currency, std::unique_ptr<double> amount);
+            void addBalance(std::unique_ptr<Balance> balance);
 
             void addPayment(std::unique_ptr<Payment> payment);
 

@@ -39,4 +39,5 @@ add_executable(backend.cgi
         include/models/Payment.hpp
         lib/models/Payment.cpp
         lib/models/BankData.cpp
-        include/models/BankData.hpp)
+        include/models/BankData.hpp
+        lib/models/Balance.cpp)
