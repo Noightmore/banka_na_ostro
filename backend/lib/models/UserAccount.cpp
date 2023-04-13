@@ -3,18 +3,16 @@
 
 namespace bank::models
 {
-
-    UserAccount::UserAccount(std::unique_ptr<unsigned int> id,
-                             std::unique_ptr<std::string> firstName,
-                             std::unique_ptr<std::string> lastName,
-                             std::unique_ptr<std::string> email)
+    UserAccount::UserAccount(unsigned int *id, std::string *firstName, std::string *lastName, std::string *email,
+                             std::string *password,
+                             std::vector<Balance*> *balances)
     {
-        this->id = id.release();
-        this->firstName = firstName.release();
-        this->lastName = lastName.release();
-        this->email = email.release();
-        this->balances = new std::vector<Balance*>();
-
+        this->id = id;
+        this->firstName = firstName;
+        this->lastName = lastName;
+        this->email = email;
+        this->password = password;
+        this->balances = balances;
     }
 
     UserAccount::~UserAccount()
@@ -23,6 +21,7 @@ namespace bank::models
         delete this->firstName;
         delete this->lastName;
         delete this->email;
+        delete this->password;
         this->deleteBalances();
     }
 
@@ -48,4 +47,12 @@ namespace bank::models
         delete this->balances;
     }
 
+    bool UserAccount::doPasswordsMatch(std::string& _password)
+    {
+        if (_password == *this->password)
+        {
+            return true;
+        }
+        return false;
+    }
 }

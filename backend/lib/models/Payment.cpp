@@ -1,7 +1,22 @@
 #include "../../include/models/Payment.hpp"
 
-bank::models::Payment::Payment(std::unique_ptr<unsigned int> id, std::unique_ptr<Balance> balance,
-                               std::unique_ptr<unsigned int> accountId, std::unique_ptr<PaymentType> type)
-{
 
+namespace bank::models
+{
+    Payment::Payment(time_t *date, bank::models::PaymentType *type, unsigned int *accountId,
+                     bank::models::Balance *balance)
+    {
+        this->date = date;
+        this->type = type;
+        this->accountId = accountId;
+        this->balance = balance;
+    }
+
+    Payment::~Payment()
+    {
+        delete date;
+        delete type;
+        delete accountId;
+        delete balance;
+    }
 }

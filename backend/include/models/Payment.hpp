@@ -17,23 +17,26 @@ namespace bank::models
         {
 
         private:
-                // Date of the payment - todo to add
+                // Date of the payment - unix timestamp
+                time_t* date;
                 // the type of payment
                 PaymentType* type;
                 // the account that is being paid/received from
-                 unsigned int* accountId;
+                unsigned int* accountId;
                 // the amount of money that is being paid/received + currency
                 Balance* balance;
 
-
+                Payment(time_t* date,
+                        PaymentType* type,
+                        unsigned int* accountId,
+                        Balance* balance);
         public:
-            Payment(std::unique_ptr<unsigned int> id,
-                                std::unique_ptr<Balance> balance,
-                                std::unique_ptr<unsigned int> accountId,
-                                std::unique_ptr<PaymentType> type);
+
+            // TODO: add static factory method
 
             ~Payment();
 
+            // not sure if this will be used
             std::string* toString();
         };
 

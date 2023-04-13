@@ -12,25 +12,34 @@ namespace bank::models
         {
 
         private:
+
             unsigned int* id;
             std::string* firstName;
             std::string* lastName;
             std::string* email;
+            std::string* password;
             std::vector<Balance*>* balances;
+
+            UserAccount(unsigned int* id,
+                        std::string* firstName,
+                        std::string* lastName,
+                        std::string* email,
+                        std::string* password,
+                        std::vector<Balance*>* balances);
 
             void deleteBalances();
 
         public:
-            UserAccount(std::unique_ptr<unsigned int> id,
-                        std::unique_ptr<std::string> firstName,
-                        std::unique_ptr<std::string> lastName,
-                        std::unique_ptr<std::string> email);
+
+            // TODO: add static factory method
 
             ~UserAccount();
 
             unsigned int getId();
 
             void addBalance(std::unique_ptr<std::string> currency, std::unique_ptr<double> amount);
+
+            bool doPasswordsMatch(std::string& _password);
         };
 }
 
