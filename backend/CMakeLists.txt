@@ -32,12 +32,13 @@ enable_testing()
 #vcpkg_install_packages(${VCPKG_PACKAGES})
 
 # load already installed packages
-find_package(GTest REQUIRED)
+find_package(GTest CONFIG REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
 add_executable(backend.cgi main.cpp)
 target_link_libraries(backend.cgi PRIVATE Api)
 
 add_executable(Test tests/TestModel.cpp)
-target_link_libraries(Test ${GTEST_LIBRARIES})
+target_link_libraries(Test PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main)
+
 add_test(NAME Test COMMAND Test)
