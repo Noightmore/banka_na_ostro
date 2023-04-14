@@ -8,7 +8,7 @@ add_subdirectory(src)
 #set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR})
 
 # this is for test coverage using
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g --coverage -v -fprofile-arcs -ftest-coverage")
 #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
 
 # test coverage
@@ -26,7 +26,7 @@ enable_testing()
 
 ## vcpkg integration (/home/rob/.clion-vcpkg/vcpkg - for gentoo)
 # for ubuntu - /usr/local/share/vcpkg
-set(VCPKG_ROOT "/usr/local/share/vcpkg") # vcpkg lib folder path
+set(VCPKG_ROOT "/home/rob/.clion-vcpkg/vcpkg") # vcpkg lib folder path
 #
 ## Include vcpkg.cmake
 if(EXISTS "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
