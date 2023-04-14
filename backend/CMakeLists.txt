@@ -26,7 +26,7 @@ enable_testing()
 
 ## vcpkg integration (/home/rob/.clion-vcpkg/vcpkg - for gentoo)
 # for ubuntu - /usr/local/share/vcpkg
-set(VCPKG_ROOT "/home/rob/.clion-vcpkg/vcpkg") # vcpkg lib folder path
+set(VCPKG_ROOT "/usr/local/share/vcpkg") # vcpkg lib folder path
 #
 ## Include vcpkg.cmake
 if(EXISTS "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
