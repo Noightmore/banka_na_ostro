@@ -24,7 +24,7 @@ function ubuntu_install_deps()
   #vcpkg integrate install
 
   # install vcpkg libraries
-  #ubuntu_install_vcpkg_libs
+  ubuntu_install_vcpkg_libs
 }
 
 function ubuntu_verify_deps()
@@ -49,8 +49,7 @@ function ubuntu_clean_up()
 
 function ubuntu_install_vcpkg_libs()
 {
-  # install vcpkg libraries, just update vcpkg for now
-  # TODO: this may get completely removed in the future
+  # install vcpkg libraries
   echo "Configuring vcpkg"
   /usr/local/bin/vcpkg update
   /usr/local/bin/vcpkg install gtest
