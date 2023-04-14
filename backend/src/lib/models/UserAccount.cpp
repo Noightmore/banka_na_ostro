@@ -132,7 +132,6 @@ namespace bank::models
             json->append(R"("firstName": ")" + *this->firstName + "\",");
             json->append(R"("lastName": ")" + *this->lastName + "\",");
             json->append(R"("email": ")" + *this->email + "\",");
-            json->append(R"("password": ")" + *this->password + "\",");
             json->append("\"balances\": [");
             for (auto balance : *this->balances)
             {
