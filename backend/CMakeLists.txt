@@ -14,11 +14,11 @@ add_compile_options(-O3 -pipe -std=c++23)
 enable_testing()
 
 ## vcpkg integration (/home/rob/.clion-vcpkg/vcpkg - for gentoo)
-#set(VCPKG_ROOT "/usr/local/share/vcpkg") # vcpkg lib folder path
-##
+set(VCPKG_ROOT "/usr/local/share/vcpkg") # vcpkg lib folder path
+#
 ## Include vcpkg.cmake
 if(EXISTS "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
-    set(CMAKE_TOOLCHAIN_FILE "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
+    set(CMAKE_TOOLCHAIN_FILE "/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
     message(STATUS "Using vcpkg toolchain file: ${CMAKE_TOOLCHAIN_FILE}")
 else()
     message(FATAL_ERROR "vcpkg.cmake not found in ${VCPKG_ROOT}/scripts/buildsystems/")
