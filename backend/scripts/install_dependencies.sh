@@ -53,7 +53,7 @@ function ubuntu_install_vcpkg_libs()
   # TODO: this may get completely removed in the future
   echo "Configuring vcpkg"
   /usr/local/bin/vcpkg update
-  #/usr/local/bin/vcpkg install 7zip
+  /usr/local/bin/vcpkg install gtest
 }
 
 function main()
