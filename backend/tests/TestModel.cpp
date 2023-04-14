@@ -30,12 +30,15 @@ TEST(BalanceTest, CreateInstanceWithNegativeAmount)
         ASSERT_THROW(Balance::createInstance(std::move(name), std::move(amount)), std::invalid_argument);
 }
 
+// EXCHANGE RATE TESTS
 TEST(ExchangeRateTest, CreateInstance)
 {
         std::unique_ptr<std::string> name = std::make_unique<std::string>("USD");
         std::unique_ptr<unsigned int> amount = std::make_unique<unsigned int>(1);
         std::unique_ptr<double> rate = std::make_unique<double>(25.0);
-        std::unique_ptr<ExchangeRate> exRate = ExchangeRate::createInstance(std::move(name), std::move(amount), std::move(rate));
+        std::unique_ptr<ExchangeRate> exRate = ExchangeRate::createInstance(std::move(name),
+                                                                            std::move(amount),
+                                                                            std::move(rate));
         EXPECT_EQ(exRate->getName(), "USD");
         EXPECT_EQ(exRate->getAmount(), 1);
         EXPECT_EQ(exRate->getRate(), 25.0);
@@ -46,7 +49,8 @@ TEST(ExchangeRateTest, CreateInstanceWithNullName)
         std::unique_ptr<std::string> name = nullptr;
         std::unique_ptr<unsigned int> amount = std::make_unique<unsigned int>(1);
         std::unique_ptr<double> rate = std::make_unique<double>(25.0);
-        EXPECT_THROW(ExchangeRate::createInstance(std::move(name), std::move(amount), std::move(rate)), std::invalid_argument);
+        EXPECT_THROW(ExchangeRate::createInstance(std::move(name), std::move(amount), std::move(rate)),
+                     std::invalid_argument);
 }
 
 TEST(ExchangeRateTest, CreateInstanceWithNullAmount)
@@ -54,7 +58,8 @@ TEST(ExchangeRateTest, CreateInstanceWithNullAmount)
         std::unique_ptr<std::string> name = std::make_unique<std::string>("USD");
         std::unique_ptr<unsigned int> amount = nullptr;
         std::unique_ptr<double> rate = std::make_unique<double>(25.0);
-        EXPECT_THROW(ExchangeRate::createInstance(std::move(name), std::move(amount), std::move(rate)), std::invalid_argument);
+        EXPECT_THROW(ExchangeRate::createInstance(std::move(name), std::move(amount), std::move(rate)),
+                     std::invalid_argument);
 }
 
 TEST(ExchangeRateTest, CreateInstanceWithNullRate)
@@ -62,7 +67,8 @@ TEST(ExchangeRateTest, CreateInstanceWithNullRate)
         std::unique_ptr<std::string> name = std::make_unique<std::string>("USD");
         std::unique_ptr<unsigned int> amount = std::make_unique<unsigned int>(1);
         std::unique_ptr<double> rate = nullptr;
-        EXPECT_THROW(ExchangeRate::createInstance(std::move(name), std::move(amount), std::move(rate)), std::invalid_argument);
+        EXPECT_THROW(ExchangeRate::createInstance(std::move(name), std::move(amount), std::move(rate)),
+                     std::invalid_argument);
 }
 
 TEST(ExchangeRateTest, CreateInstanceWithEmptyName)
@@ -70,7 +76,8 @@ TEST(ExchangeRateTest, CreateInstanceWithEmptyName)
         std::unique_ptr<std::string> name = std::make_unique<std::string>("");
         std::unique_ptr<unsigned int> amount = std::make_unique<unsigned int>(1);
         std::unique_ptr<double> rate = std::make_unique<double>(25.0);
-        EXPECT_THROW(ExchangeRate::createInstance(std::move(name), std::move(amount), std::move(rate)), std::invalid_argument);
+        EXPECT_THROW(ExchangeRate::createInstance(std::move(name), std::move(amount), std::move(rate)),
+                     std::invalid_argument);
 }
 
 TEST(ExchangeRateTest, CreateInstanceWithZeroAmount)
@@ -78,7 +85,8 @@ TEST(ExchangeRateTest, CreateInstanceWithZeroAmount)
         std::unique_ptr<std::string> name = std::make_unique<std::string>("USD");
         std::unique_ptr<unsigned int> amount = std::make_unique<unsigned int>(0);
         std::unique_ptr<double> rate = std::make_unique<double>(25.0);
-        EXPECT_THROW(ExchangeRate::createInstance(std::move(name), std::move(amount), std::move(rate)), std::invalid_argument);
+        EXPECT_THROW(ExchangeRate::createInstance(std::move(name), std::move(amount), std::move(rate)),
+                     std::invalid_argument);
 }
 
 TEST(ExchangeRateTest, CreateInstanceWithZeroRate)
@@ -86,7 +94,8 @@ TEST(ExchangeRateTest, CreateInstanceWithZeroRate)
         std::unique_ptr<std::string> name = std::make_unique<std::string>("USD");
         std::unique_ptr<unsigned int> amount = std::make_unique<unsigned int>(1);
         std::unique_ptr<double> rate = std::make_unique<double>(0);
-        EXPECT_THROW(ExchangeRate::createInstance(std::move(name), std::move(amount), std::move(rate)), std::invalid_argument);
+        EXPECT_THROW(ExchangeRate::createInstance(std::move(name), std::move(amount), std::move(rate)),
+                     std::invalid_argument);
 }
 
 
