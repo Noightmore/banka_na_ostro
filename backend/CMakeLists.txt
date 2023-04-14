@@ -43,7 +43,8 @@ add_executable(backend.cgi
         lib/models/Payment.cpp
         lib/models/BankData.cpp
         include/models/BankData.hpp
-        lib/models/Balance.cpp include/models/Money.hpp
+        lib/models/Balance.cpp
+        include/models/Money.hpp
         lib/models/ExchangeRate.cpp
         include/models/ExchangeRate.hpp
         )

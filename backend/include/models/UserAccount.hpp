@@ -100,6 +100,11 @@ namespace bank::models
              */
             bool doPasswordsMatch(std::string& _password);
 
+            /**
+             * @brief method for parsing the class into a json string
+             */
+            std::string& toJson();
+
         };
 }
 
