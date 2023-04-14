@@ -2,10 +2,13 @@
 #define BACKEND_API_HPP
 
 
-class Api
+namespace banks
 {
+    class Api
+    {
 
-};
+    };
+}
 
 
 #endif //BACKEND_API_HPP

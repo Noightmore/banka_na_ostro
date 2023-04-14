@@ -4,22 +4,51 @@
 
 #include <vector>
 #include "UserAccount.hpp"
+#include "ExchangeRate.hpp"
 
 namespace bank::models
 {
+    /**
+     * @brief BankData class
+     * @details This class is used to represent the data of the bank.
+     * @note This class is a singleton.
+     */
     class BankData
     {
         private:
 
-            std::vector<UserAccount*> *loggedInUsers;
+                /**
+                 * @brief loggedInUsers vector of pointers to UserAccount objects
+                 * @details This vector contains all the users that are currently logged in.
+                 */
+                std::vector<UserAccount*> *loggedInUsers;
 
-            explicit BankData(std::vector<UserAccount*> *loggedInUsers);
+                /**
+                 * @brief currentExchangeRates vector of pointers to ExchangeRate objects
+                 * @details This vector contains all the exchange rates that are currently in use.
+                 */
+                std::vector<ExchangeRate*> *currentExchangeRates;
+
+                // deletes all the users that are currently logged in
+                // called on destruction
+                void deleteLoggedInUsers();
+
+                // deletes all the exchange rates that are currently in use
+                // called on destruction
+                void deleteCurrentExchangeRates();
 
         public:
 
-            // TODO: add factory method
+                BankData(std::vector<UserAccount*> *loggedInUsers, std::vector<ExchangeRate*> *currentExchangeRates);
 
-            ~BankData();
+                /**
+                 * @brief method for creating new instance of BankData class
+                 * @return new instance of BankData class
+                 */
+                static std::unique_ptr<BankData> createInstance();
+
+                ~BankData();
+
     };
 }
 
