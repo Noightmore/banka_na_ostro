@@ -12,11 +12,11 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g --coverage -v -fprofile-arcs -ftest-c
 #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
 
 # test coverage
-set(CMAKE_THREAD_LIBS_INIT "-lpthread")
-set(CMAKE_HAVE_THREADS_LIBRARY 1)
-set(CMAKE_USE_WIN32_THREADS_INIT 0)
-set(CMAKE_USE_PTHREADS_INIT 1)
-set(THREADS_PREFER_PTHREAD_FLAG ON)
+#set(CMAKE_THREAD_LIBS_INIT "-lpthread")
+#set(CMAKE_HAVE_THREADS_LIBRARY 1)
+#set(CMAKE_USE_WIN32_THREADS_INIT 0)
+#set(CMAKE_USE_PTHREADS_INIT 1)
+#set(THREADS_PREFER_PTHREAD_FLAG ON)
 
 # Set compiler options
 add_compile_options(-O3 -pipe -std=c++23)
