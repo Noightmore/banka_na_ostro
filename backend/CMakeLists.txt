@@ -24,8 +24,8 @@ else()
     message(FATAL_ERROR "vcpkg.cmake not found in /usr/local/share/vcpkg/scripts/buildsystems/")
 endif()
 
-set(GTest_DIR "/usr/local/share/vcpkg/packages")
-
+#set(GTest_DIR "/usr/local/share/vcpkg/packages")
+set(CMAKE_PREFIX_PATH "/usr/local/share/vcpkg/packages/gtest_x64-linux")
 #
 ## Install packages listed in vcpkg.json
 #file(READ "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg.json" VCPKG_JSON)
