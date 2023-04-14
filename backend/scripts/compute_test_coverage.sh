@@ -4,8 +4,8 @@
 
 function compute_coverage()
 {
-   llvm-profdata merge -sparse default.profraw -o default.profdata
-   llvm-cov show backend.cgi -instr-profile=default.profdata
+   lcov --capture --directory CMakeFiles/Test.dir/tests/  --output-file coverage.info
+   lcov --list coverage.info --output-file coverage.txt
 }
 
 compute_coverage

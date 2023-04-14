@@ -8,7 +8,7 @@ add_subdirectory(src)
 #set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR})
 
 # this is for test coverage using
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g --coverage -v -fprofile-arcs -ftest-coverage")
+
 #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
 
 # test coverage
@@ -19,14 +19,14 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g --coverage -v -fprofile-arcs -ftest-c
 #set(THREADS_PREFER_PTHREAD_FLAG ON)
 
 # Set compiler options
-add_compile_options(-O3 -pipe -std=c++23)
+#add_compile_options(-O3 -pipe -std=c++23)
 
 # enable tests
 enable_testing()
 
 ## vcpkg integration (/home/rob/.clion-vcpkg/vcpkg - for gentoo)
 # for ubuntu - /usr/local/share/vcpkg
-set(VCPKG_ROOT "/usr/local/share/vcpkg") # vcpkg lib folder path
+set(VCPKG_ROOT "/home/rob/.clion-vcpkg/vcpkg") # vcpkg lib folder path
 #
 ## Include vcpkg.cmake
 if(EXISTS "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
@@ -55,5 +55,7 @@ target_link_libraries(backend.cgi PRIVATE Api)
 
 add_executable(Test tests/TestModel.cpp)
 target_link_libraries(Test PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main Api)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -pipe -std=c++23 -g --coverage -v -fprofile-arcs -ftest-coverage -fprofile-correction")
 
 add_test(NAME Test COMMAND Test)
