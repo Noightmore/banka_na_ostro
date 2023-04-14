@@ -5,7 +5,7 @@
 #include "../src/include/models/ExchangeRate.hpp"
 #include "../src/include/models/UserAccount.hpp"
 
-//s
+
 using namespace bank::models;
 
 // BALANCE CLASS TESTS
@@ -98,6 +98,5 @@ TEST(ExchangeRateTest, CreateInstanceWithZeroRate)
         EXPECT_THROW(ExchangeRate::createInstance(std::move(name), std::move(amount), std::move(rate)),
                      std::invalid_argument);
 }
-
 
 
