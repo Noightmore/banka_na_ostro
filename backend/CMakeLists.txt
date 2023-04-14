@@ -12,7 +12,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-instr-generate -fcoverage-mapp
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fprofile-instr-generate")
 
 # Set compiler options
-add_compile_options(-O3 -pipe -std=c++23)
+add_compile_options(-O3 -pipe -std=c++23 -pthread)
 
 # enable tests
 enable_testing()
