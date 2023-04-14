@@ -15,24 +15,27 @@ namespace bank::models
          */
         class Balance : public Money<std::string, double>
         {
-
             public:
-                Balance();
+                Balance(std::string* name, double* amount);
                 ~Balance();
 
-                /**
-                 * @brief method for creating new instance of Balance class
-                 *
-                 * @param _name currency name (e.g. USD, EUR, etc.)
-                 * @param _amount amount of money
-                 * @return new instance of Balance class
-                 */
-                static std::unique_ptr<Balance> createInstance(std::unique_ptr<std::string> _name,
-                                                               std::unique_ptr<double> _amount);
+            /**
+             * @brief method for creating new instance of Balance class
+             *
+             * @param _name currency name (e.g. USD, EUR, etc.)
+             * @param _amount amount of money
+             * @return new instance of Balance class
+             */
+            static std::unique_ptr<Balance> createInstance(std::unique_ptr<std::string> _name,
+                                                    std::unique_ptr<double> _amount);
 
+            /**
+             * @brief method for converting Balance object to JSON string
+             * @return json string representation of Balance object
+             */
+            std::string& toJson();
         };
 
-        //std::unique_ptr<Balance> bal = Balance::createInstance(std::make_unique<std::string>("USD"), std::make_unique<double>(100));
 }
 
 #endif //BACKEND_BALANCE_HPP

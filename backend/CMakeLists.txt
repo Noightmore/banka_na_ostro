@@ -4,6 +4,9 @@ project(backend)
 # Set the output folder for the executable
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 
+# Set compiler options
+add_compile_options(-O2 -pipe)
+
 # vcpkg integration (/home/rob/.clion-vcpkg/vcpkg - for gentoo)
 #set(VCPKG_ROOT "/usr/local/share/vcpkg") # vcpkg lib folder path
 #
@@ -40,4 +43,7 @@ add_executable(backend.cgi
         lib/models/Payment.cpp
         lib/models/BankData.cpp
         include/models/BankData.hpp
-        lib/models/Balance.cpp include/models/Money.hpp lib/models/ExchangeRate.cpp include/models/ExchangeRate.hpp include/services/JsonBuilder.hpp lib/services/JsonBuilder.cpp lib/models/Money.cpp)
+        lib/models/Balance.cpp include/models/Money.hpp
+        lib/models/ExchangeRate.cpp
+        include/models/ExchangeRate.hpp
+        )

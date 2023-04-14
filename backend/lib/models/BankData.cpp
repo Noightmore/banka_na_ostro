@@ -4,8 +4,8 @@ namespace bank::models
 {
     BankData::BankData(std::vector<UserAccount*> *loggedInUsers, std::vector<ExchangeRate*> *currentExchangeRates)
     {
-        this->loggedInUsers = loggedInUsers;
-        this->currentExchangeRates = currentExchangeRates;
+            this->loggedInUsers = loggedInUsers;
+            this->currentExchangeRates = currentExchangeRates;
     }
 
     BankData::~BankData()
@@ -23,19 +23,20 @@ namespace bank::models
 
     void BankData::deleteLoggedInUsers()
     {
-        for (auto user : *loggedInUsers)
-        {
-            delete user;
-        }
-        delete this->loggedInUsers;
+            for (auto user : *loggedInUsers)
+            {
+                    delete user;
+            }
+            delete this->loggedInUsers;
     }
 
     void BankData::deleteCurrentExchangeRates()
     {
-        for (auto exchangeRate : *currentExchangeRates)
-        {
-            delete exchangeRate;
-        }
-        delete this->currentExchangeRates;
+            for (auto exchangeRate : *currentExchangeRates)
+            {
+                    delete exchangeRate;
+            }
+            delete this->currentExchangeRates;
     }
 }
+

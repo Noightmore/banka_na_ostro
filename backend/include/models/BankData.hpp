@@ -8,25 +8,49 @@
 
 namespace bank::models
 {
+    /**
+     * @brief BankData class
+     * @details This class is used to represent the data of the bank.
+     * @note This class is a singleton.
+     */
     class BankData
     {
         private:
 
-            std::vector<UserAccount*> *loggedInUsers;
-            std::vector<ExchangeRate*> *currentExchangeRates;
+                /**
+                 * @brief loggedInUsers vector of pointers to UserAccount objects
+                 * @details This vector contains all the users that are currently logged in.
+                 */
+                std::vector<UserAccount*> *loggedInUsers;
 
-            void deleteLoggedInUsers();
+                /**
+                 * @brief currentExchangeRates vector of pointers to ExchangeRate objects
+                 * @details This vector contains all the exchange rates that are currently in use.
+                 */
+                std::vector<ExchangeRate*> *currentExchangeRates;
 
-            void deleteCurrentExchangeRates();
+                // deletes all the users that are currently logged in
+                // called on destruction
+                void deleteLoggedInUsers();
 
-    public:
-            BankData(std::vector<UserAccount*> *loggedInUsers, std::vector<ExchangeRate*> *currentExchangeRates);
+                // deletes all the exchange rates that are currently in use
+                // called on destruction
+                void deleteCurrentExchangeRates();
 
-            std::unique_ptr<BankData> static createInstance();
+        public:
 
-            ~BankData();
+                BankData(std::vector<UserAccount*> *loggedInUsers, std::vector<ExchangeRate*> *currentExchangeRates);
+
+                /**
+                 * @brief method for creating new instance of BankData class
+                 * @return new instance of BankData class
+                 */
+                static std::unique_ptr<BankData> createInstance();
+
+                ~BankData();
 
     };
 }
+
 
 #endif //BACKEND_BANKDATA_HPP

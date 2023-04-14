@@ -3,11 +3,11 @@
 
 namespace bank::models
 {
-    Payment::Payment(time_t *date, models::PaymentType *type, unsigned int *accountId,
+    Payment::Payment(time_t *date, std::string *type, unsigned int *accountId,
                      bank::models::Balance *balance)
     {
         this->date = date;
-        this->type = type;
+        this->paymentType = type;
         this->accountId = accountId;
         this->balance = balance;
     }
@@ -15,13 +15,13 @@ namespace bank::models
     Payment::~Payment()
     {
         delete date;
-        delete type;
+        delete paymentType;
         delete accountId;
         delete balance;
     }
 
     std::unique_ptr<Payment>
-    Payment::createInstance(std::unique_ptr<time_t> date, std::unique_ptr<PaymentType> type,
+    Payment::createInstance(std::unique_ptr<time_t> date, std::unique_ptr<std::string> type,
                             std::unique_ptr<unsigned int> accountId, std::unique_ptr<Balance> balance)
     {
         // check if any parameter is null
@@ -43,5 +43,26 @@ namespace bank::models
                                          type.release(),
                                          accountId.release(),
                                          balance.release());
+    }
+
+    std::string &Payment::toJson()
+    {
+        auto *json = new std::string();
+        json->append("{");
+        json->append("\"date\":");
+        json->append(std::to_string(*date));
+        json->append(",");
+        json->append("\"type\":");
+        json->append("\"");
+        json->append(*paymentType);
+        json->append("\"");
+        json->append(",");
+        json->append("\"accountId\":");
+        json->append(std::to_string(*accountId));
+        json->append(",");
+        json->append("\"balance\":");
+        json->append(balance->toJson());
+        json->append("}");
+        return *json;
     }
 }
