@@ -17,12 +17,15 @@ enable_testing()
 set(VCPKG_ROOT "/usr/local/share/vcpkg") # vcpkg lib folder path
 #
 ## Include vcpkg.cmake
-if(EXISTS "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
+if(EXISTS "/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake")
     set(CMAKE_TOOLCHAIN_FILE "/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
     message(STATUS "Using vcpkg toolchain file: ${CMAKE_TOOLCHAIN_FILE}")
 else()
-    message(FATAL_ERROR "vcpkg.cmake not found in ${VCPKG_ROOT}/scripts/buildsystems/")
+    message(FATAL_ERROR "vcpkg.cmake not found in /usr/local/share/vcpkg/scripts/buildsystems/")
 endif()
+
+set(GTest_DIR "/usr/local/share/vcpkg/packages")
+
 #
 ## Install packages listed in vcpkg.json
 #file(READ "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg.json" VCPKG_JSON)
