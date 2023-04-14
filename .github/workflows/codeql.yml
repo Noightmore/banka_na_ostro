@@ -60,7 +60,7 @@ jobs:
       - name: Install project dependencies
         run: |
           chmod +x ./backend/scripts/install_dependencies.sh
-          bin/bash ./backend/scripts/install_dependencies.sh
+          /bin/bash ./backend/scripts/install_dependencies.sh
 
       - name: Build
         run : |
