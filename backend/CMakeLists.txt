@@ -7,6 +7,9 @@ add_subdirectory(src)
 # Set the output folder for the executable
 #set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR})
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-instr-generate -fcoverage-mapping")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fprofile-instr-generate")
+
 # Set compiler options
 add_compile_options(-O3 -pipe -std=c++23)
 
