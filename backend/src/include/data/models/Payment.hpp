@@ -4,7 +4,7 @@
 #include <memory>
 #include "Balance.hpp"
 
-namespace bank::models
+namespace bank::data::models
 {
         /**
          * @brief Payment class

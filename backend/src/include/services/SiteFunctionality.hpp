@@ -3,13 +3,13 @@
 
 
 #include <memory>
-#include "../models/UserAccount.hpp"
+#include "../data/models/UserAccount.hpp"
 
 namespace bank::services
 {
     class SiteFunctionality
     {
-        virtual std::unique_ptr<models::UserAccount> loadUserFromDatabaseById(unsigned int id) = 0;
+        virtual std::unique_ptr<data::models::UserAccount> loadUserFromDatabaseById(unsigned int id) = 0;
 
         virtual std::unique_ptr<std::string> authorizeUserLoginByAccountIdAndPassword(unsigned int id,
                                                                                       std::string& password) = 0;

@@ -1,6 +1,6 @@
-#include "../../include/models/ExchangeRate.hpp"
+#include "include/data/models/ExchangeRate.hpp"
 
-namespace bank::models
+namespace bank::data::models
 {
 
     ExchangeRate::ExchangeRate(std::string *name, unsigned int *amount, double *rate) : Money()

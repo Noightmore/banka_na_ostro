@@ -6,7 +6,7 @@ function ubuntu_install_deps()
   echo "Installing dependencies"
   sudo apt update
   # essential tools
-  sudo apt install -y zip unzip build-essential pkg-config
+  sudo apt install -y zip unzip build-essential pkg-config libpthread-stubs0-dev lcov
   # download and unpack vcpkg
   wget -qO vcpkg.tar.gz https://github.com/microsoft/vcpkg/archive/master.tar.gz
   sudo mkdir /opt/vcpkg
@@ -21,10 +21,10 @@ function ubuntu_install_deps()
   ubuntu_clean_up
 
   # where lib folder?
-  #vcpkg integrate install
+  vcpkg integrate install
 
   # install vcpkg libraries
-  #ubuntu_install_vcpkg_libs
+  ubuntu_install_vcpkg_libs
 }
 
 function ubuntu_verify_deps()
@@ -49,11 +49,10 @@ function ubuntu_clean_up()
 
 function ubuntu_install_vcpkg_libs()
 {
-  # install vcpkg libraries, just update vcpkg for now
-  # TODO: this may get completely removed in the future
+  # install vcpkg libraries
   echo "Configuring vcpkg"
   /usr/local/bin/vcpkg update
-  #/usr/local/bin/vcpkg install 7zip
+  /usr/local/bin/vcpkg install gtest
 }
 
 function main()

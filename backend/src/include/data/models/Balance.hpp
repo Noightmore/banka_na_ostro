@@ -5,7 +5,7 @@
 #include <memory>
 #include "Money.hpp"
 
-namespace bank::models
+namespace bank::data::models
 {
         /**
          * @brief Balance class
@@ -33,7 +33,7 @@ namespace bank::models
              * @brief method for converting Balance object to JSON string
              * @return json string representation of Balance object
              */
-            std::string& toJson();
+            std::unique_ptr<std::string> toJson();
         };
 
 }

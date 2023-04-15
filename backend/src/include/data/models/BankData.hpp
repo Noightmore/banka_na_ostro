@@ -6,7 +6,7 @@
 #include "UserAccount.hpp"
 #include "ExchangeRate.hpp"
 
-namespace bank::models
+namespace bank::data::models
 {
     /**
      * @brief BankData class
@@ -46,6 +46,16 @@ namespace bank::models
                  * @return new instance of BankData class
                  */
                 static std::unique_ptr<BankData> createInstance();
+
+                void addLoggedInUser(UserAccount *user);
+
+                void removeLoggedInUser(unsigned int id);
+
+                void addCurrentExchangeRate(ExchangeRate *exchangeRate);
+
+                void emptyCurrentExchangeRates();
+
+                std::string& getLoggedInUserInJsonFormat_ById(unsigned int id);
 
                 ~BankData();
 

@@ -1,6 +1,6 @@
-#include "../../include/models/Balance.hpp"
+#include "include/data/models/Balance.hpp"
 
-namespace bank::models
+namespace bank::data::models
 {
 
         Balance::Balance(std::string* name, double* amount) : Money()
@@ -33,7 +33,7 @@ namespace bank::models
             return std::make_unique<Balance>(_name.release(), _amount.release());
         }
 
-        std::string &Balance::toJson()
+        std::unique_ptr<std::string> Balance::toJson()
         {
             auto json = new std::string();
             json->append("{");
@@ -44,6 +44,7 @@ namespace bank::models
             json->append(std::to_string(*this->amount));
             json->append("}");
 
-            return *json;
+            auto jsonPtr = std::make_unique<std::string>(json->c_str());
+            return jsonPtr;
         }
 }

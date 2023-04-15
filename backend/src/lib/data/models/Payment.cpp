@@ -1,10 +1,10 @@
-#include "../../include/models/Payment.hpp"
+#include "include/data/models/Payment.hpp"
 
 
-namespace bank::models
+namespace bank::data::models
 {
     Payment::Payment(time_t *date, std::string *type, unsigned int *accountId,
-                     bank::models::Balance *balance)
+                     Balance *balance)
     {
         this->date = date;
         this->paymentType = type;
@@ -45,24 +45,24 @@ namespace bank::models
                                          balance.release());
     }
 
-    std::string &Payment::toJson()
-    {
-        auto *json = new std::string();
-        json->append("{");
-        json->append("\"date\":");
-        json->append(std::to_string(*date));
-        json->append(",");
-        json->append("\"type\":");
-        json->append("\"");
-        json->append(*paymentType);
-        json->append("\"");
-        json->append(",");
-        json->append("\"accountId\":");
-        json->append(std::to_string(*accountId));
-        json->append(",");
-        json->append("\"balance\":");
-        json->append(balance->toJson());
-        json->append("}");
-        return *json;
-    }
+//    std::string &Payment::toJson()
+//    {
+//        auto *json = new std::string();
+//        json->append("{");
+//        json->append("\"date\":");
+//        json->append(std::to_string(*date));
+//        json->append(",");
+//        json->append("\"type\":");
+//        json->append("\"");
+//        json->append(*paymentType);
+//        json->append("\"");
+//        json->append(",");
+//        json->append("\"accountId\":");
+//        json->append(std::to_string(*accountId));
+//        json->append(",");
+//        json->append("\"balance\":");
+//        json->append(balance->toJson());
+//        json->append("}");
+//        return *json;
+//    }
 }
