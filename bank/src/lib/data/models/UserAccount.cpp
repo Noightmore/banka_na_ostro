@@ -1,5 +1,5 @@
 #include "include/data/models/UserAccount.hpp"
-// Path: backend/lib/models/UserAccount.cpp
+// Path: bank/lib/models/UserAccount.cpp
 
 namespace bank::data::models
 {
