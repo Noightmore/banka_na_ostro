@@ -29,19 +29,19 @@ enable_testing()
 # for ubuntu - /usr/local/share/vcpkg
 #set(VCPKG_ROOT "/home/rob/.clion-vcpkg/vcpkg") # vcpkg lib folder path
 
-# Run the `whoami` command
-execute_process(COMMAND whoami
-        OUTPUT_VARIABLE OUTPUT
-        RESULT_VARIABLE RESULT)
-
-string(REPLACE "\n" "" OUTPUT "${OUTPUT}")
-
 if(EXISTS "/etc/os-release")
     file(STRINGS "/etc/os-release" OS_RELEASE_CONTENTS)
     foreach(line ${OS_RELEASE_CONTENTS})
         if(line MATCHES "Ubuntu") # production operating system
             set(VCPKG_ROOT "/usr/local/share/vcpkg")
         elseif(line MATCHES "Gentoo") # or any desktop operating system with vcpkg installed using clion
+            # Run the `whoami` command
+            execute_process(COMMAND whoami
+                    OUTPUT_VARIABLE OUTPUT
+                    RESULT_VARIABLE RESULT)
+
+            string(REPLACE "\n" "" OUTPUT "${OUTPUT}")
+
             set(VCPKG_ROOT "/home/${OUTPUT}/.clion-vcpkg/vcpkg")
         #elseif(line MATCHES "Opensuse")
             # Do something specific for Debian
