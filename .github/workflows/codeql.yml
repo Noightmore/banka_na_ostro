@@ -59,19 +59,19 @@ jobs:
       # If this step fails, then you should remove it and run the build manually (see below)
       - name: Install project dependencies
         run: |
-          chmod +x ./backend/scripts/install_dependencies.sh
-          /bin/bash ./backend/scripts/install_dependencies.sh
+          chmod +x ./bank/scripts/install_dependencies.sh
+          /bin/bash ./bank/scripts/install_dependencies.sh
 
       - name: Configure CMake
         run : |
-          cd backend
+          cd bank
           cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
-      - name: Build Backend
+      - name: Build Bank
         # Build your program with the given configuration
         run: cmake --build ${{github.workspace}}/build/
 
-      - name: Test Backend
+      - name: Test Bank
         working-directory: ${{github.workspace}}/build/
         # Execute tests defined by the CMake configuration.
         # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
@@ -80,8 +80,8 @@ jobs:
       - name: Compute Test Coverage
         working-directory: ${{github.workspace}}/build/
         run: |
-          sudo chmod +x ../backend/scripts/compute_test_coverage.sh
-          /bin/bash ../backend/scripts/compute_test_coverage.sh
+          sudo chmod +x ../bank/scripts/compute_test_coverage.sh
+          /bin/bash ../bank/scripts/compute_test_coverage.sh
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
