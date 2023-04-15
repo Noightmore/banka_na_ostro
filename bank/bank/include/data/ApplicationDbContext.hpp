@@ -31,10 +31,11 @@ namespace bank::data
                                 std::string* lastName,
                                 std::string* email, std::string* password);
 
-                void loadUserBalancesAndPaymentRecords(xmlNodePtr cur, const xmlChar *content,
-                                                       models::UserAccount* user);
+                void loadUserBalancesAndPaymentRecords(xmlNodePtr cur,  models::UserAccount* user);
 
-                std::unique_ptr<models::Balance> parseBalanceFromXML(xmlNodePtr cur);
+                std::unique_ptr<models::Balance> parseBalanceFromXML(xmlNodePtr bNode);
+
+                std::unique_ptr<models::Payment> parsePaymentFromXML(xmlNodePtr pNode);
 
         public:
             ApplicationDbContext();

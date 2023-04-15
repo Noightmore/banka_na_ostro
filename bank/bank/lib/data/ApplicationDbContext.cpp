@@ -44,34 +44,35 @@ namespace bank::data
 
             for (xmlNodePtr cur = userNode->children; cur != nullptr; cur = cur->next)
             {
-                    if (cur->type == XML_ELEMENT_NODE)
+                    if (cur->type != XML_ELEMENT_NODE)
                     {
-                            std::cout << cur->name << ": ";
-                            xmlChar* content = xmlNodeGetContent(cur);
-
-
-
-                            if (user_ptr == nullptr)
-                            {
-                                    user_ptr = this->loadBasicUserData(cur,
-                                                                       content,
-                                                                       &id,
-                                                                       &firstName,
-                                                                       &lastName,
-                                                                       &email,
-                                                                       &password);
-                                    std::cout << content << std::endl;
-                                    xmlFree(content);
-                                    continue;
-                            }
-
-                            // load users balances and payment records
-                            this->loadUserBalancesAndPaymentRecords(cur, content, user_ptr.get());
-
-
-                            xmlFree(content);
-
+                                continue;
                     }
+
+                    std::cout << cur->name << ": ";
+                    xmlChar* content = xmlNodeGetContent(cur);
+
+
+                    if (user_ptr == nullptr)
+                    {
+                            user_ptr = this->loadBasicUserData(cur,
+                                                               content,
+                                                               &id,
+                                                               &firstName,
+                                                               &lastName,
+                                                               &email,
+                                                               &password);
+                            std::cout << content << std::endl;
+                            xmlFree(content);
+                            continue;
+                    }
+
+                    // load users balances and payment records
+                    this->loadUserBalancesAndPaymentRecords(cur, user_ptr.get());
+
+
+                    xmlFree(content);
+
             }
 
 
@@ -133,59 +134,72 @@ namespace bank::data
             return nullptr;
     }
 
-    void ApplicationDbContext::loadUserBalancesAndPaymentRecords(xmlNodePtr cur, const xmlChar *content,
+    void ApplicationDbContext::loadUserBalancesAndPaymentRecords(xmlNodePtr cur,
                                                                  models::UserAccount *user)
     {
         for (xmlNodePtr curr = cur->children; curr != nullptr; curr = curr->next)
         {
-                if (cur->type == XML_ELEMENT_NODE)
+                if (cur->type != XML_ELEMENT_NODE)
                 {
-                        std::cout << curr->name << ": ";
-                        if(strcmp((char*)curr->name, "balance") == 0)
-                        {
-                                user->addBalance(this->parseBalanceFromXML(curr));
-                        }
-                        xmlChar *content2 = xmlNodeGetContent(curr);
-                        std::cout << content2 << std::endl;
-                        xmlFree(content2);
+                        continue;
                 }
+
+                std::cout << curr->name << ": ";
+                if(strcmp((char*)curr->name, "balance") == 0)
+                {
+                        user->addBalance(this->parseBalanceFromXML(curr));
+                }
+                else if(strcmp((char*)curr->name, "payments") == 0)
+                {
+                        user->addPayment(this->parsePaymentFromXML(curr));
+                }
+
+                xmlChar *content2 = xmlNodeGetContent(curr);
+                std::cout << content2 << std::endl;
+                xmlFree(content2);
         }
     }
 
-    std::unique_ptr<models::Balance> ApplicationDbContext::parseBalanceFromXML(xmlNodePtr cur)
+    std::unique_ptr<models::Balance> ApplicationDbContext::parseBalanceFromXML(xmlNodePtr bNode)
     {
             std::unique_ptr<models::Balance> balance_ptr;
             std::string balanceType;
             double amount = -1;
 
-            for (xmlNodePtr curr = cur->children; curr != nullptr; curr = curr->next)
+            for (xmlNodePtr curr = bNode->children; curr != nullptr; curr = curr->next)
             {
-                    if (cur->type == XML_ELEMENT_NODE)
+                    if (bNode->type != XML_ELEMENT_NODE)
                     {
-                            std::cout << curr->name << ": ";
-                            xmlChar *content2 = xmlNodeGetContent(curr);
-                            if(strcmp((char*)curr->name, "balance_type") == 0)
-                            {
-                                        balanceType = (char*)content2;
-                            }
-                            else if(strcmp((char*)curr->name, "amount") == 0)
-                            {
-                                        amount = std::stod((char*)content2);
-                            }
+                                continue;
+                    }
+                    std::cout << curr->name << ": ";
+                    xmlChar *content2 = xmlNodeGetContent(curr);
+                    if(strcmp((char*)curr->name, "balance_type") == 0)
+                    {
+                                balanceType = (char*)content2;
+                    }
+                    else if(strcmp((char*)curr->name, "amount") == 0)
+                    {
+                                amount = std::stod((char*)content2);
+                    }
 
-                            std::cout << content2 << std::endl;
-                            xmlFree(content2);
+                    std::cout << content2 << std::endl;
+                    xmlFree(content2);
 
-                            if(!balanceType.empty() && amount != -1)
-                            {
-                                    auto _balanceType = std::make_unique<std::string> (balanceType);
-                                    auto _amount = std::make_unique<double> (amount);
-                                    balance_ptr = models::Balance::createInstance(std::move(_balanceType),
-                                                                                  std::move(_amount));
-                                    return balance_ptr;
-                            }
+                    if(!balanceType.empty() && amount != -1)
+                    {
+                            auto _balanceType = std::make_unique<std::string> (balanceType);
+                            auto _amount = std::make_unique<double> (amount);
+                            balance_ptr = models::Balance::createInstance(std::move(_balanceType),
+                                                                          std::move(_amount));
+                            return balance_ptr;
                     }
             }
+    }
+
+    std::unique_ptr<models::Payment> ApplicationDbContext::parsePaymentFromXML(xmlNodePtr pNode)
+    {
+            return nullptr;
     }
 
     [[maybe_unused]]
@@ -193,7 +207,5 @@ namespace bank::data
     {
             throw std::runtime_error("Not implemented yet");
     }
-
-
 
 }
