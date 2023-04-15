@@ -21,7 +21,7 @@ function ubuntu_install_deps()
   ubuntu_clean_up
 
   # where lib folder?
-  vcpkg integrate install
+  # vcpkg integrate install
 
   # install vcpkg libraries
   ubuntu_install_vcpkg_libs
@@ -52,7 +52,7 @@ function ubuntu_install_vcpkg_libs()
   # install vcpkg libraries
   echo "Configuring vcpkg"
   /usr/local/bin/vcpkg update
-  /usr/local/bin/vcpkg install gtest
+  /usr/local/bin/vcpkg install gtest libxml2
 }
 
 function main()
