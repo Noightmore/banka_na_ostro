@@ -4,7 +4,7 @@
 
 #include "include/data/models/BankData.hpp"
 
-#define .XML (+ "xml")
+#define DOT_XML (+ ".xml")
 
 namespace bank::data
 {
