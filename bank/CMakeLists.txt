@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.25)
 project(bank)
 set(CMAKE_CXX_STANDARD 23)
 
-add_subdirectory(src)
+add_subdirectory(bank)
 
 # Set the output folder for the executable
 #set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR})

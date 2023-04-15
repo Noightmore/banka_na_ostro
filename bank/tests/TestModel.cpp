@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "../src/include/data/models/Balance.hpp"
-#include "../src/include/data/models/BankData.hpp"
+#include "../bank/include/data/models/Balance.hpp"
+#include "../bank/include/data/models/BankData.hpp"
 
 using namespace bank::data::models;
 

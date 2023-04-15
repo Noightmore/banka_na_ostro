@@ -4,6 +4,8 @@
 
 #include "include/data/models/BankData.hpp"
 
+#define .XML (+ "xml")
+
 namespace bank::data
 {
     /**
@@ -16,6 +18,15 @@ namespace bank::data
     class ApplicationDbContext
     {
         models::BankData *bankData;
+
+        public:
+            ApplicationDbContext();
+            ~ApplicationDbContext();
+
+            void loadUserFromDatabase_ByAccountId(unsigned int id);
+
+            void addPaymentRecordToAUser_ByAccountId(unsigned int id, models::Payment paymentRecord);
+
     };
 }
 
