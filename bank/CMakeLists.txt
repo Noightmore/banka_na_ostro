@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
-project(backend)
+project(bank)
 set(CMAKE_CXX_STANDARD 23)
 
 add_subdirectory(src)
@@ -72,10 +72,10 @@ set(CMAKE_PREFIX_PATH "/usr/local/share/vcpkg/packages/gtest_x64-linux")
 find_package(GTest CONFIG REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
-add_executable(backend.cgi main.cpp)
-target_link_libraries(backend.cgi PRIVATE Api)
+add_executable(BankApp.cgi main.cpp)
+target_link_libraries(BankApp.cgi PRIVATE Bank)
 
 add_executable(TestModel tests/TestModel.cpp)
-target_link_libraries(TestModel PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main Api)
+target_link_libraries(TestModel PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main Bank)
 
 add_test(NAME TestModel COMMAND TestModel)
