@@ -1,4 +1,4 @@
-name: Backend
+name: Bank
 
 on:
   push:
