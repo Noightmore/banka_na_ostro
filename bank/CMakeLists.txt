@@ -70,12 +70,13 @@ set(CMAKE_PREFIX_PATH "/usr/local/share/vcpkg/packages/gtest_x64-linux")
 
 # load already installed packages
 find_package(GTest CONFIG REQUIRED)
+find_package(LibXml2 REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
 add_executable(BankApp.cgi main.cpp)
-target_link_libraries(BankApp.cgi PRIVATE Bank)
+target_link_libraries(BankApp.cgi PRIVATE Bank LibXml2::LibXml2)
 
 add_executable(TestModel tests/TestModel.cpp)
-target_link_libraries(TestModel PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main Bank)
+target_link_libraries(TestModel PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main LibXml2::LibXml2 Bank)
 
 add_test(NAME TestModel COMMAND TestModel)
