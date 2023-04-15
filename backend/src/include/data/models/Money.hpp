@@ -4,7 +4,7 @@
 #include <memory>
 #include <string>
 
-namespace bank::models
+namespace bank::data::models
 {
     /**
     * @brief Base class for all money related classes

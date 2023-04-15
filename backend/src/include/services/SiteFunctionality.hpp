@@ -3,7 +3,7 @@
 
 
 #include <memory>
-#include "../models/UserAccount.hpp"
+#include "../data/models/UserAccount.hpp"
 
 namespace bank::services
 {

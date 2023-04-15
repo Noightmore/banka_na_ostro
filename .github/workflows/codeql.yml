@@ -71,6 +71,12 @@ jobs:
         # Build your program with the given configuration
         run: cmake --build ${{github.workspace}}/build/
 
+      - name: Compute Test Coverage
+        working-directory: ${{github.workspace}}/build/
+        run: |
+          sudo chmod +x ../backend/scripts/compute_test_coverage.sh
+          /bin/bash ../backend/scripts/compute_test_coverage.sh
+
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         with:

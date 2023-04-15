@@ -4,7 +4,7 @@
 
 #include "Money.hpp"
 
-namespace bank::models
+namespace bank::data::models
 {
     /**
      * @brief this class represents exchange rate of a chosen currency to CZK currency

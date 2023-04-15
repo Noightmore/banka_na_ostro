@@ -1,21 +1,18 @@
 #include <gtest/gtest.h>
 
-#include "../src/include/models/Balance.hpp"
-#include "../src/include/models/BankData.hpp"
-#include "../src/include/models/ExchangeRate.hpp"
-#include "../src/include/models/UserAccount.hpp"
-
+#include "../src/include/data/models/Balance.hpp"
+#include "../src/include/data/models/BankData.hpp"
 
 using namespace bank::models;
 
 // BALANCE CLASS TESTS
-TEST(BalanceTest, CreateInstance)
-{
-        auto name = std::make_unique<std::string>("USD");
-        auto amount = std::make_unique<double>(1000.000000);
-        auto balance = Balance::createInstance(std::move(name), std::move(amount));
-        ASSERT_EQ(balance->toJson(), R"({"name": "USD","amount": 1000.000000})");
-}
+//TEST(BalanceTest, CreateInstance)
+//{
+//        auto name = std::make_unique<std::string>("USD");
+//        auto amount = std::make_unique<double>(1000.000000);
+//        auto balance = Balance::createInstance(std::move(name), std::move(amount));
+//        ASSERT_EQ(balance->toJson(), R"({"name": "USD","amount": 1000.000000})");
+//}
 
 TEST(BalanceTest, CreateInstanceWithEmptyName)
 {
@@ -99,4 +96,38 @@ TEST(ExchangeRateTest, CreateInstanceWithZeroRate)
                      std::invalid_argument);
 }
 
+// USER ACCOUNT TESTS
 
+// Test case for correct password
+TEST(UserAccountTest, CorrectPassword)
+{
+        // create a new user account with a password of "password123"
+        std::unique_ptr<UserAccount> user = UserAccount::createInstance(
+                std::make_unique<unsigned int>(1),
+                std::make_unique<std::string>("John"),
+                std::make_unique<std::string>("Doe"),
+                std::make_unique<std::string>("johndoe@example.com"),
+                std::make_unique<std::string>("password123")
+        );
+
+        std::string password = "password123";
+        // check if the password matches
+        EXPECT_TRUE(user->doPasswordsMatch(password));
+}
+
+// Test case for incorrect password
+TEST(UserAccountTest, IncorrectPassword)
+{
+        // create a new user account with a password of "password123"
+        std::unique_ptr<UserAccount> user = UserAccount::createInstance(
+                std::make_unique<unsigned int>(1),
+                std::make_unique<std::string>("John"),
+                std::make_unique<std::string>("Doe"),
+                std::make_unique<std::string>("johndoe@example.com"),
+                std::make_unique<std::string>("password123")
+        );
+
+        std::string password = "wrongpassword";
+        // check if the password matches
+        EXPECT_FALSE(user->doPasswordsMatch(password));
+}

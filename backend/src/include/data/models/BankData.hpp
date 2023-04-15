@@ -6,7 +6,7 @@
 #include "UserAccount.hpp"
 #include "ExchangeRate.hpp"
 
-namespace bank::models
+namespace bank::data::models
 {
     /**
      * @brief BankData class

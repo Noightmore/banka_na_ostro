@@ -9,7 +9,7 @@
 #include "Balance.hpp"
 #include "Payment.hpp"
 
-namespace bank::models
+namespace bank::data::models
 {
         /**
          * @brief UserAccount class

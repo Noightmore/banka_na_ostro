@@ -1,6 +1,6 @@
-#include "../../include/models/BankData.hpp"
+#include "include/data/models/BankData.hpp"
 
-namespace bank::models
+namespace bank::data::models
 {
     BankData::BankData(std::vector<UserAccount*> *loggedInUsers, std::vector<ExchangeRate*> *currentExchangeRates)
     {
