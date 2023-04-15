@@ -9,7 +9,13 @@ add_subdirectory(bank)
 
 # this is for test coverage using
 #--coverage -v -fprofile-arcs -ftest-coverage -fprofile-correction
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -v -pipe -std=c++23 -g --coverage")
+execute_process(
+        COMMAND pkg-config --cflags libxml-2.0
+        OUTPUT_VARIABLE LIBXML_CFLAGS
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -v -pipe -std=c++23 -g --coverage ${LIBXML_CFLAGS}")
 #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
 
 # test coverage
@@ -60,6 +66,11 @@ endif()
 
 #set(GTest_DIR "/usr/local/share/vcpkg/packages")
 set(CMAKE_PREFIX_PATH "/usr/local/share/vcpkg/packages/gtest_x64-linux")
+#list(APPEND CMAKE_PREFIX_PATH "/usr/local/share/vcpkg/packages/zlib_x64-linux")
+#list(APPEND CMAKE_PREFIX_PATH "/home/rob/.clion-vcpkg/vcpkg/packages/zlib_x64-linux")
+
+# include libxml2
+
 #
 ## Install packages listed in vcpkg.json
 #file(READ "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg.json" VCPKG_JSON)
@@ -71,13 +82,13 @@ set(CMAKE_PREFIX_PATH "/usr/local/share/vcpkg/packages/gtest_x64-linux")
 # load already installed packages
 find_package(GTest CONFIG REQUIRED)
 
-find_package(LibXml2 REQUIRED)
-include_directories(${GTEST_INCLUDE_DIRS})
+#find_package(LibXml2 REQUIRED)
+#include_directories(${GTEST_INCLUDE_DIRS})
 
 add_executable(BankApp.cgi main.cpp)
-target_link_libraries(BankApp.cgi PRIVATE Bank LibXml2::LibXml2)
+target_link_libraries(BankApp.cgi PRIVATE Bank)
 
 add_executable(TestModel tests/TestModel.cpp)
-target_link_libraries(TestModel PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main LibXml2::LibXml2 Bank)
+target_link_libraries(TestModel PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main Bank)
 
 add_test(NAME TestModel COMMAND TestModel)

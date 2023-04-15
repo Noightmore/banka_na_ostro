@@ -6,7 +6,7 @@ function ubuntu_install_deps()
   echo "Installing dependencies"
   sudo apt update
   # essential tools
-  sudo apt install -y zip unzip build-essential pkg-config libpthread-stubs0-dev lcov
+  sudo apt install -y zip unzip build-essential pkg-config libpthread-stubs0-dev lcov libxml2
   # download and unpack vcpkg
   wget -qO vcpkg.tar.gz https://github.com/microsoft/vcpkg/archive/master.tar.gz
   sudo mkdir /opt/vcpkg
@@ -52,7 +52,8 @@ function ubuntu_install_vcpkg_libs()
   # install vcpkg libraries
   echo "Configuring vcpkg"
   /usr/local/bin/vcpkg update
-  /usr/local/bin/vcpkg install gtest libxml2
+  # libxml2
+  /usr/local/bin/vcpkg install gtest
 }
 
 function main()

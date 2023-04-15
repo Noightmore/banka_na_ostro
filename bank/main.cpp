@@ -1,7 +1,11 @@
 #include <iostream>
+#include "bank/include/data/ApplicationDbContext.hpp"
 
 int main()
 {
-        std::cout << "Hello, World!" << std::endl;
+        auto *context = new bank::data::ApplicationDbContext();
+
+        context->loadUserFromDatabase_ByAccountId(1);
+
         return 0;
 }

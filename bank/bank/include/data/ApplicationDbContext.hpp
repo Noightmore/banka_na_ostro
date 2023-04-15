@@ -1,6 +1,9 @@
 #ifndef BACKEND_APPLICATIONDBCONTEXT_HPP
 #define BACKEND_APPLICATIONDBCONTEXT_HPP
 
+#include <libxml/parser.h>
+#include <cstring>
+#include <iostream>
 
 #include "include/data/models/BankData.hpp"
 
