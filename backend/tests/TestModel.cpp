@@ -3,7 +3,7 @@
 #include "../src/include/data/models/Balance.hpp"
 #include "../src/include/data/models/BankData.hpp"
 
-using namespace bank::models;
+using namespace bank::data::models;
 
 // BALANCE CLASS TESTS
 //TEST(BalanceTest, CreateInstance)

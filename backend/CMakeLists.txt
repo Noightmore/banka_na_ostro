@@ -27,8 +27,22 @@ enable_testing()
 
 ## vcpkg integration (/home/rob/.clion-vcpkg/vcpkg - for gentoo)
 # for ubuntu - /usr/local/share/vcpkg
-set(VCPKG_ROOT "/home/rob/.clion-vcpkg/vcpkg") # vcpkg lib folder path
-#
+#set(VCPKG_ROOT "/home/rob/.clion-vcpkg/vcpkg") # vcpkg lib folder path
+
+if(EXISTS "/etc/os-release")
+    file(STRINGS "/etc/os-release" OS_RELEASE_CONTENTS)
+    foreach(line ${OS_RELEASE_CONTENTS})
+        if(line MATCHES "Ubuntu")
+            set(VCPKG_ROOT "/usr/local/share/vcpkg") # vcpkg lib folder path
+        elseif(line MATCHES "Gentoo")
+            set(VCPKG_ROOT "/home/rob/.clion-vcpkg/vcpkg")
+        #elseif(line MATCHES "Opensuse")
+            # Do something specific for Debian
+        endif()
+    endforeach()
+endif()
+
+
 ## Include vcpkg.cmake
 if(EXISTS "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
     set(CMAKE_TOOLCHAIN_FILE "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
