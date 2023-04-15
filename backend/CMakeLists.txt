@@ -9,7 +9,7 @@ add_subdirectory(src)
 
 # this is for test coverage using
 #--coverage -v -fprofile-arcs -ftest-coverage -fprofile-correction
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -pipe -std=c++23 -g --coverage")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -v -pipe -std=c++23 -g --coverage")
 #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
 
 # test coverage
