@@ -70,6 +70,7 @@ set(CMAKE_PREFIX_PATH "/usr/local/share/vcpkg/packages/gtest_x64-linux")
 
 # load already installed packages
 find_package(GTest CONFIG REQUIRED)
+
 find_package(LibXml2 REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
