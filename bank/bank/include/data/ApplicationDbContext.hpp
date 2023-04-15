@@ -7,7 +7,8 @@
 
 #include "include/data/models/BankData.hpp"
 
-#define DOT_XML (+ ".xml")
+#define DB_PATH ("../db/")
+#define DOT_XML (".xml")
 
 namespace bank::data
 {
@@ -20,7 +21,20 @@ namespace bank::data
      */
     class ApplicationDbContext
     {
-        models::BankData *bankData;
+        private:
+                models::BankData *bankData;
+
+                std::unique_ptr<models::UserAccount> parseUserFromXML(xmlNode *userNode);
+
+                std::unique_ptr<models::UserAccount>
+                loadBasicUserData(xmlNodePtr cur, const xmlChar *content, unsigned int* id, std::string* firstName,
+                                std::string* lastName,
+                                std::string* email, std::string* password);
+
+                void loadUserBalancesAndPaymentRecords(xmlNodePtr cur, const xmlChar *content,
+                                                       models::UserAccount* user);
+
+                std::unique_ptr<models::Balance> parseBalanceFromXML(xmlNodePtr cur);
 
         public:
             ApplicationDbContext();
@@ -28,7 +42,9 @@ namespace bank::data
 
             void loadUserFromDatabase_ByAccountId(unsigned int id);
 
-            void addPaymentRecordToAUser_ByAccountId(unsigned int id, models::Payment paymentRecord);
+        [[maybe_unused]] void addPaymentRecordToAUser_ByAccountId(unsigned int id, models::Payment paymentRecord);
+
+
 
     };
 }
