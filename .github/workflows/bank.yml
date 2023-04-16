@@ -45,8 +45,8 @@ jobs:
       - name: Compute Test Coverage
         working-directory: ${{github.workspace}}/bank/build/
         run: |
-          sudo chmod +x ../bank/scripts/compute_test_coverage.sh
-          /bin/bash ../bank/scripts/compute_test_coverage.sh
+          sudo chmod +x ../scripts/compute_test_coverage.sh
+          /bin/bash ../scripts/compute_test_coverage.sh
 
       - name: Install Bank As WebApp
         working-directory: ${{github.workspace}}/bank
