@@ -124,6 +124,21 @@ namespace bank::data::models
         this->balances->push_back(balance.release());
     }
 
+    const std::string& UserAccount::getFirstName()
+    {
+        return *this->firstName;
+    }
+
+    const std::string& UserAccount::getLastName()
+    {
+            return *this->lastName;
+    }
+
+    const std::string& UserAccount::getEmail()
+    {
+            return *this->email;
+    }
+
 //    std::string &UserAccount::toJson()
 //    {
 //            auto json = new std::string();

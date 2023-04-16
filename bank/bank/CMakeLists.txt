@@ -23,5 +23,9 @@ add_library(Bank STATIC
 # Set include directories
 target_include_directories(Bank PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
+find_package(LibXml2 REQUIRED)
+
+# Set link libraries
+target_link_libraries(Bank PRIVATE LibXml2::LibXml2)
 # Set library version and API compatibility level
 set_target_properties(Bank PROPERTIES VERSION 1.0 SOVERSION 1)

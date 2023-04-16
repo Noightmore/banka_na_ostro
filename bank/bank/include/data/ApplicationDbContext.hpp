@@ -1,10 +1,14 @@
 #ifndef BACKEND_APPLICATIONDBCONTEXT_HPP
 #define BACKEND_APPLICATIONDBCONTEXT_HPP
 
+#include <libxml/parser.h>
+#include <cstring>
+#include <iostream>
 
 #include "include/data/models/BankData.hpp"
 
-#define DOT_XML (+ ".xml")
+#define DB_PATH ("../db/")
+#define DOT_XML (".xml")
 
 namespace bank::data
 {
@@ -17,15 +21,36 @@ namespace bank::data
      */
     class ApplicationDbContext
     {
-        models::BankData *bankData;
+        private:
+                models::BankData *bankData;
+
+                // series of helper methods for loading and parsing user data from the database
+                std::unique_ptr<models::UserAccount> parseUserFromXML(xmlNode *userNode);
+
+                std::unique_ptr<models::UserAccount>
+                loadBasicUserData(xmlNodePtr cur, const xmlChar *content, unsigned int* id, std::string* firstName,
+                                std::string* lastName,
+                                std::string* email, std::string* password);
+
+                void loadUserBalancesAndPaymentRecords(xmlNodePtr cur,  models::UserAccount* user);
+
+                std::unique_ptr<models::Balance> parseBalanceFromXML(xmlNodePtr bNode);
+
+                std::unique_ptr<models::Payment> parsePaymentFromXML(xmlNodePtr pNode);
 
         public:
             ApplicationDbContext();
             ~ApplicationDbContext();
 
-            void loadUserFromDatabase_ByAccountId(unsigned int id);
+            /**
+             * @brief method for loading a single user from the database by his account id
+             *
+             * @param id account id
+             * @return reference to the user object
+             */
+            models::UserAccount& loadUser_ByAccountId(unsigned int id);
 
-            void addPaymentRecordToAUser_ByAccountId(unsigned int id, models::Payment paymentRecord);
+            [[maybe_unused]] void addPaymentRecordToAUser_ByAccountId(unsigned int id, models::Payment paymentRecord);
 
     };
 }

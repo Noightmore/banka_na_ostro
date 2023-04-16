@@ -74,17 +74,30 @@ namespace bank::data::models
         this->currentExchangeRates->clear();
     }
 
-    std::string &BankData::getLoggedInUserInJsonFormat_ById(unsigned int id)
+    UserAccount& BankData::getLoggedInUserAccount_ById(unsigned int id)
     {
-            for (auto user : *loggedInUsers)
+            for(auto user : *loggedInUsers)
             {
                     if(id == user->getId())
                     {
-                            return user->toJson();
+                            return *user;
                     }
-
             }
-            throw std::invalid_argument("This user is currently not logged in");
     }
+
+
+
+//    std::string &BankData::getLoggedInUserInJsonFormat_ById(unsigned int id)
+//    {
+//            for (auto user : *loggedInUsers)
+//            {
+//                    if(id == user->getId())
+//                    {
+//                            return user->toJson();
+//                    }
+//
+//            }
+//            throw std::invalid_argument("This user is currently not logged in");
+//    }
 }
 

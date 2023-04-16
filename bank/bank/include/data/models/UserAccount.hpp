@@ -78,6 +78,14 @@ namespace bank::data::models
 
             unsigned int getId();
 
+            const std::string& getFirstName();
+
+            const std::string& getLastName();
+
+            const std::string& getEmail();
+
+
+
             /**
              * @brief method for adding new balance to balances vector
              * @param balance new balance
