@@ -9,12 +9,12 @@ namespace bank::services
 {
     class SiteFunctionality
     {
-        virtual std::unique_ptr<data::models::UserAccount> loadUserFromDatabaseById(unsigned int id) = 0;
+        virtual data::models::UserAccount loadUserFromDatabase_ById(unsigned int id) = 0;
 
-        virtual std::unique_ptr<std::string> authorizeUserLoginByAccountIdAndPassword(unsigned int id,
+        virtual std::unique_ptr<std::string> authorizeUserLogin_ByAccountIdAndPassword(unsigned int id,
                                                                                       std::string& password) = 0;
 
-        virtual std::unique_ptr<std::string> verifyUserLoginByEmail(std::string& email) = 0;
+        virtual std::unique_ptr<std::string> verifyUserLogin_ByEmail(std::string& email) = 0;
 
     };
 }

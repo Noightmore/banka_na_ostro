@@ -24,6 +24,7 @@ namespace bank::data
         private:
                 models::BankData *bankData;
 
+                // series of helper methods for loading and parsing user data from the database
                 std::unique_ptr<models::UserAccount> parseUserFromXML(xmlNode *userNode);
 
                 std::unique_ptr<models::UserAccount>
@@ -41,11 +42,15 @@ namespace bank::data
             ApplicationDbContext();
             ~ApplicationDbContext();
 
-            models::UserAccount& loadUserFromDatabase_ByAccountId(unsigned int id);
+            /**
+             * @brief method for loading a single user from the database by his account id
+             *
+             * @param id account id
+             * @return reference to the user object
+             */
+            models::UserAccount& loadUser_ByAccountId(unsigned int id);
 
-        [[maybe_unused]] void addPaymentRecordToAUser_ByAccountId(unsigned int id, models::Payment paymentRecord);
-
-
+            [[maybe_unused]] void addPaymentRecordToAUser_ByAccountId(unsigned int id, models::Payment paymentRecord);
 
     };
 }

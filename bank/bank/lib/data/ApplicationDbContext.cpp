@@ -13,7 +13,7 @@ namespace bank::data
         delete bankData;
     }
 
-    models::UserAccount& ApplicationDbContext::loadUserFromDatabase_ByAccountId(unsigned int id)
+    models::UserAccount& ApplicationDbContext::loadUser_ByAccountId(unsigned int id)
     {
             std::string fileName = DB_PATH + std::to_string(id) + DOT_XML;
             char* fileNameChar = new char[fileName.length() + 1];
@@ -27,9 +27,12 @@ namespace bank::data
             }
 
             xmlNodePtr root = xmlDocGetRootElement(doc);
+
+            // loads user from the xml file into memory marking it as logged-in user
             std::unique_ptr<models::UserAccount> user = this->parseUserFromXML(root);
             this->bankData->addLoggedInUser(user.release());
 
+            // returns the user as a reference
             return this->bankData->getLoggedInUserAccount_ById(id);
 
     }
