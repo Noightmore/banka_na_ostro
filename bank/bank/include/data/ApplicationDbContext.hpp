@@ -38,17 +38,21 @@ namespace bank::data
 
                 std::unique_ptr<models::Payment> parsePaymentFromXML(xmlNodePtr pNode);
 
+                /**
+                * @brief method for loading a single user from the database by his account id
+                *
+                * @param id account id
+                * @return reference to the user object
+                */
+                void loadUserFromDatabase_ByAccountId(unsigned int id);
+
         public:
             ApplicationDbContext();
             ~ApplicationDbContext();
 
-            /**
-             * @brief method for loading a single user from the database by his account id
-             *
-             * @param id account id
-             * @return reference to the user object
-             */
-            models::UserAccount& loadUser_ByAccountId(unsigned int id);
+
+            const models::UserAccount& getUserAccountById(unsigned int id);
+
 
             [[maybe_unused]] void addPaymentRecordToAUser_ByAccountId(unsigned int id, models::Payment paymentRecord);
 

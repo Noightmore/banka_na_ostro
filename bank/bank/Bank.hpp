@@ -1,12 +1,14 @@
 #ifndef BACKEND_BANK_HPP
 #define BACKEND_BANK_HPP
 
+#include <iostream>
 
-namespace banks
+namespace bank
 {
     class Bank
     {
-
+        public:
+                static void startServer();
     };
 }
 

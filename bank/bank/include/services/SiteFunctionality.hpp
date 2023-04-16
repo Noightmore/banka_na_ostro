@@ -1,21 +1,33 @@
 #ifndef BACKEND_SITEFUNCTIONALITY_H
 #define BACKEND_SITEFUNCTIONALITY_H
 
-
+#include <cstring>
+#include <sys/socket.h>
+#include <ifaddrs.h>
+#include <arpa/inet.h>
+#include <string>
+#include <cstdlib>
 #include <memory>
+
+#include "AuthStatus.h"
 #include "../data/models/UserAccount.hpp"
 
 namespace bank::services
 {
     class SiteFunctionality
     {
-        virtual data::models::UserAccount loadUserFromDatabase_ById(unsigned int id) = 0;
+        protected:
+                virtual void fetchHostIpAddress() = 0;
 
-        virtual std::unique_ptr<std::string> authorizeUserLogin_ByAccountIdAndPassword(unsigned int id,
-                                                                                      std::string& password) = 0;
+                virtual const data::models::UserAccount& getUserAccount_ById(unsigned int id) = 0;
 
-        virtual std::unique_ptr<std::string> verifyUserLogin_ByEmail(std::string& email) = 0;
+                virtual const AuthStatus& authorizeUserLogin_ByAccountIdAndPassword(unsigned int id,
+                                                                                    std::string& password) = 0;
 
+                virtual const AuthStatus& verifyUserLogin_ByEmail(std::string& email) = 0;
+
+        public:
+                virtual void run() = 0;
     };
 }
 

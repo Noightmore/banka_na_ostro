@@ -83,6 +83,9 @@ namespace bank::data::models
                             return *user;
                     }
             }
+
+            // return null
+            throw std::invalid_argument("This user is currently not logged in");
     }
 
 
