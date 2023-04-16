@@ -55,7 +55,7 @@ namespace bank::data::models
 
                 void emptyCurrentExchangeRates();
 
-                std::string& getLoggedInUserInJsonFormat_ById(unsigned int id);
+                UserAccount& getLoggedInUserAccount_ById(unsigned int id);
 
                 ~BankData();
 

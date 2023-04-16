@@ -13,7 +13,7 @@ namespace bank::data
         delete bankData;
     }
 
-    void ApplicationDbContext::loadUserFromDatabase_ByAccountId(unsigned int id)
+    models::UserAccount& ApplicationDbContext::loadUserFromDatabase_ByAccountId(unsigned int id)
     {
             std::string fileName = DB_PATH + std::to_string(id) + DOT_XML;
             char* fileNameChar = new char[fileName.length() + 1];
@@ -29,6 +29,8 @@ namespace bank::data
             xmlNodePtr root = xmlDocGetRootElement(doc);
             std::unique_ptr<models::UserAccount> user = this->parseUserFromXML(root);
             this->bankData->addLoggedInUser(user.release());
+
+            return this->bankData->getLoggedInUserAccount_ById(id);
 
     }
 
@@ -147,11 +149,13 @@ namespace bank::data
                 std::cout << curr->name << ": ";
                 if(strcmp((char*)curr->name, "balance") == 0)
                 {
-                        user->addBalance(this->parseBalanceFromXML(curr));
+                        std::unique_ptr<models::Balance> balance = this->parseBalanceFromXML(curr);
+                        user->addBalance(std::move(balance));
                 }
-                else if(strcmp((char*)curr->name, "payments") == 0)
+                else if(strcmp((char*)curr->name, "payment") == 0)
                 {
-                        user->addPayment(this->parsePaymentFromXML(curr));
+                        std::unique_ptr<models::Payment> payment = this->parsePaymentFromXML(curr);
+                        user->addPayment(std::move(payment));
                 }
 
                 xmlChar *content2 = xmlNodeGetContent(curr);
@@ -172,11 +176,12 @@ namespace bank::data
                     {
                                 continue;
                     }
+
                     std::cout << curr->name << ": ";
                     xmlChar *content2 = xmlNodeGetContent(curr);
                     if(strcmp((char*)curr->name, "balance_type") == 0)
                     {
-                                balanceType = (char*)content2;
+                                balanceType = std::string((char*)content2);
                     }
                     else if(strcmp((char*)curr->name, "amount") == 0)
                     {
@@ -186,19 +191,83 @@ namespace bank::data
                     std::cout << content2 << std::endl;
                     xmlFree(content2);
 
-                    if(!balanceType.empty() && amount != -1)
+                    if (balanceType.empty() || amount == -1)
                     {
-                            auto _balanceType = std::make_unique<std::string> (balanceType);
-                            auto _amount = std::make_unique<double> (amount);
-                            balance_ptr = models::Balance::createInstance(std::move(_balanceType),
-                                                                          std::move(_amount));
-                            return balance_ptr;
+                                continue;
                     }
+
+                    auto _balanceType = std::make_unique<std::string> (balanceType);
+                    auto _amount = std::make_unique<double> (amount);
+                    balance_ptr = models::Balance::createInstance(std::move(_balanceType),
+                                                                  std::move(_amount));
+                    return balance_ptr;
             }
+
+            return nullptr;
     }
 
     std::unique_ptr<models::Payment> ApplicationDbContext::parsePaymentFromXML(xmlNodePtr pNode)
     {
+            std::unique_ptr<models::Payment> payment_ptr;
+            time_t paymentDate = -1;
+            std::string paymentType;
+            unsigned int payment_receiver_sender_id = -1;
+            std::unique_ptr<models::Balance> balance_ptr;
+            std::string balanceType;
+            double amount = -1;
+
+            for (xmlNodePtr curr = pNode->children; curr != nullptr; curr = curr->next)
+            {
+                    if (pNode->type != XML_ELEMENT_NODE)
+                    {
+                            continue;
+                    }
+
+                    std::cout << curr->name << ": ";
+                    xmlChar *content2 = xmlNodeGetContent(curr);
+
+                    if(strcmp((char*)curr->name, "payment_date") == 0)
+                    {
+                            paymentDate = reinterpret_cast<time_t> (content2);
+                    }
+                    else if(strcmp((char*)curr->name, "payment_type") == 0)
+                    {
+                            paymentType = std::string((char*)content2);
+                    }
+                    else if(strcmp((char*)curr->name, "payment_receiver_sender_id") == 0)
+                    {
+                             payment_receiver_sender_id = std::stoi((char*)content2);
+                    }
+                    else if(strcmp((char*)curr->name, "payment_currency") == 0)
+                    {
+                            balanceType = std::string((char*)content2);
+                    }
+                    else if(strcmp((char*)curr->name, "payment_amount") == 0)
+                    {
+                            amount = std::stod((char*)content2);
+                    }
+
+                    if(balanceType.empty() || amount == -1)
+                    {
+                            continue;
+                    }
+
+                    balance_ptr = models::Balance::createInstance(std::make_unique<std::string>(balanceType),
+                                                                  std::make_unique<double>(amount));
+
+                    if(paymentDate == -1 || paymentType.empty() || payment_receiver_sender_id == -1)
+                    {
+                            continue;
+                    }
+
+                    payment_ptr = models::Payment::createInstance(std::make_unique<time_t>(paymentDate),
+                                                                  std::make_unique<std::string>(paymentType),
+                                                                  std::make_unique<unsigned int>
+                                                                          (payment_receiver_sender_id),
+                                                                  std::move(balance_ptr));
+
+                    return payment_ptr;
+            }
             return nullptr;
     }
 

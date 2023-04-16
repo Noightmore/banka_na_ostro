@@ -41,7 +41,7 @@ namespace bank::data
             ApplicationDbContext();
             ~ApplicationDbContext();
 
-            void loadUserFromDatabase_ByAccountId(unsigned int id);
+            models::UserAccount& loadUserFromDatabase_ByAccountId(unsigned int id);
 
         [[maybe_unused]] void addPaymentRecordToAUser_ByAccountId(unsigned int id, models::Payment paymentRecord);
 

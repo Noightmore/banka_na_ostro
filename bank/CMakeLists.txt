@@ -9,6 +9,8 @@ add_subdirectory(bank)
 
 # this is for test coverage using
 #--coverage -v -fprofile-arcs -ftest-coverage -fprofile-correction
+
+# include libxml2
 execute_process(
         COMMAND pkg-config --cflags libxml-2.0
         OUTPUT_VARIABLE LIBXML_CFLAGS
@@ -69,8 +71,6 @@ set(CMAKE_PREFIX_PATH "/usr/local/share/vcpkg/packages/gtest_x64-linux")
 #list(APPEND CMAKE_PREFIX_PATH "/usr/local/share/vcpkg/packages/zlib_x64-linux")
 #list(APPEND CMAKE_PREFIX_PATH "/home/rob/.clion-vcpkg/vcpkg/packages/zlib_x64-linux")
 
-# include libxml2
-
 #
 ## Install packages listed in vcpkg.json
 #file(READ "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg.json" VCPKG_JSON)
@@ -91,4 +91,8 @@ target_link_libraries(BankApp.cgi PRIVATE Bank)
 add_executable(TestModel tests/TestModel.cpp)
 target_link_libraries(TestModel PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main Bank)
 
+add_executable(TestAppDbContext tests/TestAppDbContext.cpp)
+target_link_libraries(TestAppDbContext PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main Bank)
+
 add_test(NAME TestModel COMMAND TestModel)
+add_test(NAME TestAppDbContext COMMAND TestAppDbContext)

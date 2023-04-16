@@ -7,7 +7,7 @@
     <balances>
         <balance>
             <balance_type>KRW</balance_type>
-            <balance>15000</balance>
+            <amount>15000</amount>
         </balance>
     </balances>
     <payments>

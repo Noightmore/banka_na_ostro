@@ -4,8 +4,8 @@
 int main()
 {
         auto *context = new bank::data::ApplicationDbContext();
+        bank::data::models::UserAccount user = context->loadUserFromDatabase_ByAccountId(3);
 
-        context->loadUserFromDatabase_ByAccountId(1);
 
         return 0;
 }

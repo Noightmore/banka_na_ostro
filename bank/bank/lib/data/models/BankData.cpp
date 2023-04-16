@@ -74,6 +74,19 @@ namespace bank::data::models
         this->currentExchangeRates->clear();
     }
 
+    UserAccount& BankData::getLoggedInUserAccount_ById(unsigned int id)
+    {
+            for(auto user : *loggedInUsers)
+            {
+                    if(id == user->getId())
+                    {
+                            return *user;
+                    }
+            }
+    }
+
+
+
 //    std::string &BankData::getLoggedInUserInJsonFormat_ById(unsigned int id)
 //    {
 //            for (auto user : *loggedInUsers)
