@@ -30,20 +30,20 @@ jobs:
         # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
         run: | 
           cd bank
-          cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+          cmake -B ${{github.workspace}}/bank/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
       - name: Build Bank
         # Build your program with the given configuration
-        run: cmake --build ${{github.workspace}}/build/ --config ${{env.BUILD_TYPE}}
+        run: cmake --build ${{github.workspace}}/bank/build/ --config ${{env.BUILD_TYPE}}
 
       - name: Test Bank
-        working-directory: ${{github.workspace}}/build/
+        working-directory: ${{github.workspace}}/bank/build/
         # Execute tests defined by the CMake configuration.
         # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
         run: ctest -C --output-on-failure  ${{env.BUILD_TYPE}}
 
       - name: Compute Test Coverage
-        working-directory: ${{github.workspace}}/build/
+        working-directory: ${{github.workspace}}/bank/build/
         run: |
           sudo chmod +x ../bank/scripts/compute_test_coverage.sh
           /bin/bash ../bank/scripts/compute_test_coverage.sh
