@@ -86,7 +86,7 @@ find_package(GTest CONFIG REQUIRED)
 #include_directories(${GTEST_INCLUDE_DIRS})
 
 add_executable(BankApp.fcgi main.cpp)
-target_link_libraries(BankApp.cgi PRIVATE Bank)
+target_link_libraries(BankApp.fcgi PRIVATE Bank)
 
 add_executable(TestModel tests/TestModel.cpp)
 target_link_libraries(TestModel PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main Bank)
