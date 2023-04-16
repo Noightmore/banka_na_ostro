@@ -3,10 +3,10 @@
 function ubuntu_install_web_server()
 {
   # web server
-  sudo apt install -y apache2 libapache2-mod-fastcgi
+  sudo apt install -y apache2 libapache2-mod-fcgid
   sudo systemctl start apache2
   sudo systemctl enable apache2
-  sudo a2enmod fastcgi
+  sudo a2enmod fcgid
 
   sudo mkdir -p /var/www/bank
   sudo mkdir -p /var/www/db
@@ -14,7 +14,7 @@ function ubuntu_install_web_server()
   sudo a2ensite bank.conf
   sudo chmod ugo+x build/BankApp.fcgi
   sudo cp build/BankApp.fcgi /var/www/bank/BankApp.fcgi
-  sudo ugo+rw db/*.xml
+  sudo chmod ugo+rw db/*.xml
   sudo cp db/*.xml /var/www/db
   sudo systemctl restart apache2
 
