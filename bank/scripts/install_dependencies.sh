@@ -5,7 +5,7 @@ function ubuntu_install_deps()
   # install dependencies
   echo "Installing dependencies"
   sudo apt update
-  # essential tools
+  # essential tools - missing obvious ones like c++ compiler and cmake
   sudo apt install -y zip unzip build-essential pkg-config libpthread-stubs0-dev lcov libxml2
 
   # download and unpack vcpkg

@@ -17,7 +17,7 @@ function ubuntu_install_web_server()
   sudo chmod ugo+rw db/*.xml
   sudo cp db/*.xml /var/www/db
   sudo systemctl restart apache2
-
+  sudo systemctl reload apache2
 }
 
 function main()
