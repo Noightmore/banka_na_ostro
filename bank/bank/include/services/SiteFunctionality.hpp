@@ -23,11 +23,12 @@ namespace bank::services
 
                 virtual const AuthStatus& authorizeUserLogin_ByAccountIdAndPassword(unsigned int id,
                                                                                     std::string& password) = 0;
-
                 virtual const AuthStatus& verifyUserLogin_ByEmail(std::string& email) = 0;
 
         public:
                 virtual void run() = 0;
+
+                virtual void startup() = 0;
     };
 }
 

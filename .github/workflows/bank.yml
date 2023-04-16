@@ -47,3 +47,9 @@ jobs:
         run: |
           sudo chmod +x ../bank/scripts/compute_test_coverage.sh
           /bin/bash ../bank/scripts/compute_test_coverage.sh
+
+      - name: Install Bank As WebApp
+        working-directory: ${{github.workspace}}
+        run: |
+          sudo chmod +x bank/scripts/install_web_app.sh
+          /bin/bash bank/scripts/install_web_app.sh

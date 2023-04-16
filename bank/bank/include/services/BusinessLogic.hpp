@@ -12,20 +12,25 @@ namespace bank::services
                 data::ApplicationDbContext* database;
                 std::string host_ip_address;
                 //const std::string default_error_message = "error error";
-        public:
-                BusinessLogic();
-                ~BusinessLogic();
-
-                void run() override;
 
                 void fetchHostIpAddress() override;
 
                 const data::models::UserAccount& getUserAccount_ById(unsigned int id) override;
 
                 const AuthStatus& authorizeUserLogin_ByAccountIdAndPassword(unsigned int id,
-                                                                            std::string& password) override;
+                                                                    std::string& password) override;
 
                 const AuthStatus& verifyUserLogin_ByEmail(std::string& email) override;
+
+        public:
+                BusinessLogic();
+                ~BusinessLogic();
+
+                void startup() override;
+
+                void run() override;
+
+
 
 
 

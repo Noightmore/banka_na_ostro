@@ -1,17 +1,15 @@
 #ifndef BANK_LOGINPAGE_HPP
 #define BANK_LOGINPAGE_HPP
 
-#include <string>
-#include <iostream>
 
-#include "include/pages/Shared/PageRoute.hpp"
+#include "include/pages/Shared/Page.hpp"
 
 namespace bank::pages
 {
-    class LoginPage
+    class LoginPage : public Page
     {
         public:
-                static void generateLoginPage(std::string& hostIpAddress);
+                void generatePage(std::string& hostIpAddress, std::string& message) override;
     };
 }
 

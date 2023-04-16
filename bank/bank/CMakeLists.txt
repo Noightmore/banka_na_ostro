@@ -18,7 +18,14 @@ add_library(Bank STATIC
         lib/data/models/ExchangeRate.cpp
         include/data/models/ExchangeRate.hpp
         include/data/ApplicationDbContext.hpp
-        lib/data/ApplicationDbContext.cpp include/pages/LoginPage.hpp lib/pages/LoginPage.cpp include/services/BusinessLogic.hpp include/services/AuthStatus.h include/pages/Shared/PageRoute.hpp)
+        lib/data/ApplicationDbContext.cpp
+        include/pages/LoginPage.hpp
+        lib/pages/LoginPage.cpp
+        include/services/BusinessLogic.hpp
+        include/services/AuthStatus.h
+        include/pages/Shared/Page.hpp
+        include/pages/ErrorPage.hpp
+        lib/pages/ErrorPage.cpp)
 
 # Set include directories
 target_include_directories(Bank PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

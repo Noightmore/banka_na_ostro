@@ -3,7 +3,7 @@
 namespace bank::pages
 {
 
-    void LoginPage::generateLoginPage(std::string &hostIpAddress)
+    void LoginPage::generatePage(std::string &hostIpAddress, std::string& message)
     {
             std::cout << "Content-Type: text/html\n\n";
             std::cout << "<html lang=\"en\">\n";

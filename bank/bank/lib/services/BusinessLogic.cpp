@@ -14,9 +14,15 @@ namespace bank::services
         delete this->database;
     }
 
+    void BusinessLogic::startup()
+    {
+        // put startup code here - code that runs only once on the site start
+        this->fetchHostIpAddress();
+    }
+
     void BusinessLogic::run()
     {
-
+        // put code here that runs every time the site is accessed via http request
     }
 
     void services::BusinessLogic::fetchHostIpAddress()

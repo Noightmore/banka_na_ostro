@@ -7,6 +7,7 @@ function ubuntu_install_deps()
   sudo apt update
   # essential tools
   sudo apt install -y zip unzip build-essential pkg-config libpthread-stubs0-dev lcov libxml2
+
   # download and unpack vcpkg
   wget -qO vcpkg.tar.gz https://github.com/microsoft/vcpkg/archive/master.tar.gz
   sudo mkdir /opt/vcpkg
