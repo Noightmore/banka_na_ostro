@@ -24,3 +24,5 @@ function test_site_visit()
     cat /var/log/apache2/error.log
   fi
 }
+
+test_site_visit
