@@ -58,4 +58,4 @@ jobs:
         working-directory: ${{github.workspace}}/bank
         run: |
           sudo chmod +x tests/test_http_get.sh
-          /bin/bash scripts/test_http_get.sh
+          /bin/bash tests/test_http_get.sh
