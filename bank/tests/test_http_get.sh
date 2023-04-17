@@ -8,7 +8,7 @@ function mock_site_visit()
   #ip=$(ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
   #ip=$(curl ifconfig.me > /dev/null)
   #echo "IP: $ip"
-  curl -s -o /dev/null -w "%{http_code}" http://localhost/BankApp.fcgi
+  curl -s -o /dev/null -w "%{http_code}" http://localhost/bank/BankApp.fcgi
 }
 
 function test_site_visit()
@@ -17,7 +17,7 @@ function test_site_visit()
   if [[ $response == "200" ]]; then
     echo "Test passed"
     # download and print the website to the console
-    wget http://localhost/BankApp.fcgi
+    wget http://localhost/bank/BankApp.fcgi
     cat index.html
   else
     echo "Test failed with response: $response"
