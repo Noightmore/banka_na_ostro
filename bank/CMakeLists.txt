@@ -101,13 +101,6 @@ set(CMAKE_PREFIX_PATH "/usr/local/share/vcpkg/packages/gtest_x64-linux")
 #include("${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
 #vcpkg_install_packages(${VCPKG_PACKAGES})
 
-# fcgi lib
-find_package(FCGI REQUIRED)
-if(FCGI_FOUND)
-    include_directories(${FCGI_INCLUDE_DIR})
-    target_link_libraries(your_executable ${FCGI_LIBRARIES})
-endif()
-
 # load already installed packages
 find_package(GTest CONFIG REQUIRED)
 
