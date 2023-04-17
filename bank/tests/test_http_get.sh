@@ -18,7 +18,7 @@ function test_site_visit()
     echo "Test passed"
     # download and print the website to the console
     wget http://localhost
-    cat BankApp.fcgi
+    cat index.html
   else
     echo "Test failed with response: $response"
     cat /var/log/apache2/error.log
