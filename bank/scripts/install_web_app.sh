@@ -13,7 +13,7 @@ function ubuntu_install_web_server()
   sudo cp configs/ubuntu_apache.conf /etc/apache2/sites-available/bank.conf
   sudo a2ensite bank.conf
   sudo cp build/BankApp.fcgi /var/www/html/BankApp.fcgi
-  sudo chmod +x /var/www/html/BankApp.fcgi
+  sudo chmod a+x /var/www/html/BankApp.fcgi
   sudo chmod ugo+rw db/*.xml
   sudo cp db/*.xml /var/www/db
   sudo systemctl restart apache2
