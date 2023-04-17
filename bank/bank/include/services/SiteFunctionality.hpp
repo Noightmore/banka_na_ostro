@@ -8,6 +8,7 @@
 #include <string>
 #include <cstdlib>
 #include <memory>
+#include <fcgiapp.h>
 
 #include "AuthStatus.h"
 #include "../data/models/UserAccount.hpp"

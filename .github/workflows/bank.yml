@@ -53,3 +53,9 @@ jobs:
         run: |
           sudo chmod +x scripts/install_web_app.sh
           /bin/bash scripts/install_web_app.sh
+
+      - name: Test Bank As WebApp
+        working-directory: ${{github.workspace}}/bank
+        run: |
+          sudo chmod +x tests/test_http_get.sh
+          /bin/bash scripts/test_http_get.sh
