@@ -49,6 +49,7 @@ namespace bank::services
                     std::string ip_address(addr);
                     freeifaddrs(ifap);
                     this->host_ip_address = ip_address;
+                    return;
             }
 
             freeifaddrs(ifap);

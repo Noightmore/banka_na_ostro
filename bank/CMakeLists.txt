@@ -10,14 +10,6 @@ add_subdirectory(bank)
 # this is for test coverage using
 #--coverage -v -fprofile-arcs -ftest-coverage -fprofile-correction
 
-# include libxml2
-execute_process(
-        COMMAND pkg-config --cflags libxml-2.0
-        OUTPUT_VARIABLE LIBXML_CFLAGS
-        OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -v -pipe -std=c++23 -g --coverage ${LIBXML_CFLAGS}")
 #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
 
 # test coverage
@@ -42,6 +34,12 @@ if(EXISTS "/etc/os-release")
     foreach(line ${OS_RELEASE_CONTENTS})
         if(line MATCHES "Ubuntu") # production operating system
             set(VCPKG_ROOT "/usr/local/share/vcpkg")
+            # include libxml2
+            execute_process(
+                    COMMAND pkg-config --cflags libxml-2.0
+                    OUTPUT_VARIABLE LIBXML_CFLAGS
+                    OUTPUT_STRIP_TRAILING_WHITESPACE
+            )
         elseif(line MATCHES "Gentoo") # or any desktop operating system with vcpkg installed using clion
             # Run the `whoami` command
             execute_process(COMMAND whoami
@@ -51,12 +49,36 @@ if(EXISTS "/etc/os-release")
             string(REPLACE "\n" "" OUTPUT "${OUTPUT}")
 
             set(VCPKG_ROOT "/home/${OUTPUT}/.clion-vcpkg/vcpkg")
-        #elseif(line MATCHES "Opensuse")
-            # Do something specific for Debian
+
+            # include libxml2
+            execute_process(
+                    COMMAND pkg-config --cflags libxml-2.0
+                    OUTPUT_VARIABLE LIBXML_CFLAGS
+                    OUTPUT_STRIP_TRAILING_WHITESPACE
+            )
+
+        elseif(line MATCHES "openSUSE Tumbleweed")
+            # Run the `whoami` command
+            execute_process(COMMAND whoami
+                    OUTPUT_VARIABLE OUTPUT
+                    RESULT_VARIABLE RESULT)
+
+            string(REPLACE "\n" "" OUTPUT "${OUTPUT}")
+
+            set(VCPKG_ROOT "/home/${OUTPUT}/.clion-vcpkg/vcpkg")
+
+            # include libxml2
+            execute_process(
+                    COMMAND pkg-config --cflags libxml-2.0
+                    OUTPUT_VARIABLE LIBXML_CFLAGS
+                    OUTPUT_STRIP_TRAILING_WHITESPACE
+            )
         endif()
     endforeach()
 endif()
 
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -v -pipe -std=c++23 -g --coverage ${LIBXML_CFLAGS}")
 
 ## Include vcpkg.cmake
 if(EXISTS "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
