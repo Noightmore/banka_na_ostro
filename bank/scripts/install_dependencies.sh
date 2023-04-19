@@ -6,7 +6,7 @@ function ubuntu_install_deps()
   echo "Installing dependencies"
   sudo apt update
   # essential tools - missing obvious ones like c++ compiler and cmake
-  sudo apt install -y zip unzip build-essential pkg-config libpthread-stubs0-dev lcov libxml2 libfcgi-dev
+  sudo apt install -y zip unzip build-essential pkg-config libpthread-stubs0-dev lcov libxml2 libfcgi-dev gcc cmake
 
   # download and unpack vcpkg
   wget -qO vcpkg.tar.gz https://github.com/microsoft/vcpkg/archive/master.tar.gz
@@ -15,7 +15,8 @@ function ubuntu_install_deps()
   # install vcpkg
   sudo /opt/vcpkg/bootstrap-vcpkg.sh
   sudo ln -s /opt/vcpkg/vcpkg /usr/local/bin/vcpkg
-  # todo: link the vcpkg folder libraries to /usr/local/share/vcpkg (default vcpkg folder on ubuntu)
+  # link the vcpkg folder libraries to /usr/local/share/vcpkg (default vcpkg folder on ubuntu)
+  #
 
   # verify whether dependencies are installed
   ubuntu_verify_deps
