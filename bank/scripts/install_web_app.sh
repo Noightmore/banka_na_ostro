@@ -3,39 +3,39 @@
 function ubuntu_install_web_server()
 {
   # web server
-#  sudo apt install -y apache2 libapache2-mod-fcgid
-#  sudo systemctl start apache2
-#  sudo systemctl enable apache2
-#  sudo a2enmod fcgid
-#
-#  sudo mkdir -p /var/www/html
-#  sudo mkdir -p /var/www/db
-#  sudo cp configs/ubuntu_apache.conf /etc/apache2/conf.d/bank.conf
-#  sudo a2ensite bank.conf
-#  sudo cp build/BankApp.fcgi /var/www/html/BankApp.fcgi
-#  sudo chmod -R 755 /var/www/html/BankApp.fcgi
-#  ls -l /var/www/html/BankApp.fcgi
-#  sudo chmod -R 755 db/*.xml
-#  sudo cp db/*.xml /var/www/db
-#  sudo systemctl restart apache2
-#  sudo systemctl reload apache2
+  sudo apt install -y apache2 libapache2-mod-fcgid
+  sudo systemctl start apache2
+  sudo systemctl enable apache2
+  sudo a2enmod fcgid
+
+  sudo mkdir -p /var/www/html
+  sudo mkdir -p /var/www/db
+  sudo cp configs/ubuntu_apache.conf /etc/apache2/conf.d/bank.conf
+  sudo a2ensite bank.conf
+  sudo mv build/BankApp.fcgi /var/www/html/BankApp.fcgi
+  sudo chmod -R 755 /var/www/html/BankApp.fcgi
+  ls -l /var/www/html/BankApp.fcgi
+  sudo chmod -R 755 db/*.xml
+  sudo cp db/*.xml /var/www/db
+  sudo systemctl restart apache2
+  sudo systemctl reload apache2
 
   # nginx
-  sudo apt update
-  sudo apt install -y nginx libfcgi-dev g++ make
-  sudo hostnamectl set-hostname bank.com
-  sudo mkdir /var/www/bank.com
-  sudo mkdir -p /var/www/db
-  sudo cp configs/ubuntu_nginx.com /etc/nginx/sites-available/bank.conf
-  sudo cp build/BankApp.fcgi /var/www/bank/index.fcgi
-  sudo systemctl enable fcgiwrap
-  sudo systemctl start fcgiwrap
-  sudo systemctl enable nginx
-  sudo systemctl start nginx
-
-  sudo ln -s /etc/nginx/sites-available/bank.conf /etc/nginx/sites-enabled/
-
-  sudo systemctl restart nginx
+#  sudo apt update
+#  sudo apt install -y nginx libfcgi-dev g++ make
+#  sudo hostnamectl set-hostname example.com
+#  sudo mkdir /var/www/bank.com
+#  sudo mkdir -p /var/www/db
+#  sudo cp configs/ubuntu_nginx.com /etc/nginx/sites-available/bank.conf
+#  sudo cp build/BankApp.fcgi /var/www/bank/index.fcgi
+#  sudo systemctl enable fcgiwrap
+#  sudo systemctl start fcgiwrap
+#  sudo systemctl enable nginx
+#  sudo systemctl start nginx
+#
+#  sudo ln -s /etc/nginx/sites-available/bank.conf /etc/nginx/sites-enabled/
+#
+#  sudo systemctl restart nginx
 }
 
 function main()
