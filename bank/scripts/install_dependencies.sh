@@ -1,5 +1,4 @@
-#!/bin/bash
-
+##!/bin/bash
 
 function ubuntu_install_deps()
 {
