@@ -22,7 +22,7 @@ function test_site_visit()
   else
     echo "Test failed with response: $response"
     cat /var/log/apache2/error.log
-    journalctl -b | grep “suexec” | tail -10 ;
+    journalctl -b | grep "suexec" | tail -10 ;
   fi
 }
 
