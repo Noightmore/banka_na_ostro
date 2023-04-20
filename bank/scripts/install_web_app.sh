@@ -2,23 +2,37 @@
 
 function ubuntu_install_web_server()
 {
-  # web server
-  sudo apt install -y apache2 libapache2-mod-fcgid
-  sudo systemctl start apache2
-  sudo systemctl enable apache2
-  sudo a2enmod fcgid
 
-  sudo mkdir -p /var/www/html
-  sudo mkdir -p /var/www/db
-  sudo cp configs/ubuntu_apache.conf /etc/apache2/conf.d/bank.conf
-  sudo a2ensite bank.conf
-  sudo mv build/BankApp.fcgi /var/www/html/BankApp.fcgi
-  sudo chmod -R 755 /var/www/html/BankApp.fcgi
-  ls -l /var/www/html/BankApp.fcgi
-  sudo chmod -R 755 db/*.xml
-  sudo cp db/*.xml /var/www/db
-  sudo systemctl restart apache2
-  sudo systemctl reload apache2
+  echo "Configuring apache"
+  sudo apt install -y apache2 libapache2-mod-fcgid
+  sudo a2enmod cgi
+  sudo a2enmod fcgid
+  sudo mkdir -p /usr/lib/cgi-bin/
+  sudo mkdir -p /usr/lib/db
+  sudo cp db/*.xml /usr/lib/db
+  sudo cp ./build/BankApp.fcgi /usr/lib/cgi-bin/
+  sudo chmod +x /usr/lib/cgi-bin/BankApp.fcgi
+  sudo mkdir -p /etc/apache2/conf.d/
+  sudo cp ./server_configs/ubuntu_apache.conf /etc/apache2/conf.d/
+  sudo service apache2 restart
+
+  # web server
+#  sudo apt install -y apache2 libapache2-mod-fcgid
+#  sudo systemctl start apache2
+#  sudo systemctl enable apache2
+#  sudo a2enmod fcgid
+#
+#  sudo mkdir -p /var/www/html
+#  sudo mkdir -p /var/www/db
+#  sudo cp configs/ubuntu_apache.conf /etc/apache2/conf.d/bank.conf
+#  sudo a2ensite bank.conf
+#  sudo mv build/BankApp.fcgi /var/www/html/BankApp.fcgi
+#  sudo chmod -R 755 /var/www/html/BankApp.fcgi
+#  ls -l /var/www/html/BankApp.fcgi
+#  sudo chmod -R 755 db/*.xml
+#  sudo cp db/*.xml /var/www/db
+#  sudo systemctl restart apache2
+#  sudo systemctl reload apache2
 
   # nginx
 #  sudo apt update
