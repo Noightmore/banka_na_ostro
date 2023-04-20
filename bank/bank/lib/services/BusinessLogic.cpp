@@ -29,6 +29,9 @@ namespace bank::services
         FCGX_InitRequest(&request, 0, 0);
         pages::LoginPage loginPage;
         pages::ErrorPage errorPage;
+        loginPage = pages::LoginPage();
+        errorPage = pages::ErrorPage();
+        std::string message = "";
 
         // put code here that runs every time the site is accessed via http request
         while (FCGX_Accept_r(&request) == 0)
@@ -36,19 +39,19 @@ namespace bank::services
                 const char* method = FCGX_GetParam("REQUEST_METHOD", request.envp);
                 const char* uri = FCGX_GetParam("REQUEST_URI", request.envp);
 
-                std::string message = "";
                 if (method && std::string(method) == "GET" && uri && std::string(uri) == "/")
                 {
-                        loginPage = pages::LoginPage();
+
                         loginPage.generatePage(this->host_ip_address, message);
                 }
                 else
                 {
                         message = "Error: 404 - Page not found.";
-                        errorPage = pages::ErrorPage();
                         errorPage.generatePage(this->host_ip_address, message);
                 }
         }
+        message = "Error: 404 - Page not found.";
+        errorPage.generatePage(this->host_ip_address, message);
 //        std::string message = "";
 //        pages::LoginPage loginPage;
 //        loginPage = pages::LoginPage();
