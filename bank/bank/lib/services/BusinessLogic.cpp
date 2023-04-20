@@ -24,7 +24,7 @@ namespace bank::services
 
     void BusinessLogic::run()
     {
-        /*FCGX_Request request;
+        FCGX_Request request;
         FCGX_Init();
         FCGX_InitRequest(&request, 0, 0);
         pages::LoginPage loginPage;
@@ -36,7 +36,7 @@ namespace bank::services
                 const char* method = FCGX_GetParam("REQUEST_METHOD", request.envp);
                 const char* uri = FCGX_GetParam("REQUEST_URI", request.envp);
 
-                std::string message;
+                std::string message = "";
                 if (method && std::string(method) == "GET" && uri && std::string(uri) == "/")
                 {
                         loginPage = pages::LoginPage();
@@ -48,11 +48,11 @@ namespace bank::services
                         errorPage = pages::ErrorPage();
                         errorPage.generatePage(this->host_ip_address, message);
                 }
-        }*/
-        std::string message = "";
-        pages::LoginPage loginPage;
-        loginPage = pages::LoginPage();
-        loginPage.generatePage(this->host_ip_address, message);
+        }
+//        std::string message = "";
+//        pages::LoginPage loginPage;
+//        loginPage = pages::LoginPage();
+//        loginPage.generatePage(this->host_ip_address, message);
     }
 
     void services::BusinessLogic::fetchHostIpAddress()
