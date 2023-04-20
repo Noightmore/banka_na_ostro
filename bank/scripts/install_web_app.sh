@@ -13,7 +13,7 @@ function ubuntu_install_web_server()
   sudo cp ./build/BankApp.fcgi /usr/lib/cgi-bin/
   sudo chmod 755 /usr/lib/cgi-bin/BankApp.fcgi
   sudo mkdir -p /etc/apache2/conf.d/
-  sudo cp ./server_configs/ubuntu_apache.conf /etc/apache2/conf.d/
+  sudo cp ./configs/ubuntu_apache.conf /etc/apache2/conf.d/
   sudo service apache2 restart
 
   # web server
