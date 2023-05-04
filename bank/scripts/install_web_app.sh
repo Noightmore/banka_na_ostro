@@ -14,7 +14,8 @@ function ubuntu_install_web_server()
   sudo chmod 755 /usr/lib/cgi-bin/BankApp.fcgi
   sudo mkdir -p /etc/apache2/conf.d/
   sudo cp ./configs/ubuntu_apache.conf /etc/apache2/conf.d/
-  sudo service apache2 restart
+  #sudo service apache2 restart
+  sudo systemctl restart apache2
 
   # web server
 #  sudo apt install -y apache2 libapache2-mod-fcgid
