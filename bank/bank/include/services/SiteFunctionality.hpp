@@ -10,6 +10,8 @@
 #include <memory>
 #include <fcgio.h>
 #include <fcgiapp.h>
+#include <thread>
+#include <fstream>
 
 #include "AuthStatus.h"
 #include "../data/models/UserAccount.hpp"
