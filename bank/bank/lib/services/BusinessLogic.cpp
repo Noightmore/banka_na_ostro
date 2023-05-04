@@ -27,7 +27,7 @@ namespace bank::services
     void BusinessLogic::run()
     {
 
-        CGX_Request request;
+        FCGX_Request request;
         FCGX_Init();
         FCGX_InitRequest(&request, 0, 0);
 
