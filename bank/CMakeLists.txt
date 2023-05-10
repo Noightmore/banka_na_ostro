@@ -107,8 +107,8 @@ find_package(GTest CONFIG REQUIRED)
 #find_package(LibXml2 REQUIRED)
 #include_directories(${GTEST_INCLUDE_DIRS})
 
-add_executable(BankApp.cgi main.cpp)
-target_link_libraries(BankApp.cgi PRIVATE Bank)
+add_executable(BankApp.fcgi main.cpp)
+target_link_libraries(BankApp.fcgi PRIVATE Bank)
 
 add_executable(TestModel tests/TestModel.cpp)
 target_link_libraries(TestModel PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main Bank)
