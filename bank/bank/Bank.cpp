@@ -6,7 +6,7 @@ namespace bank
 {
     void Bank::startServer()
     {
-        std::cout << "Starting server..." << std::endl;
+        //std::cout << "Starting server..." << std::endl;
         services::SiteFunctionality* site = new services::BusinessLogic();
         site->startup();
         site->run();
