@@ -4,9 +4,10 @@ function ubuntu_install_web_server()
 {
 
   echo "Configuring apache"
-  sudo apt install -y apache2 libapache2-mod-fcgid
+  sudo apt install -y apache2 libapache2-mod-fcgid apache2-suexec-custom
   sudo a2enmod cgi
   sudo a2enmod fcgid
+  sudo a2enmod suexec
   sudo mkdir -p /usr/lib/cgi-bin/
   sudo mkdir -p /usr/lib/db
   sudo cp db/*.xml /usr/lib/db
