@@ -18,6 +18,21 @@ function ubuntu_install_deps()
   # link the vcpkg folder libraries to /usr/local/share/vcpkg (default vcpkg folder on ubuntu)
   #
 
+#  # install cppcms (compilation included)
+#  # this takes insane amount of time
+#  # installation process taken from the official website: http://cppcms.com/wikipp/en/page/cppcms_1x_build
+#  # only working solution
+#  git clone git clone https://github.com/artyom-beilis/cppcms.git cppcms
+#  cd cppcms
+#  mkdir build
+#  cd build
+#  cmake .. -DCMAKE_BUILD_TYPE=Release -DDISABLE_SHARED=ON -DCMAKE_CXX_FLAGS="-Wno-deprecated-declarations"
+#  make -j "$(nproc)"
+#  sudo make install
+#
+#  # update ld indexing
+#  sudo ldconfig
+
   # verify whether dependencies are installed
   ubuntu_verify_deps
   ubuntu_clean_up

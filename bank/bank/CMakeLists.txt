@@ -34,6 +34,8 @@ include_directories(/usr/include/fastcgi)
 target_include_directories(Bank PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 find_package(LibXml2 REQUIRED)
+# not needed if installed via the official method
+#find_package(cppcms REQUIRED)
 
 # Set link libraries
 target_link_libraries(Bank PRIVATE LibXml2::LibXml2 fcgi)

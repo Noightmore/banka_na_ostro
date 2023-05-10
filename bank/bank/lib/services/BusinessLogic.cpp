@@ -3,9 +3,9 @@
 #include "include/pages/LoginPage.hpp"
 #include "include/pages/ErrorPage.hpp"
 
-
 namespace bank::services
 {
+
     BusinessLogic::BusinessLogic()
     {
         this->database = new data::ApplicationDbContext();
@@ -22,56 +22,48 @@ namespace bank::services
         this->fetchHostIpAddress();
     }
 
-    // notes: all accounts must use czk, if we add new payment to the account,
+    // notes: all accounts must use czk if we add new payment to the account,
     // and it is not in czk or in any currency the user has, we will convert it to czk
     void BusinessLogic::run()
     {
 
-        FCGX_Request request;
-        FCGX_Init();
-        FCGX_InitRequest(&request, 0, 0);
+            FCGX_Request request;
+            FCGX_Init();
+            FCGX_InitRequest(&request, 0, 0);
 
-        while (FCGX_Accept_r(&request) == 0)
-        {
-            std::cout << "Content-type: text/html\r\n\r\n";
-            std::cout << "<html><head><title>FastCGI C++ Example</title></head>";
-            std::cout << "<body><h1>Hello, world!</h1></body></html>";
+            while (FCGX_Accept_r(&request) == 0) {
+                    std::cout << "Content-type: text/html\r\n\r\n";
+                    std::cout << "<html><head><title>FastCGI C++ Example</title></head>";
+                    std::cout << "<body><h1>Hello, world!</h1></body></html>";
 
-            FCGX_Finish_r(&request);
-        }
-//        FCGX_Request request;
-//        FCGX_Init();
-//        FCGX_InitRequest(&request, 0, 0);
-//        pages::LoginPage loginPage;
-//        pages::ErrorPage errorPage;
-//        loginPage = pages::LoginPage();
-//        errorPage = pages::ErrorPage();
-//        std::string message = "";
+                    FCGX_Finish_r(&request);
+            }
+
+
+
+            // Get the request method from the environment
+//            char *requestMethod = getenv("REQUEST_METHOD");
 //
-//        // put code here that runs every time the site is accessed via http request
-//        while (FCGX_Accept_r(&request) == 0)
-//        {
-//                const char* method = FCGX_GetParam("REQUEST_METHOD", request.envp);
-//                const char* uri = FCGX_GetParam("REQUEST_URI", request.envp);
+//            // Parse the query string to get the parameters
+//            char *useId = NULL;
+//            char *verified = NULL;
 //
-//                if (method && std::string(method) == "GET" && uri && std::string(uri) == "/")
-//                {
-//
-//                        loginPage.generatePage(this->host_ip_address, message);
-//                }
-//                else
-//                {
-//                        message = "Error: 404 - Page not found.";
-//                        errorPage.generatePage(this->host_ip_address, message);
-//                }
-//        }
-//        message = "Error: 404 - Page not found.";
-//        errorPage.generatePage(this->host_ip_address, message);
-//        std::string message = "";
-//        pages::LoginPage loginPage;
-//        loginPage = pages::LoginPage();
-//        loginPage.generatePage(this->host_ip_address, message);
+//            // Check if the request method is GET or POST
+//            if (strcmp(requestMethod, "GET") == 0)
+//            {
+//                    std::cout << "HTTP GET request received" << std::endl;
+//            }
+//            else if (strcmp(requestMethod, "POST") == 0)
+//            {
+//                    std::cout << "HTTP POST request received" << std::endl;
+//            }
+//            else
+//            {
+//                    std::cerr << "Unknown HTTP request method" << std::endl;
+//            }
     }
+
+
 
     void services::BusinessLogic::fetchHostIpAddress()
     {
