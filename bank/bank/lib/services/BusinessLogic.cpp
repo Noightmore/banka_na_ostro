@@ -26,19 +26,27 @@ namespace bank::services
     // and it is not in czk or in any currency the user has, we will convert it to czk
     void BusinessLogic::run()
     {
+            std::string message = "";
+            pages::LoginPage loginPage;
+            char* requestMethod = getenv("REQUEST_METHOD");
 
-            FCGX_Request request;
-            FCGX_Init();
-            FCGX_InitRequest(&request, 0, 0);
-
-            while (FCGX_Accept_r(&request) == 0) {
-                    std::cout << "Content-type: text/html\r\n\r\n";
-                    std::cout << "<html><head><title>FastCGI C++ Example</title></head>";
-                    std::cout << "<body><h1>Hello, world!</h1></body></html>";
-
-                    FCGX_Finish_r(&request);
+            if (requestMethod == nullptr)
+            {
+                    std::cerr << "Error getting request method.\n";
+                    return;
             }
 
+            if (std::strcmp(requestMethod, "GET") == 0)
+            {
+                    loginPage.generatePage(this->host_ip_address, message);
+                    return;
+            }
+
+            else if (std::strcmp(requestMethod, "POST") == 0)
+            {
+
+                    return;
+            }
     }
 
 
