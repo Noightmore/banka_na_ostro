@@ -5,8 +5,9 @@ function ubuntu_install_deps()
   # install dependencies
   echo "Installing dependencies"
   sudo apt update
-  # essential tools
-  sudo apt install -y zip unzip build-essential pkg-config libpthread-stubs0-dev lcov libxml2
+  # essential tools - missing obvious ones like c++ compiler and cmake
+  sudo apt install -y zip unzip build-essential pkg-config libpthread-stubs0-dev lcov libxml2 libfcgi-dev gcc cmake
+
   # download and unpack vcpkg
   wget -qO vcpkg.tar.gz https://github.com/microsoft/vcpkg/archive/master.tar.gz
   sudo mkdir /opt/vcpkg
@@ -14,7 +15,23 @@ function ubuntu_install_deps()
   # install vcpkg
   sudo /opt/vcpkg/bootstrap-vcpkg.sh
   sudo ln -s /opt/vcpkg/vcpkg /usr/local/bin/vcpkg
-  # todo: link the vcpkg folder libraries to /usr/local/share/vcpkg (default vcpkg folder on ubuntu)
+  # link the vcpkg folder libraries to /usr/local/share/vcpkg (default vcpkg folder on ubuntu)
+  #
+
+#  # install cppcms (compilation included)
+#  # this takes insane amount of time
+#  # installation process taken from the official website: http://cppcms.com/wikipp/en/page/cppcms_1x_build
+#  # only working solution
+#  git clone git clone https://github.com/artyom-beilis/cppcms.git cppcms
+#  cd cppcms
+#  mkdir build
+#  cd build
+#  cmake .. -DCMAKE_BUILD_TYPE=Release -DDISABLE_SHARED=ON -DCMAKE_CXX_FLAGS="-Wno-deprecated-declarations"
+#  make -j "$(nproc)"
+#  sudo make install
+#
+#  # update ld indexing
+#  sudo ldconfig
 
   # verify whether dependencies are installed
   ubuntu_verify_deps

@@ -18,14 +18,26 @@ add_library(Bank STATIC
         lib/data/models/ExchangeRate.cpp
         include/data/models/ExchangeRate.hpp
         include/data/ApplicationDbContext.hpp
-        lib/data/ApplicationDbContext.cpp)
+        lib/data/ApplicationDbContext.cpp
+        include/pages/LoginPage.hpp
+        lib/pages/LoginPage.cpp
+        include/services/BusinessLogic.hpp
+        include/services/AuthStatus.h
+        include/pages/Shared/Page.hpp
+        include/pages/ErrorPage.hpp
+        lib/pages/ErrorPage.cpp)
+
+# Add the include directories for libfcgi-dev
+include_directories(/usr/include/fastcgi)
 
 # Set include directories
 target_include_directories(Bank PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 find_package(LibXml2 REQUIRED)
+# not needed if installed via the official method
+#find_package(cppcms REQUIRED)
 
 # Set link libraries
-target_link_libraries(Bank PRIVATE LibXml2::LibXml2)
+target_link_libraries(Bank PRIVATE LibXml2::LibXml2 fcgi)
 # Set library version and API compatibility level
 set_target_properties(Bank PROPERTIES VERSION 1.0 SOVERSION 1)

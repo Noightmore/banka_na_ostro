@@ -13,7 +13,32 @@ namespace bank::data
         delete bankData;
     }
 
-    models::UserAccount& ApplicationDbContext::loadUser_ByAccountId(unsigned int id)
+    const models::UserAccount& ApplicationDbContext::getUserAccountById(unsigned int id)
+    {
+            // check if user has been loaded to memory
+            try
+            {
+                    this->bankData->getLoggedInUserAccount_ById(id);
+            }
+            catch(std::invalid_argument& e)
+            {
+                    // if user has not been loaded to memory, load it from the database
+                    this->loadUserFromDatabase_ByAccountId(id);
+            }
+
+            // try a second time, if loading user fails the user does not exist
+            try
+            {
+                    return this->bankData->getLoggedInUserAccount_ById(id);
+            }
+            catch(std::invalid_argument& e)
+            {
+                    throw std::invalid_argument("User with id " + std::to_string(id) + " does not exist");
+            }
+
+    }
+
+    void ApplicationDbContext::loadUserFromDatabase_ByAccountId(unsigned int id)
     {
             std::string fileName = DB_PATH + std::to_string(id) + DOT_XML;
             char* fileNameChar = new char[fileName.length() + 1];
@@ -33,7 +58,7 @@ namespace bank::data
             this->bankData->addLoggedInUser(user.release());
 
             // returns the user as a reference
-            return this->bankData->getLoggedInUserAccount_ById(id);
+            //return this->bankData->getLoggedInUserAccount_ById(id);
 
     }
 
