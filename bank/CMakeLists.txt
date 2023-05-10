@@ -116,5 +116,6 @@ target_link_libraries(TestModel PRIVATE GTest::gtest GTest::gtest_main GTest::gm
 add_executable(TestAppDbContext tests/TestAppDbContext.cpp)
 target_link_libraries(TestAppDbContext PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main Bank)
 
+
 add_test(NAME TestModel COMMAND TestModel)
 add_test(NAME TestAppDbContext COMMAND TestAppDbContext)
