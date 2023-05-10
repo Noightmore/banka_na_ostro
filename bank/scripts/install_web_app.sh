@@ -4,15 +4,14 @@ function ubuntu_install_web_server()
 {
 
   echo "Configuring apache"
-  sudo apt install -y apache2 libapache2-mod-fcgid apache2-suexec-custom
+  sudo apt install -y apache2 libapache2-mod-fcgid
   sudo a2enmod cgi
   sudo a2enmod fcgid
-  sudo a2enmod suexec
   sudo mkdir -p /usr/lib/cgi-bin/
   sudo mkdir -p /usr/lib/db
   sudo cp db/*.xml /usr/lib/db
-  sudo cp ./build/BankApp.fcgi /usr/lib/cgi-bin/
-  sudo chmod 755 /usr/lib/cgi-bin/BankApp.fcgi
+  sudo cp ./build/BankApp.cgi /usr/lib/cgi-bin/
+  sudo chmod 755 /usr/lib/cgi-bin/BankApp.cgi
   sudo mkdir -p /etc/apache2/conf.d/
   sudo cp ./configs/ubuntu_apache.conf /etc/apache2/conf.d/
   #sudo service apache2 restart

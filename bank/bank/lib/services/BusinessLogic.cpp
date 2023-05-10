@@ -26,41 +26,28 @@ namespace bank::services
     // and it is not in czk or in any currency the user has, we will convert it to czk
     void BusinessLogic::run()
     {
+            // Get the request method from the environment
+            char *requestMethod = getenv("REQUEST_METHOD");
 
-            FCGX_Request request;
-            FCGX_Init();
-            FCGX_InitRequest(&request, 0, 0);
+            // Parse the query string to get the parameters
+            char *useId = NULL;
+            char *verified = NULL;
 
-            while (FCGX_Accept_r(&request) == 0) {
+            // Check if the request method is GET or POST
+            if (strcmp(requestMethod, "GET") == 0)
+            {
                     std::cout << "Content-type: text/html\r\n\r\n";
                     std::cout << "<html><head><title>FastCGI C++ Example</title></head>";
                     std::cout << "<body><h1>Hello, world!</h1></body></html>";
-
-                    FCGX_Finish_r(&request);
             }
-
-
-
-            // Get the request method from the environment
-//            char *requestMethod = getenv("REQUEST_METHOD");
-//
-//            // Parse the query string to get the parameters
-//            char *useId = NULL;
-//            char *verified = NULL;
-//
-//            // Check if the request method is GET or POST
-//            if (strcmp(requestMethod, "GET") == 0)
-//            {
-//                    std::cout << "HTTP GET request received" << std::endl;
-//            }
-//            else if (strcmp(requestMethod, "POST") == 0)
-//            {
-//                    std::cout << "HTTP POST request received" << std::endl;
-//            }
-//            else
-//            {
-//                    std::cerr << "Unknown HTTP request method" << std::endl;
-//            }
+            else if (strcmp(requestMethod, "POST") == 0)
+            {
+                    std::cout << "HTTP POST request received" << std::endl;
+            }
+            else
+            {
+                    std::cerr << "Unknown HTTP request method" << std::endl;
+            }
     }
 
 
