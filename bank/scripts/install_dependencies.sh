@@ -70,7 +70,7 @@ function ubuntu_install_vcpkg_libs()
   echo "Configuring vcpkg"
   /usr/local/bin/vcpkg update
   # libxml2
-  /usr/local/bin/vcpkg install gtest cppcms
+  /usr/local/bin/vcpkg install gtest
 }
 
 function main()
