@@ -26,17 +26,10 @@ namespace bank::services
     // and it is not in czk or in any currency the user has, we will convert it to czk
     void BusinessLogic::run()
     {
-            FCGX_Request request;
-            FCGX_Init();
-            FCGX_InitRequest(&request, 0, 0);
 
-            while (FCGX_Accept_r(&request) == 0) {
-                    std::cout << "Content-type: text/html\r\n\r\n";
-                    std::cout << "<html><head><title>FastCGI C++ Example</title></head>";
-                    std::cout << "<body><h1>Hello, world!</h1></body></html>";
-
-                    FCGX_Finish_r(&request);
-            }
+            std::cout << "Content-type: text/html\r\n\r\n";
+            std::cout << "<html><head><title>FastCGI C++ Example</title></head>";
+            std::cout << "<body><h1>Hello, world!</h1></body></html>";
 
     }
 
