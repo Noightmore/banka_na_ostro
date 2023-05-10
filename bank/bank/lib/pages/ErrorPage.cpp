@@ -5,7 +5,7 @@ namespace bank::pages
 
     void ErrorPage::generatePage(std::string &hostIpAddress, std::string &errorMessage)
     {
-            std::cout << "Content-type:text/html\r\n\r\n";
+            //std::cout << "Content-type:text/html\r\n\r\n";
             std::cout << "<!DOCTYPE html>\n";
             std::cout << "<html lang=\"en\">\n";
             std::cout << "<head>\n";

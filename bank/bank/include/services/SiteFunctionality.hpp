@@ -12,6 +12,7 @@
 #include <fcgiapp.h>
 #include <thread>
 #include <fstream>
+#include <curl/curl.h>
 
 #include "AuthStatus.h"
 #include "../data/models/UserAccount.hpp"
@@ -25,9 +26,14 @@ namespace bank::services
 
                 virtual const data::models::UserAccount& getUserAccount_ById(unsigned int id) = 0;
 
-                virtual const AuthStatus& authorizeUserLogin_ByAccountIdAndPassword(unsigned int id,
-                                                                                    std::string& password) = 0;
+                //virtual const AuthStatus& authorizeUserLogin_ByAccountIdAndPassword(unsigned int id,
+                //                                                                   std::string& password) = 0;
+
                 virtual const AuthStatus& verifyUserLogin_ByEmail(std::string& email) = 0;
+
+                virtual void generateRandomPayment_ForAccount(unsigned int id) = 0;
+
+                virtual std::string& getParsedUrl(std::string& query) = 0;
 
         public:
                 virtual void run() = 0;

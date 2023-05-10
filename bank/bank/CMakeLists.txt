@@ -25,7 +25,7 @@ add_library(Bank STATIC
         include/services/AuthStatus.h
         include/pages/Shared/Page.hpp
         include/pages/ErrorPage.hpp
-        lib/pages/ErrorPage.cpp)
+        lib/pages/ErrorPage.cpp include/pages/VerificationNoticePage.hpp lib/pages/VerificationNoticePage.cpp include/pages/UserAccount.h include/pages/UserAccount.cpp)
 
 # Add the include directories for libfcgi-dev
 include_directories(/usr/include/fastcgi)

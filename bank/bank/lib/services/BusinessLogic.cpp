@@ -28,7 +28,21 @@ namespace bank::services
     {
             std::string message = "";
             pages::LoginPage loginPage;
+            pages::ErrorPage errorPage;
+
             char* requestMethod = getenv("REQUEST_METHOD");
+            char* query_string = std::getenv("QUERY_STRING");
+
+            std::cout << "Content-type:text/html\r\n\r\n";
+
+            if (query_string == nullptr)
+            {
+                    std::cout << "No query string provided" << std::endl;
+            }
+
+            std::cout << "Query string: " << query_string << std::endl;
+
+            // TODO: implement query string parser
 
             if (requestMethod == nullptr)
             {
@@ -44,9 +58,11 @@ namespace bank::services
 
             else if (std::strcmp(requestMethod, "POST") == 0)
             {
-
                     return;
             }
+
+            //message = query_string;
+            errorPage.generatePage(this->host_ip_address, message);
     }
 
 

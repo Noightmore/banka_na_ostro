@@ -5,7 +5,7 @@ namespace bank::pages
 
     void LoginPage::generatePage(std::string &hostIpAddress, std::string& message)
     {
-            std::cout << "Content-Type: text/html\n\n";
+            //std::cout << "Content-Type: text/html\n\n";
             std::cout << "<html lang=\"en\">\n";
             std::cout << "<head>\n";
             std::cout << "<meta charset=\"UTF-8\">\n";
@@ -53,8 +53,8 @@ namespace bank::pages
             std::cout << "<h1>Welcome To The Bank</h1>\n";
             std::cout << "<p>Please login</p>\n";
             std::cout << "<form action=\"http://" + hostIpAddress + PAGE_ROUTE + "\" method=\"post\">\n";
-            std::cout << "<label for=\"name\">Name:</label>\n";
-            std::cout << "<input type=\"text\" name=\"name\" id=\"name\">\n";
+            std::cout << "<label for=\"name\">Email:</label>\n";
+            std::cout << "<input type=\"text\" name=\"email\" id=\"email\">\n";
             std::cout << "<label for=\"password\">Password:</label>\n";
             std::cout << "<input type=\"text\" name=\"password\" id=\"password\">\n";
             std::cout << "<input type=\"submit\" value=\"Submit\">\n";
