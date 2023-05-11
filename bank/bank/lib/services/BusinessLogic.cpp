@@ -103,14 +103,19 @@ namespace bank::services
                 return this->database->getUserAccountById(id);
     }
 
-    const AuthStatus &BusinessLogic::authorizeUserLogin_ByAccountIdAndPassword(unsigned int id, std::string& password)
+    const AuthStatus &BusinessLogic::verifyUserLogin_ByEmail(std::string& email)
     {
             throw std::runtime_error("Not implemented yet.");
     }
 
-    const AuthStatus &BusinessLogic::verifyUserLogin_ByEmail(std::string& email)
+    void BusinessLogic::generateRandomPayment_ForAccount(unsigned int id)
     {
-            throw std::runtime_error("Not implemented yet.");
+        throw std::runtime_error("Not implemented yet.");
+    }
+
+    std::string &BusinessLogic::getParsedUrl(std::string &query)
+    {
+        throw std::runtime_error("Not implemented yet.");
     }
 
 }

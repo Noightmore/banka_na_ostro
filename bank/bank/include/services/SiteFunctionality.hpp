@@ -8,8 +8,6 @@
 #include <string>
 #include <cstdlib>
 #include <memory>
-#include <fcgio.h>
-#include <fcgiapp.h>
 #include <thread>
 #include <fstream>
 #include <curl/curl.h>
