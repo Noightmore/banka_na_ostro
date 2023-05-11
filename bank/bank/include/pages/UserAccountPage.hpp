@@ -1,12 +1,12 @@
-#ifndef BANK_USERACCOUNT_H
-#define BANK_USERACCOUNT_H
+#ifndef BANK_USERACCOUNTPAGE_HPP
+#define BANK_USERACCOUNTPAGE_HPP
 
 
 #include "include/pages/Shared/Page.hpp"
 
 namespace bank::pages
 {
-    class UserAccount : public Page
+    class UserAccountPage : public Page
     {
         public:
             void generatePage(std::string& hostIpAddress, std::string& errorMessage) override;
@@ -14,4 +14,4 @@ namespace bank::pages
 }
 
 
-#endif //BANK_USERACCOUNT_H
+#endif //BANK_USERACCOUNTPAGE_HPP

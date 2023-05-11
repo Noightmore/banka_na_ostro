@@ -1,5 +1,5 @@
 #include "include/data/models/UserAccount.hpp"
-// Path: bank/lib/models/UserAccount.cpp
+// Path: bank/lib/models/UserAccountPage.cpp
 
 namespace bank::data::models
 {
@@ -104,7 +104,7 @@ namespace bank::data::models
             throw std::invalid_argument("Email is not in valid format.");
         }
 
-        // Create a new instance of UserAccount and return it
+        // Create a new instance of UserAccountPage and return it
         return std::make_unique<UserAccount>(id.release(),
                                              firstName.release(),
                                              lastName.release(),
@@ -139,7 +139,7 @@ namespace bank::data::models
             return *this->email;
     }
 
-//    std::string &UserAccount::toJson()
+//    std::string &UserAccountPage::toJson()
 //    {
 //            auto json = new std::string();
 //            json->append("{");

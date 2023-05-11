@@ -18,7 +18,7 @@ namespace bank::data::models
         private:
 
                 /**
-                 * @brief loggedInUsers vector of pointers to UserAccount objects
+                 * @brief loggedInUsers vector of pointers to UserAccountPage objects
                  * @details This vector contains all the users that are currently logged in.
                  */
                 std::vector<UserAccount*> *loggedInUsers;

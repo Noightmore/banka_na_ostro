@@ -1,8 +1,8 @@
-#include "UserAccount.h"
+#include "include/pages/UserAccountPage.hpp"
 
 namespace bank::pages
 {
-    void UserAccount::generatePage(std::string& hostIpAddress, std::string& errorMessage)
+    void UserAccountPage::generatePage(std::string& hostIpAddress, std::string& errorMessage)
     {
         std::cout << "Content-type: text/html\r\n\r\n";
         std::cout << "<html>\n";
