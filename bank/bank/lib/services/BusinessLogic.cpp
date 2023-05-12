@@ -2,6 +2,7 @@
 #include "include/services/BusinessLogic.hpp"
 #include "include/pages/LoginPage.hpp"
 #include "include/pages/ErrorPage.hpp"
+#include "include/pages/UserAccountPage.hpp"
 
 namespace bank::services
 {
@@ -27,7 +28,9 @@ namespace bank::services
     void BusinessLogic::run()
     {
             std::string message = "";
+            int loginId = -1;
             pages::LoginPage loginPage;
+            pages::UserAccountPage userPage;
             pages::ErrorPage errorPage;
 
             char* requestMethod = getenv("REQUEST_METHOD");
@@ -42,7 +45,8 @@ namespace bank::services
 
             std::cout << "Query string: " << query_string << std::endl;
 
-            // TODO: implement query string parser
+            std::string query = std::string(query_string);
+            loginId= this->getParsedUrl(query);
 
             if (requestMethod == nullptr)
             {
@@ -52,13 +56,31 @@ namespace bank::services
 
             if (std::strcmp(requestMethod, "GET") == 0)
             {
-                    loginPage.generatePage(this->host_ip_address, message);
+                    if(loginId == -1)
+                    {
+                        loginPage.generatePage(this->host_ip_address, message);
+                        return;
+                    }
+
+                    // user logged in, print user info
+                    userPage.generatePage(this->host_ip_address, message); // + loginId
                     return;
             }
 
             else if (std::strcmp(requestMethod, "POST") == 0)
             {
+                if(loginId == -1)
+                {
+                    // submit form data
+                    // check if user exists
+                    // send verification email
+                    // with link to user account page
                     return;
+                }
+
+                // if user is already logged in it means we want to generate random payment
+                this->generateRandomPayment_ForAccount(loginId);
+                userPage.generatePage(this->host_ip_address, message); // + loginId
             }
 
             //message = query_string;
@@ -113,7 +135,16 @@ namespace bank::services
         throw std::runtime_error("Not implemented yet.");
     }
 
-    std::string &BusinessLogic::getParsedUrl(std::string &query)
+    int BusinessLogic::getParsedUrl(std::string &query)
+    {
+        // split string by = and return the second part
+        std::string delimiter = "=";
+        std::string token = query.substr(0, query.find(delimiter));
+        query.erase(0, query.find(delimiter) + delimiter.length());
+        return std::stoi(query);
+    }
+
+    std::vector<data::models::ExchangeRate> &BusinessLogic::getExchangeRates()
     {
         throw std::runtime_error("Not implemented yet.");
     }

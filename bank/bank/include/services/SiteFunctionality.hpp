@@ -14,6 +14,7 @@
 
 #include "AuthStatus.h"
 #include "../data/models/UserAccount.hpp"
+#include "include/data/models/ExchangeRate.hpp"
 
 namespace bank::services
 {
@@ -31,7 +32,15 @@ namespace bank::services
 
                 virtual void generateRandomPayment_ForAccount(unsigned int id) = 0;
 
-                virtual std::string& getParsedUrl(std::string& query) = 0;
+                // url is entered in the following format:
+                // login=loginId
+                // loginId is the id of the user account
+                // -1 is returned if no user is logged in
+                virtual int getParsedUrl(std::string& query) = 0;
+
+                // method that downloads the exchange rates from url (only in specific time), in a form of a text file
+                // and parses the data into a vector of ExchangeRate objects
+                virtual std::vector<data::models::ExchangeRate>& getExchangeRates() = 0;
 
         public:
                 virtual void run() = 0;
