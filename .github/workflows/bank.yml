@@ -43,10 +43,10 @@ jobs:
         run: ctest -C --extra-verbose --output-on-failure  ${{env.BUILD_TYPE}}
 
       - name: Compute Test Coverage
-        working-directory: ${{github.workspace}}/bank/build/
+        working-directory: ${{github.workspace}}/bank/
         run: |
-          sudo chmod +x ../scripts/compute_test_coverage.sh
-          /bin/bash ../scripts/compute_test_coverage.sh
+          sudo chmod +x scripts/compute_test_coverage.sh
+          /bin/bash scripts/compute_test_coverage.sh
 
       - name: Install Bank As WebApp
         working-directory: ${{github.workspace}}/bank
