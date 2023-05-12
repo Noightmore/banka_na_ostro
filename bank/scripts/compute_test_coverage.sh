@@ -11,12 +11,13 @@ function compute_coverage()
 #    done
 
 
-  ls -al
+   ls -al
+   ls -al ./bank
   #CMakeFiles/AllTests.dir/tests/
-   lcov --capture --directory ./bank --capture  --output-file coverage.info
-   lcov --remove coverage.info '/usr/*' '*/tests/*' '*/pages/*' --output-file coverage.info
-   lcov --remove coverage.info  --output-file coverage.info
-   lcov --list coverage.info --output-file coverage.txt
+   sudo lcov --capture --directory ./bank --capture  --output-file coverage.info
+   sudo lcov --remove coverage.info '/usr/*' '*/tests/*' '*/pages/*' --output-file coverage.info
+   sudo lcov --remove coverage.info  --output-file coverage.info
+   sudo lcov --list coverage.info --output-file coverage.txt
 }
 
 compute_coverage
