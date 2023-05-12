@@ -139,6 +139,16 @@ namespace bank::data::models
             return *this->email;
     }
 
+    const std::vector<Balance *> &UserAccount::getBalances()
+    {
+                return *this->balances;
+    }
+
+    const std::vector<Payment *> &UserAccount::getPayments()
+    {
+                return *this->payments;
+    }
+
 //    std::string &UserAccountPage::toJson()
 //    {
 //            auto json = new std::string();

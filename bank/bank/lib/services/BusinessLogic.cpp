@@ -33,6 +33,7 @@ namespace bank::services
             pages::UserAccountPage userPage;
             pages::ErrorPage errorPage;
 
+
             char* requestMethod = getenv("REQUEST_METHOD");
             char* query_string = std::getenv("QUERY_STRING");
 
@@ -44,7 +45,7 @@ namespace bank::services
                     std::cout << "No query string provided" << std::endl;
             }
 
-            std::cout << "Query string: " << query_string << std::endl;
+            //std::cout << "Query string: " << query_string << std::endl;
 
             std::string query = std::string(query_string);
             loginId= this->getParsedUrl(query);
@@ -63,9 +64,20 @@ namespace bank::services
                         return;
                     }
 
-                    // user logged in, print user info
-                    userPage.generatePage(this->host_ip_address, message); // + loginId
-                    return;
+                    try
+                    {
+                            data::models::UserAccount user = this->database->getUserAccountById(loginId);
+                            // user logged in, print user info
+                            userPage.generatePage(this->host_ip_address, message, user); // + loginId
+                            return;
+                    }
+                    catch(std::runtime_error& e)
+                    {
+                                // user was not found
+                                // redirect to login page
+                                loginPage.generatePage(this->host_ip_address, message);
+                                return;
+                    }
             }
 
             else if (std::strcmp(requestMethod, "POST") == 0)
@@ -76,12 +88,15 @@ namespace bank::services
                     // check if user exists
                     // send verification email
                     // with a link to user account page
+                    //verifyUserLogin_ByEmail(std::string& email);
                     return;
                 }
 
                 // if a user is already logged in, it means we want to generate random payment
-                this->generateRandomPayment_ForAccount(loginId);
-                userPage.generatePage(this->host_ip_address, message); // + loginId
+                data::models::UserAccount user = this->database->getUserAccountById(loginId);
+                //this->generateRandomPayment_ForAccount(loginId);
+                userPage.generatePage(this->host_ip_address, message, user);; // + loginId
+                return;
             }
 
             //message = query_string;
@@ -151,11 +166,4 @@ namespace bank::services
             std::string token = query.substr(delimiterPos + delimiter.length());
             return std::stoi(token);
     }
-
-
-    std::vector<data::models::ExchangeRate> &BusinessLogic::getExchangeRates()
-    {
-        throw std::runtime_error("Not implemented yet.");
-    }
-
 }

@@ -6,6 +6,10 @@
     <password>vwx456</password>
     <balances>
         <balance>
+            <balance_type>CZK</balance_type>
+            <amount>100000000</amount>
+        </balance>
+        <balance>
             <balance_type>KRW</balance_type>
             <amount>15000</amount>
         </balance>

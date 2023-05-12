@@ -25,8 +25,6 @@ namespace bank::services
 
                 void generateRandomPayment_ForAccount(unsigned int id) override;
 
-                std::vector<data::models::ExchangeRate>& getExchangeRates() override;
-
         public:
                 BusinessLogic();
                 ~BusinessLogic();

@@ -57,6 +57,10 @@ namespace bank::data::models
 
                 UserAccount& getLoggedInUserAccount_ById(unsigned int id);
 
+                ExchangeRate& getCurrentExchangeRate_ByName(std::string& name);
+
+                bool areExchangeRatesEmpty();
+
                 ~BankData();
 
     };

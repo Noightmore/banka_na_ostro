@@ -29,11 +29,6 @@ namespace bank::data::models
             static std::unique_ptr<Balance> createInstance(std::unique_ptr<std::string> _name,
                                                     std::unique_ptr<double> _amount);
 
-            /**
-             * @brief method for converting Balance object to JSON string
-             * @return json string representation of Balance object
-             */
-            std::unique_ptr<std::string> toHtml();
         };
 }
 

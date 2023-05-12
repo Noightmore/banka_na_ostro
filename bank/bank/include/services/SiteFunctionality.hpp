@@ -32,10 +32,6 @@ namespace bank::services
 
                 virtual void generateRandomPayment_ForAccount(unsigned int id) = 0;
 
-                // method that downloads the exchange rates from url (only in specific time), in the form of a text file
-                // and parses the data into a vector of ExchangeRate objects
-                virtual std::vector<data::models::ExchangeRate>& getExchangeRates() = 0;
-
                 // TODO: add a method for downloading a file from a URL and parsing it
 
         public:

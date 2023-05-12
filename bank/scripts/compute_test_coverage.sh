@@ -10,9 +10,6 @@ function compute_coverage()
 #        echo "$file"
 #    done
 
-   pwd
-   ls -al
-   cd bank/
   #CMakeFiles/AllTests.dir/tests/
    lcov --capture --directory . --capture  --output-file coverage.info
    lcov --remove coverage.info '/usr/*' '*/tests/*' '*/pages/*'  --output-file coverage.info

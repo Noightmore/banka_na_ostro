@@ -23,7 +23,7 @@ namespace bank::data::models
 
             // user id - starting at 1
             unsigned int* id;
-            // users first name
+            // users' first name
             std::string* firstName;
             // users last name
             std::string* lastName;
@@ -84,6 +84,9 @@ namespace bank::data::models
 
             const std::string& getEmail();
 
+            const std::vector<Balance*>& getBalances();
+
+            const std::vector<Payment*>& getPayments();
 
 
             /**
@@ -107,11 +110,6 @@ namespace bank::data::models
              * @note it is very basic
              */
             bool doPasswordsMatch(std::string& _password);
-
-            /**
-             * @brief method for parsing the class into a json string
-             */
-            std::string& toJson();
 
         };
 }

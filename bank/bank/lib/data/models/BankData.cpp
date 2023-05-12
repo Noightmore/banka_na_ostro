@@ -88,6 +88,24 @@ namespace bank::data::models
             throw std::invalid_argument("This user is currently not logged in");
     }
 
+    ExchangeRate &BankData::getCurrentExchangeRate_ByName(std::string& name)
+    {
+            for (auto rate : *currentExchangeRates)
+            {
+                    if(name == rate->getName())
+                    {
+                            return *rate;
+                    }
+            }
+
+            throw std::invalid_argument("This exchange rate is currently not in use");
+    }
+
+    bool BankData::areExchangeRatesEmpty()
+    {
+            return currentExchangeRates->empty();
+    }
+
 
 
 //    std::string &BankData::getLoggedInUserInJsonFormat_ById(unsigned int id)
