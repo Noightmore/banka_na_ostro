@@ -33,9 +33,8 @@ namespace bank::data::models
              * @brief method for converting Balance object to JSON string
              * @return json string representation of Balance object
              */
-            std::unique_ptr<std::string> toJson();
+            std::unique_ptr<std::string> toHtml();
         };
-
 }
 
 #endif //BACKEND_BALANCE_HPP

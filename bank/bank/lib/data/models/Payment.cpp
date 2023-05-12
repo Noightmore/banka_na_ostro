@@ -45,6 +45,26 @@ namespace bank::data::models
                                          balance.release());
     }
 
+    time_t *Payment::getDate() const
+    {
+            return date;
+    }
+
+    std::string *Payment::getPaymentType() const
+    {
+            return paymentType;
+    }
+
+    unsigned int *Payment::getAccountId() const
+    {
+            return accountId;
+    }
+
+    Balance *Payment::getBalance() const
+    {
+            return balance;
+    }
+
 //    std::string &Payment::toJson()
 //    {
 //        auto *json = new std::string();

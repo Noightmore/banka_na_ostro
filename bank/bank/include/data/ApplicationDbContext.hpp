@@ -34,11 +34,7 @@ namespace bank::data
 
                 void loadUserBalancesAndPaymentRecords(xmlNodePtr cur,  models::UserAccount* user);
 
-                std::unique_ptr<models::Balance> parseBalanceFromXML(xmlNodePtr bNode);
-
-                std::unique_ptr<models::Payment> parsePaymentFromXML(xmlNodePtr pNode);
-
-                /**
+        /**
                 * @brief method for loading a single user from the database by his account id
                 *
                 * @param id account id
@@ -56,6 +52,9 @@ namespace bank::data
 
             [[maybe_unused]] void addPaymentRecordToAUser_ByAccountId(unsigned int id, models::Payment paymentRecord);
 
+        std::unique_ptr<models::Balance> parseBalanceFromXML(xmlNodePtr bNode);
+
+        std::unique_ptr<models::Payment> parsePaymentFromXML(xmlNodePtr pNode);
     };
 }
 

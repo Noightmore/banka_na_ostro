@@ -42,7 +42,6 @@ namespace bank::data::models
     {
             return *this->amount;
     }
-
 }
 
 #endif //BACKEND_MONEY_HPP

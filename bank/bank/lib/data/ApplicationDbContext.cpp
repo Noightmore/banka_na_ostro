@@ -213,6 +213,12 @@ namespace bank::data
                     }
                     else if(strcmp((char*)curr->name, "amount") == 0)
                     {
+                                // check if the amount is a valid double
+                                if(!std::regex_match((char *) content2, std::regex("^[0-9]+(\\.[0-9]+)?$")))
+                                {
+                                         return nullptr;
+                                }
+
                                 amount = std::stod((char*)content2);
                     }
 
@@ -256,7 +262,8 @@ namespace bank::data
 
                     if(strcmp((char*)curr->name, "payment_date") == 0)
                     {
-                            paymentDate = reinterpret_cast<time_t> (content2);
+                            // convert string to time_t
+                            paymentDate = std::stoi((char*)content2);
                     }
                     else if(strcmp((char*)curr->name, "payment_type") == 0)
                     {
