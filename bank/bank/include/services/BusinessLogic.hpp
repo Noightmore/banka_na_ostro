@@ -25,13 +25,13 @@ namespace bank::services
 
                 void generateRandomPayment_ForAccount(unsigned int id) override;
 
-                int getParsedUrl(std::string& query) override;
-
                 std::vector<data::models::ExchangeRate>& getExchangeRates() override;
 
         public:
                 BusinessLogic();
                 ~BusinessLogic();
+
+                int getParsedUrl(std::string& query) override;
 
                 void startup() override;
 

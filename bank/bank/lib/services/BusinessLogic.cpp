@@ -36,6 +36,7 @@ namespace bank::services
             char* requestMethod = getenv("REQUEST_METHOD");
             char* query_string = std::getenv("QUERY_STRING");
 
+            // set content type
             std::cout << "Content-type:text/html\r\n\r\n";
 
             if (query_string == nullptr)
@@ -74,11 +75,11 @@ namespace bank::services
                     // submit form data
                     // check if user exists
                     // send verification email
-                    // with link to user account page
+                    // with a link to user account page
                     return;
                 }
 
-                // if user is already logged in it means we want to generate random payment
+                // if a user is already logged in, it means we want to generate random payment
                 this->generateRandomPayment_ForAccount(loginId);
                 userPage.generatePage(this->host_ip_address, message); // + loginId
             }
@@ -86,7 +87,6 @@ namespace bank::services
             //message = query_string;
             errorPage.generatePage(this->host_ip_address, message);
     }
-
 
 
     void services::BusinessLogic::fetchHostIpAddress()
@@ -135,14 +135,23 @@ namespace bank::services
         throw std::runtime_error("Not implemented yet.");
     }
 
-    int BusinessLogic::getParsedUrl(std::string &query)
+    int BusinessLogic::getParsedUrl(std::string& query)
     {
-        // split string by = and return the second part
-        std::string delimiter = "=";
-        std::string token = query.substr(0, query.find(delimiter));
-        query.erase(0, query.find(delimiter) + delimiter.length());
-        return std::stoi(query);
+            // check if delimiter is present and not at the beginning or end of the string
+            std::string delimiter = "=";
+            size_t delimiterPos = query.find(delimiter);
+
+            if (delimiterPos == std::string::npos || delimiterPos == 0
+            || delimiterPos == query.size() - delimiter.length())
+            {
+                    throw std::invalid_argument("Invalid query string: missing or misplaced delimiter");
+            }
+
+            // extract token after delimiter and convert to int
+            std::string token = query.substr(delimiterPos + delimiter.length());
+            return std::stoi(token);
     }
+
 
     std::vector<data::models::ExchangeRate> &BusinessLogic::getExchangeRates()
     {

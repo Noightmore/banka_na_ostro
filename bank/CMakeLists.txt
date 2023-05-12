@@ -116,6 +116,15 @@ target_link_libraries(TestModel PRIVATE GTest::gtest GTest::gtest_main GTest::gm
 add_executable(TestAppDbContext tests/TestAppDbContext.cpp)
 target_link_libraries(TestAppDbContext PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main Bank)
 
+add_executable(TestBusinessLogic tests/TestBusinessLogic.cpp)
+target_link_libraries(TestBusinessLogic PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main Bank)
 
 add_test(NAME TestModel COMMAND TestModel)
 add_test(NAME TestAppDbContext COMMAND TestAppDbContext)
+add_test(NAME TestBusinessLogic COMMAND TestBusinessLogic)
+
+# add all tests into 1 executable
+add_executable(AllTests tests/TestModel.cpp tests/TestAppDbContext.cpp tests/TestBusinessLogic.cpp)
+target_link_libraries(AllTests PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main Bank)
+
+add_test(NAME AllTests COMMAND AllTests)
