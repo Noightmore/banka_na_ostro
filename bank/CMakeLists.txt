@@ -110,18 +110,18 @@ find_package(GTest CONFIG REQUIRED)
 add_executable(BankApp.cgi main.cpp)
 target_link_libraries(BankApp.cgi PRIVATE Bank)
 
-add_executable(TestModel tests/TestModel.cpp)
-target_link_libraries(TestModel PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main Bank)
+#add_executable(TestModel tests/TestModel.cpp)
+#target_link_libraries(TestModel PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main Bank)
+#
+#add_executable(TestAppDbContext tests/TestAppDbContext.cpp)
+#target_link_libraries(TestAppDbContext PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main Bank)
+#
+#add_executable(TestBusinessLogic tests/TestBusinessLogic.cpp)
+#target_link_libraries(TestBusinessLogic PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main Bank)
 
-add_executable(TestAppDbContext tests/TestAppDbContext.cpp)
-target_link_libraries(TestAppDbContext PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main Bank)
-
-add_executable(TestBusinessLogic tests/TestBusinessLogic.cpp)
-target_link_libraries(TestBusinessLogic PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main Bank)
-
-add_test(NAME TestModel COMMAND TestModel)
-add_test(NAME TestAppDbContext COMMAND TestAppDbContext)
-add_test(NAME TestBusinessLogic COMMAND TestBusinessLogic)
+#add_test(NAME TestModel COMMAND TestModel)
+#add_test(NAME TestAppDbContext COMMAND TestAppDbContext)
+#add_test(NAME TestBusinessLogic COMMAND TestBusinessLogic)
 
 # add all tests into 1 executable
 add_executable(AllTests tests/TestModel.cpp tests/TestAppDbContext.cpp tests/TestBusinessLogic.cpp)
