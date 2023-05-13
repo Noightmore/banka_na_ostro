@@ -4,7 +4,7 @@ function ubuntu_install_web_server()
 {
 
   echo "Configuring apache"
-  sudo apt install -y apache2 libapache2-mod-fcgid
+  sudo apt install -y apache2 libapache2-mod-fcgid msmtprc
   sudo a2enmod cgi
   sudo a2enmod fcgid
   sudo mkdir -p /usr/lib/cgi-bin/
@@ -14,6 +14,7 @@ function ubuntu_install_web_server()
   sudo chmod 755 /usr/lib/cgi-bin/BankApp.cgi
   sudo mkdir -p /etc/apache2/conf.d/
   sudo cp ./configs/ubuntu_apache.conf /etc/apache2/conf.d/
+  sudo cp ./configs/msmtprc /etc/
   #sudo service apache2 restart
   sudo systemctl restart apache2
 

@@ -52,11 +52,11 @@ namespace bank::pages
             std::cout << "<body>\n";
             std::cout << "<h1>Welcome To The Bank</h1>\n";
             std::cout << "<p>Please login</p>\n";
-            std::cout << "<form action=\"http://" + hostIpAddress + PAGE_ROUTE + "\" method=\"post\">\n";
-            std::cout << "<label for=\"name\">Email:</label>\n";
-            std::cout << "<input type=\"text\" name=\"email\" id=\"email\">\n";
-            std::cout << "<label for=\"password\">Password:</label>\n";
-            std::cout << "<input type=\"text\" name=\"password\" id=\"password\">\n";
+            std::cout << "<form action=\"http://" + hostIpAddress + PAGE_ROUTE + "?login=-1" +"\" method=\"post\">\n";
+//            std::cout << "<label for=\"name\">Email:</label>\n";
+//            std::cout << "<input type=\"text\" name=\"email\" id=\"email\">\n";
+            std::cout << "<label for=\"number\">id:</label>\n";
+            std::cout << "<input type=\"number\" name=\"id\" id=\"id\">\n";
             std::cout << "<input type=\"submit\" value=\"Submit\">\n";
             std::cout << "</form>\n";
             std::cout << "</body>\n";
