@@ -13,7 +13,7 @@ function mock_site_user_visit()
 
 function test_site_visit()
 {
-  response=$(mock_site_visit)
+  response=$(mock_user_visit)
   if [[ $response == "200" ]]; then
     echo "Test passed"
     # download and print the website to the console
