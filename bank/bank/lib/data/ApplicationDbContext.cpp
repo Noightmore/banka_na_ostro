@@ -367,7 +367,7 @@ namespace bank::data
 
     bool ApplicationDbContext::isFileOlderThanOneDay(const char* filename)
     {
-            struct stat fileInfo;
+            struct stat fileInfo{};
             if (stat(filename, &fileInfo) != 0)
             {
                     std::cerr << "Error: failed to get file information for " << filename << std::endl;
