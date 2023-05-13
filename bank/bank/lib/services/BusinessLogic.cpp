@@ -2,6 +2,7 @@
 #include "include/services/BusinessLogic.hpp"
 #include "include/pages/LoginPage.hpp"
 #include "include/pages/ErrorPage.hpp"
+#include "include/pages/UserAccountPage.hpp"
 
 namespace bank::services
 {
@@ -27,8 +28,27 @@ namespace bank::services
     void BusinessLogic::run()
     {
             std::string message = "";
+            int loginId = -1;
             pages::LoginPage loginPage;
+            pages::UserAccountPage userPage;
+            pages::ErrorPage errorPage;
+
+
             char* requestMethod = getenv("REQUEST_METHOD");
+            char* query_string = std::getenv("QUERY_STRING");
+
+            // set content type
+            std::cout << "Content-type:text/html\r\n\r\n";
+
+            if (query_string == nullptr)
+            {
+                    std::cout << "No query string provided" << std::endl;
+            }
+
+            //std::cout << "Query string: " << query_string << std::endl;
+
+            std::string query = std::string(query_string);
+            loginId= this->getParsedUrl(query);
 
             if (requestMethod == nullptr)
             {
@@ -38,17 +58,50 @@ namespace bank::services
 
             if (std::strcmp(requestMethod, "GET") == 0)
             {
-                    loginPage.generatePage(this->host_ip_address, message);
-                    return;
+                    if(loginId == -1)
+                    {
+                        loginPage.generatePage(this->host_ip_address, message);
+                        return;
+                    }
+
+                    try
+                    {
+                            data::models::UserAccount user = this->database->getUserAccountById(loginId);
+                            // user logged in, print user info
+                            userPage.generatePage(this->host_ip_address, message, user); // + loginId
+                            return;
+                    }
+                    catch(std::runtime_error& e)
+                    {
+                                // user was not found
+                                // redirect to login page
+                                loginPage.generatePage(this->host_ip_address, message);
+                                return;
+                    }
             }
 
             else if (std::strcmp(requestMethod, "POST") == 0)
             {
-
+                if(loginId == -1)
+                {
+                    // submit form data
+                    // check if user exists
+                    // send verification email
+                    // with a link to user account page
+                    //verifyUserLogin_ByEmail(std::string& email);
                     return;
-            }
-    }
+                }
 
+                // if a user is already logged in, it means we want to generate random payment
+                data::models::UserAccount user = this->database->getUserAccountById(loginId);
+                //this->generateRandomPayment_ForAccount(loginId);
+                userPage.generatePage(this->host_ip_address, message, user);; // + loginId
+                return;
+            }
+
+            //message = query_string;
+            errorPage.generatePage(this->host_ip_address, message);
+    }
 
 
     void services::BusinessLogic::fetchHostIpAddress()
@@ -87,14 +140,30 @@ namespace bank::services
                 return this->database->getUserAccountById(id);
     }
 
-    const AuthStatus &BusinessLogic::authorizeUserLogin_ByAccountIdAndPassword(unsigned int id, std::string& password)
-    {
-            throw std::runtime_error("Not implemented yet.");
-    }
-
     const AuthStatus &BusinessLogic::verifyUserLogin_ByEmail(std::string& email)
     {
             throw std::runtime_error("Not implemented yet.");
     }
 
+    void BusinessLogic::generateRandomPayment_ForAccount(unsigned int id)
+    {
+        throw std::runtime_error("Not implemented yet.");
+    }
+
+    int BusinessLogic::getParsedUrl(std::string& query)
+    {
+            // check if delimiter is present and not at the beginning or end of the string
+            std::string delimiter = "=";
+            size_t delimiterPos = query.find(delimiter);
+
+            if (delimiterPos == std::string::npos || delimiterPos == 0
+            || delimiterPos == query.size() - delimiter.length())
+            {
+                    throw std::invalid_argument("Invalid query string: missing or misplaced delimiter");
+            }
+
+            // extract token after delimiter and convert to int
+            std::string token = query.substr(delimiterPos + delimiter.length());
+            return std::stoi(token);
+    }
 }

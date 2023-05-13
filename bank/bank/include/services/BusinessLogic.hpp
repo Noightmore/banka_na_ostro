@@ -17,14 +17,19 @@ namespace bank::services
 
                 const data::models::UserAccount& getUserAccount_ById(unsigned int id) override;
 
-                const AuthStatus& authorizeUserLogin_ByAccountIdAndPassword(unsigned int id,
-                                                                    std::string& password) override;
+                //const AuthStatus& authorizeUserLogin_ByAccountIdAndPassword(unsigned int id,
+                //                                                   std::string& password) override;
 
                 const AuthStatus& verifyUserLogin_ByEmail(std::string& email) override;
+
+
+                void generateRandomPayment_ForAccount(unsigned int id) override;
 
         public:
                 BusinessLogic();
                 ~BusinessLogic();
+
+                int getParsedUrl(std::string& query) override;
 
                 void startup() override;
 

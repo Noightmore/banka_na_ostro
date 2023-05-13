@@ -27,6 +27,14 @@ namespace bank::data::models
 
         public:
 
+            time_t *getDate() const;
+
+            std::string *getPaymentType() const;
+
+            unsigned int *getAccountId() const;
+
+            Balance *getBalance() const;
+
             Payment(time_t* date,
                     std::string* type,
                     unsigned int* accountId,
@@ -53,7 +61,8 @@ namespace bank::data::models
              *
              * @return formatted payment
              */
-            std::string& toJson();
+            std::string& toHtml();
+
         };
 
 }

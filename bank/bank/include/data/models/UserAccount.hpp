@@ -12,7 +12,7 @@
 namespace bank::data::models
 {
         /**
-         * @brief UserAccount class
+         * @brief UserAccountPage class
          * @details This class is used to represent 1 user account.
          * @note This class is a parent of Balance and Payment classes.
          */
@@ -23,7 +23,7 @@ namespace bank::data::models
 
             // user id - starting at 1
             unsigned int* id;
-            // users first name
+            // users' first name
             std::string* firstName;
             // users last name
             std::string* lastName;
@@ -59,14 +59,14 @@ namespace bank::data::models
             );
 
             /**
-            * @brief method for creating new instance of UserAccount class
+            * @brief method for creating new instance of UserAccountPage class
             *
             * @param id user id
             * @param firstName user first name
             * @param lastName user last name
             * @param email user email
             * @param password user password
-            * @return new instance of UserAccount class
+            * @return new instance of UserAccountPage class
             */
             std::unique_ptr<UserAccount> static createInstance(std::unique_ptr<unsigned int> id,
                                                                std::unique_ptr<std::string> firstName,
@@ -84,6 +84,9 @@ namespace bank::data::models
 
             const std::string& getEmail();
 
+            const std::vector<Balance*>& getBalances();
+
+            const std::vector<Payment*>& getPayments();
 
 
             /**
@@ -107,11 +110,6 @@ namespace bank::data::models
              * @note it is very basic
              */
             bool doPasswordsMatch(std::string& _password);
-
-            /**
-             * @brief method for parsing the class into a json string
-             */
-            std::string& toJson();
 
         };
 }

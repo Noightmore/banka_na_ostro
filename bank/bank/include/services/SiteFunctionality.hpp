@@ -8,13 +8,13 @@
 #include <string>
 #include <cstdlib>
 #include <memory>
-#include <fcgio.h>
-#include <fcgiapp.h>
 #include <thread>
 #include <fstream>
+#include <curl/curl.h>
 
 #include "AuthStatus.h"
 #include "../data/models/UserAccount.hpp"
+#include "include/data/models/ExchangeRate.hpp"
 
 namespace bank::services
 {
@@ -25,11 +25,22 @@ namespace bank::services
 
                 virtual const data::models::UserAccount& getUserAccount_ById(unsigned int id) = 0;
 
-                virtual const AuthStatus& authorizeUserLogin_ByAccountIdAndPassword(unsigned int id,
-                                                                                    std::string& password) = 0;
+                //virtual const AuthStatus& authorizeUserLogin_ByAccountIdAndPassword(unsigned int id,
+                //                                                                   std::string& password) = 0;
+
                 virtual const AuthStatus& verifyUserLogin_ByEmail(std::string& email) = 0;
 
+                virtual void generateRandomPayment_ForAccount(unsigned int id) = 0;
+
+                // TODO: add a method for downloading a file from a URL and parsing it
+
         public:
+                // url is entered in the following format:
+                // login=loginId
+                // loginId is the id of the user account
+                // -1 is returned if no user is logged in
+                virtual int getParsedUrl(std::string& query) = 0;
+
                 virtual void run() = 0;
 
                 virtual void startup() = 0;

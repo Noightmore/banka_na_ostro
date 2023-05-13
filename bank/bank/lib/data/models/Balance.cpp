@@ -32,19 +32,4 @@ namespace bank::data::models
 
             return std::make_unique<Balance>(_name.release(), _amount.release());
         }
-
-        std::unique_ptr<std::string> Balance::toJson()
-        {
-            auto json = new std::string();
-            json->append("{");
-            json->append(R"("name": ")");
-            json->append(*this->name);
-            json->append("\",");
-            json->append("\"amount\": ");
-            json->append(std::to_string(*this->amount));
-            json->append("}");
-
-            auto jsonPtr = std::make_unique<std::string>(json->c_str());
-            return jsonPtr;
-        }
 }

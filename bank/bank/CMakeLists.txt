@@ -25,10 +25,10 @@ add_library(Bank STATIC
         include/services/AuthStatus.h
         include/pages/Shared/Page.hpp
         include/pages/ErrorPage.hpp
-        lib/pages/ErrorPage.cpp)
+        lib/pages/ErrorPage.cpp include/pages/VerificationNoticePage.hpp lib/pages/VerificationNoticePage.cpp include/pages/UserAccountPage.hpp lib/pages/UserAccountPage.cpp)
 
 # Add the include directories for libfcgi-dev
-include_directories(/usr/include/fastcgi)
+#include_directories(/usr/include/fastcgi)
 
 # Set include directories
 target_include_directories(Bank PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
@@ -38,6 +38,6 @@ find_package(LibXml2 REQUIRED)
 #find_package(cppcms REQUIRED)
 
 # Set link libraries
-target_link_libraries(Bank PRIVATE LibXml2::LibXml2 fcgi)
+target_link_libraries(Bank PRIVATE LibXml2::LibXml2)
 # Set library version and API compatibility level
 set_target_properties(Bank PROPERTIES VERSION 1.0 SOVERSION 1)

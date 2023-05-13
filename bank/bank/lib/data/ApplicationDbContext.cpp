@@ -79,7 +79,7 @@ namespace bank::data
                                 continue;
                     }
 
-                    std::cout << cur->name << ": ";
+                    //std::cout << cur->name << ": ";
                     xmlChar* content = xmlNodeGetContent(cur);
 
 
@@ -92,7 +92,7 @@ namespace bank::data
                                                                &lastName,
                                                                &email,
                                                                &password);
-                            std::cout << content << std::endl;
+                            //std::cout << content << std::endl;
                             xmlFree(content);
                             continue;
                     }
@@ -213,6 +213,12 @@ namespace bank::data
                     }
                     else if(strcmp((char*)curr->name, "amount") == 0)
                     {
+                                // check if the amount is a valid double
+                                if(!std::regex_match((char *) content2, std::regex("^[0-9]+(\\.[0-9]+)?$")))
+                                {
+                                         return nullptr;
+                                }
+
                                 amount = std::stod((char*)content2);
                     }
 
@@ -256,7 +262,8 @@ namespace bank::data
 
                     if(strcmp((char*)curr->name, "payment_date") == 0)
                     {
-                            paymentDate = reinterpret_cast<time_t> (content2);
+                            // convert string to time_t
+                            paymentDate = std::stoi((char*)content2);
                     }
                     else if(strcmp((char*)curr->name, "payment_type") == 0)
                     {
@@ -303,6 +310,73 @@ namespace bank::data
     void ApplicationDbContext::addPaymentRecordToAUser_ByAccountId(unsigned int id, models::Payment paymentRecord)
     {
             throw std::runtime_error("Not implemented yet");
+    }
+
+    void ApplicationDbContext::loadExchangeRates()
+    {
+        const std::string url = "https://www.cnb.cz/cs/financni-trhy/devizovy-trh/kurzy-devizoveho-trhu/kurzy-devizoveho-trhu/denni_kurz.txt?date=";
+        const std::string cachedFilePath = "denni_kurz.txt";
+
+        // get the current date in the format of dd.mm.yyyy
+        std::time_t t = std::time(nullptr);
+        std::tm tm = *std::localtime(&t);
+        std::stringstream ss;
+
+        ss << std::put_time(&tm, "%d.%m.%Y");
+
+        //std::cout << "<p>" << ss.str() << "</p>" << std::endl;
+
+
+        // check if file denni_kurz.txt exists in the current directory
+
+        // if not load them from cache,
+        // does local cache exist?
+        std::ifstream file(cachedFilePath);
+        if(file.good())
+        {
+                // if file exists, then check for potential updates of the cached one
+                if(isFileOlderThanOneDay(cachedFilePath.c_str()))
+                {
+                        DOWNLOAD_FILE_WITH_TIMESTAMP(url + ss.str(), cachedFilePath);
+                }
+        }
+        else
+        {
+                // if not, download them from the url
+                DOWNLOAD_FILE_WITH_TIMESTAMP(url + ss.str(), cachedFilePath);
+        }
+
+        // are the exchange rates loaded from the cache file?
+        if(!bankData->areExchangeRatesEmpty())
+        {
+                // if yes, check how old the data are
+                if(isFileOlderThanOneDay(cachedFilePath.c_str()))
+                {
+                        // if older than one day, download new ones
+                        DOWNLOAD_FILE_WITH_TIMESTAMP(url + ss.str(), cachedFilePath);
+                        // and drop the mem-loaded cache
+                        bankData->emptyCurrentExchangeRates();
+                }
+        }
+
+        // if not or there is an update, load them from the cache file
+        //loadExchangeRatesFromCacheFile(cachedFilePath);
+
+    }
+
+
+    bool ApplicationDbContext::isFileOlderThanOneDay(const char* filename)
+    {
+            struct stat fileInfo{};
+            if (stat(filename, &fileInfo) != 0)
+            {
+                    std::cerr << "Error: failed to get file information for " << filename << std::endl;
+                    return false;
+            }
+
+            std::time_t now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+            std::time_t modTime = fileInfo.st_mtime;
+            return (now - modTime) > (24 * 60 * 60);  // 1 day = 24 hours * 60 minutes * 60 seconds
     }
 
 }
