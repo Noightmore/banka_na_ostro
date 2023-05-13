@@ -53,7 +53,8 @@ jobs:
         run: |
           sudo chmod +x scripts/install_web_app.sh
           /bin/bash scripts/install_web_app.sh
-
+    
+      # sudo chmod +x tests/test_user_acc_load.sh
       - name: Test Bank As WebApp
         working-directory: ${{github.workspace}}/bank
         run: |
@@ -61,6 +62,6 @@ jobs:
           /bin/bash tests/test_http_get.sh
           sudo chmod +x tests/test_send_email.sh
           /bin/bash tests/test_send_email.sh
-          sudo chmod +x tests/test_user_acc_load.sh
+          
           /bin/bash tests/test_user_acc_load.sh
           
