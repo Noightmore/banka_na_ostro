@@ -360,7 +360,7 @@ namespace bank::data
         }
 
         // if not or there is an update, load them from the cache file
-        //loadExchangeRatesFromCacheFile(cachedFilePath);
+        loadExchangeRatesFromCacheFile(cachedFilePath);
 
     }
 
@@ -377,6 +377,53 @@ namespace bank::data
             std::time_t now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
             std::time_t modTime = fileInfo.st_mtime;
             return (now - modTime) > (24 * 60 * 60);  // 1 day = 24 hours * 60 minutes * 60 seconds
+    }
+
+    void ApplicationDbContext::loadExchangeRatesFromCacheFile(const std::string& filename) const
+    {
+            std::ifstream file(filename);
+
+            if (!file.is_open())
+            {
+                    throw std::runtime_error("Failed to open file: " + filename);
+            }
+
+            std::string line;
+            // skip the header line and the second line
+            std::getline(file, line);
+            std::getline(file, line);
+
+            while (std::getline(file, line))
+            {
+                    std::istringstream iss(line);
+                    std::string name, currencyCode;
+                    unsigned int amount;
+                    char delimiter = '|' ;
+                    double rate;
+
+                    if (!(iss >> name >> delimiter >> currencyCode >> delimiter >> amount
+                        >> delimiter >> currencyCode >> delimiter >> rate))
+                    {
+                            std::string error = "Failed to parse line: " + line;
+                            error += "\n";
+                            error += "in file " + filename;
+                            error += "\n";
+                            error += "corrupted or missing data";
+                            error += "\n";
+                            error += name + " " + currencyCode + " " + std::to_string(amount) + " " + std::to_string(rate);
+
+                            throw std::runtime_error(error);
+                    }
+                    auto exchangeRate = bank::data::models::ExchangeRate::createInstance(
+                            std::make_unique<std::string>(currencyCode),
+                            std::make_unique<unsigned int>(amount),
+                            std::make_unique<double>(rate)
+                    );
+                    this->bankData->addCurrentExchangeRate(std::move(exchangeRate));
+
+            }
+
+            file.close();
     }
 
 }

@@ -60,9 +60,9 @@ namespace bank::data::models
         throw std::invalid_argument("This user is currently not logged in");
     }
 
-    void BankData::addCurrentExchangeRate(ExchangeRate *exchangeRate)
+    void BankData::addCurrentExchangeRate(std::unique_ptr<ExchangeRate> exchangeRate)
     {
-        this->currentExchangeRates->push_back(exchangeRate);
+        this->currentExchangeRates->push_back(exchangeRate.release());
     }
 
     void BankData::emptyCurrentExchangeRates()
@@ -104,6 +104,11 @@ namespace bank::data::models
     bool BankData::areExchangeRatesEmpty()
     {
             return currentExchangeRates->empty();
+    }
+
+    unsigned long BankData::getExchangeRateSize() const
+    {
+            return this->currentExchangeRates->size();
     }
 
 

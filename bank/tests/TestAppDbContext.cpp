@@ -130,5 +130,3 @@ TEST(ApplicationDbContextTest, ParsePaymentFromXMLInvalid)
 
         xmlFreeDoc(doc);
 }
-
-
