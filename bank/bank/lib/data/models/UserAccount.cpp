@@ -134,8 +134,7 @@ namespace bank::data::models
             return *this->lastName;
     }
 
-    const std::string& UserAccount::getEmail()
-    {
+    const std::string & UserAccount::getEmail() const {
             return *this->email;
     }
 

@@ -3,6 +3,7 @@
 #include "include/pages/LoginPage.hpp"
 #include "include/pages/ErrorPage.hpp"
 #include "include/pages/UserAccountPage.hpp"
+#include "include/pages/VerificationNoticePage.hpp"
 
 namespace bank::services
 {
@@ -32,6 +33,7 @@ namespace bank::services
             pages::LoginPage loginPage;
             pages::UserAccountPage userPage;
             pages::ErrorPage errorPage;
+            pages::VerificationNoticePage verificationPage;
 
 
             char* requestMethod = getenv("REQUEST_METHOD");
@@ -85,10 +87,53 @@ namespace bank::services
                 if(loginId == -1)
                 {
                     // submit form data
+
                     // check if user exists
                     // send verification email
                     // with a link to user account page
-                    //verifyUserLogin_ByEmail(std::string& email);
+                    try
+                    {
+                            std::cout << "verification email" << std::endl;
+                            // parse form data
+                            std::string form_data;
+                            getline(std::cin, form_data);
+
+                            // Split the form data into individual fields
+                            std::string accountid;
+                            char* data = strdup(form_data.c_str());
+                            char* field = strtok(data, "&");
+                            while (field != NULL)
+                            {
+                                    std::cout << field << std::endl;
+                                    char* name_value = strtok(field, "=");
+                                    char* value = strtok(NULL, "=");
+                                    if (strcmp(name_value, "id") == 0)
+                                    {
+                                            accountid = value;
+                                    }
+
+                                    field = strtok(NULL, "&");
+                            }
+
+                            // parse account id to int
+                            int id = std::stoi(accountid);
+
+                            std::cout << "account id: " << id << std::endl;
+
+                            //std::string email = "bitcoin.tul.cz@outlook.com";
+                            auto st = verifyUserLogin_ByEmail(id);
+
+                            message = "Verification email sent with status of:" +
+                                    std::to_string(static_cast<double>(st));
+
+                            verificationPage.generatePage(this->host_ip_address, message);
+
+                    }
+                    catch(std::runtime_error& e)
+                    {
+                            std::string mess = e.what();
+                            errorPage.generatePage(this->host_ip_address, mess);
+                    }
                     return;
                 }
 
@@ -140,9 +185,52 @@ namespace bank::services
                 return this->database->getUserAccountById(id);
     }
 
-    const AuthStatus &BusinessLogic::verifyUserLogin_ByEmail(std::string& email)
+    AuthStatus BusinessLogic::verifyUserLogin_ByEmail(unsigned int userId)
     {
-            throw std::runtime_error("Not implemented yet.");
+            // check if such user exists = xml file exists
+            // if not, throw exception
+            std::string email;
+            try
+            {
+                    email = this->database->getUserAccountById(userId).getEmail();
+            }
+
+            catch(std::runtime_error& e)
+            {
+                    throw std::runtime_error("User with id " + std::to_string(userId) + " does not exist.");
+            }
+
+            // spawn bash subprocess that deals with email sending
+            // we assume emails are already verified at the registration and all users are forced to use outlook
+
+            std::string page_url = "http://" + this->host_ip_address + "/cgi-bin/BankApp.cgi?login=" + std::to_string(userId);
+
+            std::string command =
+                    "echo -e \" Subject: Verification\n\nPlease confirm your login here: " + page_url + "\" | msmtp -a outlook " + email + " 2> error.log.txt";
+
+            int status = std::system(command.c_str());
+
+            if (status != 0)
+            {
+                    // append the contents of error.log and save them as a string
+
+                    std::ifstream file("error.log.txt");
+
+                    if (!file.is_open())
+                    {
+                            throw std::runtime_error("Error sending email. Error log file could not be opened."
+                            + std::to_string(status));
+                    }
+
+                    std::string file_contents((std::istreambuf_iterator<char>(file)),
+                                              std::istreambuf_iterator<char>());
+
+                    file.close();
+
+                    throw std::runtime_error("Error sending email." + std::to_string(status) + file_contents + "Command: " + command);
+            }
+
+            return AuthStatus::AUTHORIZED;
     }
 
     void BusinessLogic::generateRandomPayment_ForAccount(unsigned int id)

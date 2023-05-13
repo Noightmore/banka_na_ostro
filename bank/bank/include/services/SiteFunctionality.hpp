@@ -28,11 +28,9 @@ namespace bank::services
                 //virtual const AuthStatus& authorizeUserLogin_ByAccountIdAndPassword(unsigned int id,
                 //                                                                   std::string& password) = 0;
 
-                virtual const AuthStatus& verifyUserLogin_ByEmail(std::string& email) = 0;
 
                 virtual void generateRandomPayment_ForAccount(unsigned int id) = 0;
 
-                // TODO: add a method for downloading a file from a URL and parsing it
 
         public:
                 // url is entered in the following format:
@@ -44,6 +42,8 @@ namespace bank::services
                 virtual void run() = 0;
 
                 virtual void startup() = 0;
+
+                virtual AuthStatus verifyUserLogin_ByEmail(unsigned int userId) = 0;
     };
 }
 

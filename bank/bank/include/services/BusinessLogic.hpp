@@ -20,7 +20,7 @@ namespace bank::services
                 //const AuthStatus& authorizeUserLogin_ByAccountIdAndPassword(unsigned int id,
                 //                                                   std::string& password) override;
 
-                const AuthStatus& verifyUserLogin_ByEmail(std::string& email) override;
+                AuthStatus verifyUserLogin_ByEmail(unsigned int userId) override;
 
 
                 void generateRandomPayment_ForAccount(unsigned int id) override;
