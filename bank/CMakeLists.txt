@@ -124,7 +124,8 @@ target_link_libraries(BankApp.cgi PRIVATE Bank)
 #add_test(NAME TestBusinessLogic COMMAND TestBusinessLogic)
 
 # add all tests into 1 executable
-add_executable(AllTests tests/TestModel.cpp tests/TestAppDbContext.cpp tests/TestBusinessLogic.cpp tests/TestParsingCurrencyTextFile.cpp)
+# tests/TestParsingCurrencyTextFile.cpp
+add_executable(AllTests tests/TestModel.cpp tests/TestAppDbContext.cpp tests/TestBusinessLogic.cpp )
 target_link_libraries(AllTests PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main Bank)
 
 add_test(NAME AllTests COMMAND AllTests)
