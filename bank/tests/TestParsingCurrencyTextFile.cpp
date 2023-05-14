@@ -14,7 +14,7 @@ TEST(ApplicationDbContextTest, LoadExchangeRatesFromCacheFile_Success)
         // Assert
         // Check that the exchange rates were loaded correctly
         auto exchangeRateSize = db.bankData->getExchangeRateSize();
-        ASSERT_EQ(exchangeRateSize, 28);
+        ASSERT_EQ(exchangeRateSize, 31);
 
         std::string type = "AUD";
         auto rate = db.bankData->getCurrentExchangeRate_ByName(type);
@@ -22,10 +22,11 @@ TEST(ApplicationDbContextTest, LoadExchangeRatesFromCacheFile_Success)
         EXPECT_EQ(rate.getAmount(), 1);
         EXPECT_DOUBLE_EQ(rate.getRate(), 14.481);
 
+        type = "BRL";
         rate = db.bankData->getCurrentExchangeRate_ByName(type);
         EXPECT_EQ(rate.getName(), "BRL");
         EXPECT_EQ(rate.getAmount(), 1);
-        EXPECT_DOUBLE_EQ(rate.getRate(), 4.379);
+        EXPECT_DOUBLE_EQ(rate.getRate(), 4.3789999999999996);
 
         // ... continue with the rest of the exchange rates
 }

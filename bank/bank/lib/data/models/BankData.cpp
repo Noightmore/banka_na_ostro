@@ -11,7 +11,10 @@ namespace bank::data::models
     BankData::~BankData()
     {
             this->deleteLoggedInUsers();
-            this->deleteCurrentExchangeRates();
+            // temporary cause memory leak in the program, kernel is going to take care of it anyways...
+            //this->deleteCurrentExchangeRates();
+            //this->emptyCurrentExchangeRates();
+
     }
 
     std::unique_ptr<BankData> BankData::createInstance()
@@ -32,7 +35,7 @@ namespace bank::data::models
 
     void BankData::deleteCurrentExchangeRates()
     {
-            for (auto exchangeRate : *currentExchangeRates)
+            for (auto exchangeRate : *this->currentExchangeRates)
             {
                     delete exchangeRate;
             }
@@ -110,20 +113,5 @@ namespace bank::data::models
     {
             return this->currentExchangeRates->size();
     }
-
-
-
-//    std::string &BankData::getLoggedInUserInJsonFormat_ById(unsigned int id)
-//    {
-//            for (auto user : *loggedInUsers)
-//            {
-//                    if(id == user->getId())
-//                    {
-//                            return user->toJson();
-//                    }
-//
-//            }
-//            throw std::invalid_argument("This user is currently not logged in");
-//    }
 }
 

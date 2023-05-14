@@ -56,9 +56,7 @@ namespace bank::data
                 void loadUserFromDatabase_ByAccountId(unsigned int id);
 
 
-                void loadExchangeRates();
-
-                // does exactly what the name implies
+        // does exactly what the name implies
                 static bool isFileOlderThanOneDay(const char* filename);
 
 
@@ -81,6 +79,8 @@ namespace bank::data
             void loadExchangeRatesFromCacheFile(const std::string& path) const;
 
         models::BankData *bankData;
+
+        void loadExchangeRates() const;
     };
 }
 

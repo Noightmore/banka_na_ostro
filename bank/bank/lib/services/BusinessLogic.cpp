@@ -139,7 +139,7 @@ namespace bank::services
 
                 // if a user is already logged in, it means we want to generate random payment
                 data::models::UserAccount user = this->database->getUserAccountById(loginId);
-                //this->generateRandomPayment_ForAccount(loginId);
+                this->generateRandomPayment_ForAccount(loginId);
                 userPage.generatePage(this->host_ip_address, message, user);; // + loginId
                 return;
             }
@@ -235,7 +235,8 @@ namespace bank::services
 
     void BusinessLogic::generateRandomPayment_ForAccount(unsigned int id)
     {
-        throw std::runtime_error("Not implemented yet.");
+        this->database->loadExchangeRates();
+
     }
 
     int BusinessLogic::getParsedUrl(std::string& query)
