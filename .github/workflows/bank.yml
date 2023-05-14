@@ -34,7 +34,7 @@ jobs:
 
       - name: Build Bank
         # Build your program with the given configuration
-        run: cmake --build ${{github.workspace}}/bank/build/ --config ${{env.BUILD_TYPE}} -DCMAKE_CXX_FLAGS=--coverage -DCMAKE_C_FLAGS=--coverage
+        run: cmake -DCMAKE_CXX_FLAGS=--coverage -DCMAKE_C_FLAGS=--coverage --build ${{github.workspace}}/bank/build/ --config ${{env.BUILD_TYPE}}
 
       - name: Test Bank
         working-directory: ${{github.workspace}}/bank/build/
