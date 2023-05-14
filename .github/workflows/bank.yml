@@ -30,11 +30,11 @@ jobs:
         # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
         run: | 
           cd bank
-          cmake -B ${{github.workspace}}/bank/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+          cmake -B ${{github.workspace}}/bank/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} 
 
       - name: Build Bank
         # Build your program with the given configuration
-        run: cmake --build ${{github.workspace}}/bank/build/ --config ${{env.BUILD_TYPE}}
+        run: cmake --build ${{github.workspace}}/bank/build/ --config ${{env.BUILD_TYPE}} -DCMAKE_CXX_FLAGS=--coverage -DCMAKE_C_FLAGS=--coverage
 
       - name: Test Bank
         working-directory: ${{github.workspace}}/bank/build/
