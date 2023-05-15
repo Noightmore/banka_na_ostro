@@ -65,7 +65,7 @@ jobs:
       - name: Configure CMake
         run : |
           cd bank
-          cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+          cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_CXX_FLAGS=--coverage -DCMAKE_C_FLAGS=--coverage
 
       - name: Build Bank
         # Build your program with the given configuration
