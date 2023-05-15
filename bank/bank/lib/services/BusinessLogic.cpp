@@ -139,7 +139,7 @@ namespace bank::services
 
                 // if a user is already logged in, it means we want to generate random payment
                 data::models::UserAccount user = this->database->getUserAccountById(loginId);
-                this->generateRandomPayment_ForAccount(loginId);
+                user.addPayment(this->generateRandomPayment_ForAccount(user));
                 userPage.generatePage(this->host_ip_address, message, user);; // + loginId
                 return;
             }
@@ -227,17 +227,109 @@ namespace bank::services
 
                     file.close();
 
-                    throw std::runtime_error("Error sending email." + std::to_string(status) + file_contents + "Command: " + command);
+                    throw std::runtime_error("Error sending email."
+                    + std::to_string(status) + file_contents + "Command: " + command);
             }
 
             return AuthStatus::AUTHORIZED;
     }
 
-    void BusinessLogic::generateRandomPayment_ForAccount(unsigned int id)
+    std::unique_ptr<data::models::Payment> BusinessLogic::generateRandomPayment_ForAccount(data::models::UserAccount& user)
     {
         this->database->loadExchangeRates();
 
+        // get random exchange rate
+        // get random number
+        unsigned int random_num = rand() % 100 + 1;
+        data::models::ExchangeRate rate = this->database->bankData->getRandomExchangeRate_BySeed(random_num);
+
+        // apply random payment for each random exchange rate
+        double random_payment_sum = rand() % 1000 + 1;
+
+        // get a random account id
+        unsigned int random_account_id = random_num;
+
+        // get current linux timestamp
+        unsigned int timestamp = static_cast<unsigned int>(std::time(nullptr));
+
+        // incomming our outgoing payment?
+        bool isIncoming = rand() % 2 == 0;
+
+        std::string used_currency = rate.getName();
+
+        if(!user.doesUserOwnAccount_ForCurrency(rate.getName()))
+        {
+                // convert the currency to czech
+                random_payment_sum = random_payment_sum * rate.getRate() / rate.getAmount();
+                used_currency = "CZK";
+        }
+
+
+        // allocate new payment record
+        auto balance = data::models::Balance::createInstance(
+                std::make_unique<std::string>(used_currency),
+                std::make_unique<double>(random_payment_sum)
+                );
+
+
+        auto payment = data::models::Payment::createInstance(
+                std::make_unique<time_t>(timestamp),
+                std::make_unique<std::string> (isIncoming ? "INCOMING" : "OUTGOING"),
+                std::make_unique<unsigned int>(random_account_id),
+                std::move(balance)
+                );
+
+        // attempt to apply the payment
+        if(this->attemptToApplyPayment_ForAccount(user, *payment))
+        {
+
+                // if successful, save the payment to the database
+                //this->database->bankData->getLoggedInUserAccount_ById(user.getId()).addPayment(std::move(payment));
+                //user.addPayment(std::move(payment));
+                // print payment info
+//                std::cout << "Payment was successful." << std::endl;
+//                std::cout << "Payment info: " << std::endl;
+//                std::cout << "Timestamp: " << std::to_string(timestamp) << std::endl;
+//                std::cout << "Payment type: " << (isIncoming ? "INCOMING" : "OUTGOING") << std::endl;
+//                std::cout << "Account id: " << std::to_string(random_account_id) << std::endl;
+//                std::cout << "Balance: " << std::to_string(random_payment_sum) << " " << used_currency << std::endl;
+                // update the balance amount of the account of the user
+                return payment;
+        }
+
+        // if not successful
+        std::cout << "Payment was not successful - insufficient funds." << std::endl;
+        // payment gets automatically deleted as its a unique pointer
+        return nullptr;
     }
+
+
+    bool BusinessLogic::attemptToApplyPayment_ForAccount(data::models::UserAccount& account,
+                                                         data::models::Payment& payment)
+    {
+        // check if the user has enough money in the account
+        // if not, return false
+
+        // check if the user has the currency of the payment
+        // if not, convert the currency to czech and apply the payment
+
+        // if the user has the currency of the payment, apply the payment
+        if(*payment.getPaymentType() == "INCOMING")
+        {
+                return true;
+        }
+
+
+        if(account.doesUserHasSufficientFunds_ForCurrency(payment.getBalance()->getName(),
+                                                          payment.getBalance()->getAmount())
+                                                          && *payment.getPaymentType() == "OUTGOING")
+        {
+                return true;
+        }
+
+        return false;
+    }
+
 
     int BusinessLogic::getParsedUrl(std::string& query)
     {
@@ -255,4 +347,5 @@ namespace bank::services
             std::string token = query.substr(delimiterPos + delimiter.length());
             return std::stoi(token);
     }
+
 }

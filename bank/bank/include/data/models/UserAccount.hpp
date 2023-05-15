@@ -111,6 +111,10 @@ namespace bank::data::models
              */
             bool doPasswordsMatch(std::string& _password);
 
+            bool doesUserOwnAccount_ForCurrency(std::string& currencyName);
+
+            bool doesUserHasSufficientFunds_ForCurrency(std::string& currencyName, double amount);
+
         };
 }
 

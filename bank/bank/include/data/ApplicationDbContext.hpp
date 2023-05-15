@@ -78,9 +78,9 @@ namespace bank::data
             // and records them into the bank data -> currentExchangeRates
             void loadExchangeRatesFromCacheFile(const std::string& path) const;
 
-        models::BankData *bankData;
+            models::BankData *bankData;
 
-        void loadExchangeRates() const;
+            void loadExchangeRates() const;
     };
 }
 

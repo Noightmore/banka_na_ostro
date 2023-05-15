@@ -56,13 +56,6 @@ namespace bank::data::models
                                                            std::unique_ptr<unsigned int> accountId,
                                                            std::unique_ptr<Balance> balance);
 
-            /**
-             * @brief method for formatted printing of the payment
-             *
-             * @return formatted payment
-             */
-            std::string& toHtml();
-
         };
 
 }

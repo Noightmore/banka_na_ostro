@@ -23,7 +23,10 @@ namespace bank::services
                 AuthStatus verifyUserLogin_ByEmail(unsigned int userId) override;
 
 
-                void generateRandomPayment_ForAccount(unsigned int id) override;
+                std::unique_ptr<data::models::Payment> generateRandomPayment_ForAccount(data::models::UserAccount& user) override;
+
+                bool attemptToApplyPayment_ForAccount(data::models::UserAccount& account,
+                                                      data::models::Payment& payment) override;
 
         public:
                 BusinessLogic();

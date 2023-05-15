@@ -113,5 +113,12 @@ namespace bank::data::models
     {
             return this->currentExchangeRates->size();
     }
+
+    ExchangeRate& BankData::getRandomExchangeRate_BySeed(unsigned int seed)
+    {
+                srand(seed);
+                int randomIndex = rand() % this->currentExchangeRates->size();
+                return *this->currentExchangeRates->at(randomIndex);
+    }
 }
 

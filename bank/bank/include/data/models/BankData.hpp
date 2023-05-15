@@ -59,9 +59,11 @@ namespace bank::data::models
 
                 ExchangeRate& getCurrentExchangeRate_ByName(std::string& name);
 
+                ExchangeRate& getRandomExchangeRate_BySeed(unsigned int seed);
+
                 bool areExchangeRatesEmpty();
 
-                unsigned long getExchangeRateSize() const;
+                [[nodiscard]] unsigned long getExchangeRateSize() const;
 
                 ~BankData();
 
