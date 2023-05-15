@@ -179,6 +179,23 @@ namespace bank::data::models
             return false;
     }
 
+    void UserAccount::addFunds(std::string &currencyName, double amount)
+    {
+            int index = 0;
+            for(auto balance : *this->balances)
+            {
+                    if (balance->getName() == currencyName)
+                    {
+                            if (balance->getAmount() - amount >= 0)
+                            {
+                                    balances->at(index)->setAmount(balance->getAmount() + amount);
+
+                            }
+                    }
+                    index++;
+            }
+    }
+
 //    std::string &UserAccountPage::toJson()
 //    {
 //            auto json = new std::string();

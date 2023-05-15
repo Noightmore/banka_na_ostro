@@ -320,6 +320,7 @@ namespace bank::services
         // if the user has the currency of the payment, apply the payment
         if(*payment.getPaymentType() == "INCOMING")
         {
+                account.addFunds(payment.getBalance()->getName(), payment.getBalance()->getAmount());
                 return true;
         }
 

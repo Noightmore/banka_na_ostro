@@ -115,6 +115,8 @@ namespace bank::data::models
 
             bool doesUserHasSufficientFunds_ForCurrency(std::string& currencyName, double amount);
 
+            void addFunds(std::string& currencyName, double amount);
+
         };
 }
 
