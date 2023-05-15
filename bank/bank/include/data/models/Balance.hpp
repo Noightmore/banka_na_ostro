@@ -29,6 +29,7 @@ namespace bank::data::models
             static std::unique_ptr<Balance> createInstance(std::unique_ptr<std::string> _name,
                                                     std::unique_ptr<double> _amount);
 
+            void setAmount(double amount);
         };
 }
 

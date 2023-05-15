@@ -162,15 +162,18 @@ namespace bank::data::models
 
     bool UserAccount::doesUserHasSufficientFunds_ForCurrency(std::string &currencyName, double amount)
     {
+            int index = 0;
             for(auto balance : *this->balances)
             {
                     if (balance->getName() == currencyName)
                     {
                             if (balance->getAmount() - amount >= 0)
                             {
+                                    balances->at(index)->setAmount(balance->getAmount() - amount);
                                     return true;
                             }
                     }
+                    index++;
             }
 
             return false;

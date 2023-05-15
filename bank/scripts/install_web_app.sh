@@ -6,7 +6,7 @@ function ubuntu_install_web_server()
   echo "Configuring apache"
   sudo apt install -y apache2 msmtp
   sudo a2enmod cgi
-  sudo a2enmod fcgid
+  #sudo a2enmod fcgid
   sudo mkdir -p /usr/lib/cgi-bin/
   sudo mkdir -p /usr/lib/db
   sudo cp db/*.xml /usr/lib/db

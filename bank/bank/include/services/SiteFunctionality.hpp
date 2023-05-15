@@ -11,6 +11,7 @@
 #include <thread>
 #include <fstream>
 #include <curl/curl.h>
+#include <random>
 
 #include "AuthStatus.h"
 #include "../data/models/UserAccount.hpp"

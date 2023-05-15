@@ -203,10 +203,12 @@ namespace bank::services
             // spawn bash subprocess that deals with email sending
             // we assume emails are already verified at the registration and all users are forced to use outlook
 
-            std::string page_url = "http://" + this->host_ip_address + "/cgi-bin/BankApp.cgi?login=" + std::to_string(userId);
+            std::string page_url = "http://" + this->host_ip_address +
+                    "/cgi-bin/BankApp.cgi?login=" + std::to_string(userId);
 
             std::string command =
-                    "echo -e \" Subject: Verification\n\nPlease confirm your login here: " + page_url + "\" | msmtp -a outlook " + email + " 2> error.log.txt";
+                    "echo -e \" Subject: Verification\n\nPlease confirm your login here: "
+                    + page_url + "\" | msmtp -a outlook " + email + " 2> error.log.txt";
 
             int status = std::system(command.c_str());
 
@@ -234,17 +236,28 @@ namespace bank::services
             return AuthStatus::AUTHORIZED;
     }
 
-    std::unique_ptr<data::models::Payment> BusinessLogic::generateRandomPayment_ForAccount(data::models::UserAccount& user)
+    std::unique_ptr<data::models::Payment>
+            BusinessLogic::generateRandomPayment_ForAccount(data::models::UserAccount& user)
     {
         this->database->loadExchangeRates();
 
         // get random exchange rate
         // get random number
-        unsigned int random_num = rand() % 100 + 1;
+
+        std::random_device rd;
+        std::mt19937 gen(rd());
+
+        // Define the range for the random numbers
+        int minNumber = 1;
+        int maxNumber = 100;
+
+        std::uniform_int_distribution<> dis(minNumber, maxNumber);
+
+        unsigned int random_num = dis(gen) % 100 + 1;
         data::models::ExchangeRate rate = this->database->bankData->getRandomExchangeRate_BySeed(random_num);
 
         // apply random payment for each random exchange rate
-        double random_payment_sum = rand() % 1000 + 1;
+        double random_payment_sum = dis(gen) % 1000 + 1;
 
         // get a random account id
         unsigned int random_account_id = random_num;
@@ -253,7 +266,7 @@ namespace bank::services
         unsigned int timestamp = static_cast<unsigned int>(std::time(nullptr));
 
         // incomming our outgoing payment?
-        bool isIncoming = rand() % 2 == 0;
+        bool isIncoming = dis(gen) % 2 == 0;
 
         std::string used_currency = rate.getName();
 
@@ -284,15 +297,6 @@ namespace bank::services
         {
 
                 // if successful, save the payment to the database
-                //this->database->bankData->getLoggedInUserAccount_ById(user.getId()).addPayment(std::move(payment));
-                //user.addPayment(std::move(payment));
-                // print payment info
-//                std::cout << "Payment was successful." << std::endl;
-//                std::cout << "Payment info: " << std::endl;
-//                std::cout << "Timestamp: " << std::to_string(timestamp) << std::endl;
-//                std::cout << "Payment type: " << (isIncoming ? "INCOMING" : "OUTGOING") << std::endl;
-//                std::cout << "Account id: " << std::to_string(random_account_id) << std::endl;
-//                std::cout << "Balance: " << std::to_string(random_payment_sum) << " " << used_currency << std::endl;
                 // update the balance amount of the account of the user
                 return payment;
         }
