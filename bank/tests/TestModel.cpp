@@ -131,3 +131,81 @@ TEST(UserAccountTest, IncorrectPassword)
         // check if the password matches
         EXPECT_FALSE(user->doPasswordsMatch(password));
 }
+
+
+// Test case for existing currency account
+TEST(UserAccountTest, DoesUserOwnAccount_ForExistingCurrency)
+{
+        // Create a UserAccount object
+        auto user = UserAccount::createInstance(
+                std::make_unique<unsigned int>(1),
+                std::make_unique<std::string>("John"),
+                std::make_unique<std::string>("Doe"),
+                std::make_unique<std::string>("mail@example.com"),
+                std::make_unique<std::string>("password123"));
+
+        // Add a currency balance to the user's account
+        std::string currencyName = "USD";
+        double amount = 100.0;
+
+        auto balance = Balance::createInstance(
+                std::make_unique<std::string>(currencyName),
+                std::make_unique<double>(amount));
+
+        user->addBalance(std::move(balance));
+
+        // Call the function under test
+        bool result = user->doesUserOwnAccount_ForCurrency(currencyName);
+
+        // Assert that the user owns the currency account
+        EXPECT_TRUE(result);
+}
+
+// Test case for non-existing currency account
+TEST(UserAccountTest, DoesUserOwnAccount_ForNonExistingCurrency)
+{
+        // Create a UserAccount object
+        auto user = UserAccount::createInstance(
+                std::make_unique<unsigned int>(1),
+                std::make_unique<std::string>("John"),
+                std::make_unique<std::string>("Doe"),
+                std::make_unique<std::string>("mail@example.com"),
+                std::make_unique<std::string>("password123"));
+
+        // Add a currency balance to the user's account
+        std::string currencyName = "USD";
+        double amount = 100.0;
+
+        auto balance = Balance::createInstance(
+                std::make_unique<std::string>(currencyName),
+                std::make_unique<double>(amount));
+
+        user->addBalance(std::move(balance));
+
+        // Call the function under test with a different currency name
+        std::string faulty_silly_currency = "EUR";
+        bool result = user->doesUserOwnAccount_ForCurrency(faulty_silly_currency);
+
+        // Assert that the user does not own the currency account
+        EXPECT_FALSE(result);
+}
+
+// Test case for an empty account
+TEST(UserAccountTest, DoesUserOwnAccount_ForEmptyAccount)
+{
+        // Create a UserAccount object
+        auto user = UserAccount::createInstance(
+                std::make_unique<unsigned int>(1),
+                std::make_unique<std::string>("John"),
+                std::make_unique<std::string>("Doe"),
+                std::make_unique<std::string>("mail@example.com"),
+                std::make_unique<std::string>("password123"));
+
+        // Call the function under test
+
+        std::string faulty_silly_currency = "EUR";
+        bool result = user->doesUserOwnAccount_ForCurrency(faulty_silly_currency);
+
+        // Assert that the user does not own the currency account
+        EXPECT_FALSE(result);
+}

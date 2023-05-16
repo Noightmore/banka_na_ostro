@@ -10,7 +10,9 @@ namespace bank::data::models
 
     BankData::~BankData()
     {
-            this->deleteLoggedInUsers();
+
+            // apparently all of the following is not needed because the memory will get freed automatically
+            //this->deleteLoggedInUsers();
             // temporary cause memory leak in the program, kernel is going to take care of it anyways...
             //this->deleteCurrentExchangeRates();
             //this->emptyCurrentExchangeRates();

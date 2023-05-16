@@ -130,3 +130,149 @@ TEST(ApplicationDbContextTest, ParsePaymentFromXMLInvalid)
 
         xmlFreeDoc(doc);
 }
+
+// Test case for an existing user
+TEST(ApplicationDbContextTest, GetUserAccountById_ExistingUser)
+{
+
+        bank::data::ApplicationDbContext db;
+        unsigned int id = 1; // Specify an existing user ID
+
+        bank::data::models::UserAccount user = db.getUserAccountById(id);
+
+        // Perform assertions to verify the expected results
+        // For example:
+        EXPECT_EQ(user.getId(), id);
+        // Add more assertions based on your specific UserAccount class
+}
+
+// Test case for a non-existing user
+TEST(ApplicationDbContextTest, GetUserAccountById_NonExistingUser)
+{
+
+        bank::data::ApplicationDbContext db;
+        unsigned int id = 5315; // Specify a non-existing user ID
+
+        // Perform assertions to verify that an exception is thrown
+        EXPECT_THROW(db.getUserAccountById(id), std::invalid_argument);
+        // You can also check the error message of the exception if necessary
+}
+
+
+// Test case for loading exchange rates when the cache file exists and is up to date
+TEST(ApplicationDbContextTest, LoadExchangeRates_CacheFileUpToDate)
+{
+        bank::data::ApplicationDbContext db;
+
+        // Create the cache file with recent content
+        std::ofstream cacheFile("denni_kurz.txt");
+        // Add relevant content to the cache file
+        cacheFile << "Example content";
+        cacheFile.close();
+
+        // Assume the cache file is up-to-date (less than one day old)
+        // Set the current date to yesterday
+        std::time_t t = std::time(nullptr) - (24 * 60 * 60);
+        std::tm tm = *std::localtime(&t);
+        std::stringstream ss;
+        ss << std::put_time(&tm, "%d.%m.%Y");
+
+        // Load the exchange rates
+        db.loadExchangeRates();
+
+        // Add assertions to check if the exchange rates are properly loaded,
+        // and the cache file is not updated
+        // ASSERT_... Statements to check the expected behavior
+}
+
+// Test case for loading exchange rates when the cache file exists but is outdated
+TEST(ApplicationDbContextTest, LoadExchangeRates_CacheFileOutdated)
+{
+        bank::data::ApplicationDbContext db;
+
+        // Create the cache file with outdated content
+        std::ofstream cacheFile("denni_kurz.txt");
+        // Add outdated content to the cache file
+        cacheFile << "Outdated content";
+        cacheFile.close();
+
+        // Assume the cache file is outdated (more than one day old)
+        // Set the current date to two days ago
+        std::time_t t = std::time(nullptr) - (2 * 24 * 60 * 60);
+        std::tm tm = *std::localtime(&t);
+        std::stringstream ss;
+        ss << std::put_time(&tm, "%d.%m.%Y");
+
+        // Load the exchange rates
+        db.loadExchangeRates();
+
+        // Add assertions to check if the exchange rates are properly loaded,
+        // and the cache file is updated with new data
+        // ASSERT_... statements to check the expected behavior
+}
+
+// Test case for loading exchange rates when the cache file does not exist
+TEST(ApplicationDbContextTest, LoadExchangeRates_CacheFileDoesNotExist)
+{
+
+        bank::data::ApplicationDbContext db;
+        // Assume the cache file does not exist
+        // Set the current date to yesterday
+        std::time_t t = std::time(nullptr) - (24 * 60 * 60);
+        std::tm tm = *std::localtime(&t);
+        std::stringstream ss;
+        ss << std::put_time(&tm, "%d.%m.%Y");
+
+        // Load the exchange rates
+        db.loadExchangeRates();
+
+        // Add assertions to check if the exchange rates are properly loaded,
+        // and the cache file is created with new data
+        // ASSERT_... statements to check the expected behavior
+}
+
+// Test case for a file modified less than one day ago
+//TEST(ApplicationDbContextTest, IsFileOlderThanOneDay_LessThanOneDay)
+//{
+//        bank::data::ApplicationDbContext db;
+//        const char* filename = "testfile.txt"; // Replace with an existing file that was modified recently
+//        EXPECT_FALSE(db.isFileOlderThanOneDay(filename));
+//}
+//
+//// Test case for a file modified more than one day ago
+//TEST(ApplicationDbContextTest, IsFileOlderThanOneDay_MoreThanOneDay)
+//{
+//        bank::data::ApplicationDbContext db;
+//        const char* filename = "oldfile.txt"; // Replace with an existing file that was modified more than one day ago
+//        EXPECT_TRUE(db.isFileOlderThanOneDay(filename));
+//}
+//
+//// Test case for a non-existing file
+//TEST(ApplicationDbContextTest, IsFileOlderThanOneDay_NonExistingFile)
+//{
+//        bank::data::ApplicationDbContext db;
+//        const char* filename = "nonexistingfile.txt";
+//        EXPECT_FALSE(db.isFileOlderThanOneDay(filename));
+//}
+
+
+// Test case for loading user data from a corrupted file
+//TEST(ApplicationDbContextTest, LoadBasicUserData_CorruptedFile)
+//{
+//        bank::data::ApplicationDbContext db;
+//        xmlNodePtr cur = nullptr; // Create a dummy xmlNodePtr object
+//        xmlChar* content = nullptr; // Create a dummy xmlChar* object
+//        unsigned int id;
+//        std::string firstName;
+//        std::string lastName;
+//        std::string email;
+//        std::string password;
+//
+//        // Add your specific corrupted file content here
+//        // For example, if the "firstname" element is missing or corrupted
+//        // cur = <account_id>123</account_id><lastname>Doe</lastname><email>john.doe@example.com</email><password>password</password>
+//
+//        // Perform the loading operation and expect an exception to be thrown
+//        EXPECT_THROW(db.loadBasicUserData(cur, content, &id, &firstName, &lastName, &email, &password), std::invalid_argument);
+//        // You can also check the error message of the exception if necessary
+//}

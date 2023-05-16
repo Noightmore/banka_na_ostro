@@ -23,18 +23,19 @@ namespace bank::data
             catch(std::invalid_argument& e)
             {
                     // if a user has not been loaded to memory, load it from the database
+                    // check if user exists in the database
+                    // check if file with such id exists
+                    std::string fileName = DB_PATH + std::to_string(id) + DOT_XML;
+                    std::ifstream file(fileName);
+                    if (!file.good())
+                    {
+                                throw std::invalid_argument("User with id " + std::to_string(id) + " does not exist");
+                    }
+
                     this->loadUserFromDatabase_ByAccountId(id);
             }
 
-            // try a second time, if loading user fails, the user does not exist
-            try
-            {
-                    return this->bankData->getLoggedInUserAccount_ById(id);
-            }
-            catch(std::invalid_argument& e)
-            {
-                    throw std::invalid_argument("User with id " + std::to_string(id) + " does not exist");
-            }
+            return this->bankData->getLoggedInUserAccount_ById(id);
 
     }
 

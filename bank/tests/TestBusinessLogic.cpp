@@ -55,3 +55,30 @@ TEST(BusinessLogicTest, GetParsedUrlThrowsExceptionIfTokenIsNotANumber)
         EXPECT_THROW(bl.getParsedUrl(query), std::invalid_argument);
 }
 
+// Test case for fetching host IP address successfully
+TEST(BusinessLogicTest, FetchHostIpAddress_Success)
+{
+        bank::services::BusinessLogic businessLogic;
+        // Mock the necessary dependencies if required
+        // Call the fetchHostIpAddress method
+        ASSERT_NO_THROW({
+                                businessLogic.fetchHostIpAddress();
+                        });
+        // Add assertions to check if the expected host IP address is set
+        // ASSERT_... statements to check the expected behavior
+}
+
+// CANNOT MOCK SYSTEM FUNCTION TO PROVIDE WRONG DATA
+// Test case for failing to find a non-loopback address
+//TEST(BusinessLogicTest, FetchHostIpAddress_Fail)
+//{
+//        bank::services::BusinessLogic businessLogic;
+//        // Mock the necessary dependencies to simulate failure
+//        // Call the fetchHostIpAddress method
+//        ASSERT_THROW({
+//                             businessLogic.fetchHostIpAddress();
+//                     }, std::runtime_error);
+//        // Add assertions to check if the expected exception is thrown
+//        // ASSERT_... statements to check the expected behavior
+//}
+
