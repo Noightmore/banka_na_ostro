@@ -65,24 +65,4 @@ namespace bank::data::models
             return balance;
     }
 
-//    std::string &Payment::toJson()
-//    {
-//        auto *json = new std::string();
-//        json->append("{");
-//        json->append("\"date\":");
-//        json->append(std::to_string(*date));
-//        json->append(",");
-//        json->append("\"type\":");
-//        json->append("\"");
-//        json->append(*paymentType);
-//        json->append("\"");
-//        json->append(",");
-//        json->append("\"accountId\":");
-//        json->append(std::to_string(*accountId));
-//        json->append(",");
-//        json->append("\"balance\":");
-//        json->append(balance->toJson());
-//        json->append("}");
-//        return *json;
-//    }
 }

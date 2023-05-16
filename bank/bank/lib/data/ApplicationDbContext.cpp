@@ -15,6 +15,8 @@ namespace bank::data
 
     const models::UserAccount& ApplicationDbContext::getUserAccountById(unsigned int id)
     {
+
+
             // check if user has been loaded to memory
             try
             {
@@ -29,7 +31,7 @@ namespace bank::data
                     std::ifstream file(fileName);
                     if (!file.good())
                     {
-                                throw std::invalid_argument("User with id " + std::to_string(id) + " does not exist");
+                            throw std::runtime_error("User with id " + std::to_string(id) + " does not exist");
                     }
 
                     this->loadUserFromDatabase_ByAccountId(id);
@@ -435,6 +437,11 @@ namespace bank::data
                                 error += "\n";
                                 error += *currencyCodePtr + " "
                                         + std::to_string(amount) + " " + std::to_string(rate);
+
+                                // write the error into a log file:
+                                std::ofstream logFile("log.txt");
+                                logFile << error << std::endl;
+                                logFile.close();
 
                                 throw std::runtime_error(error);
                     }

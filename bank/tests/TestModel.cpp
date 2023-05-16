@@ -472,3 +472,54 @@ TEST(BankDataTest, DeleteCurrentExchangeRates)
         EXPECT_TRUE(bankData->getExchangeRateSize() == 0);
 }
 
+TEST(UserAccountTest, GetFirstName)
+{
+        std::unique_ptr<bank::data::models::UserAccount> user1 = bank::data::models::UserAccount::createInstance(
+                std::make_unique<unsigned int>(1),
+                std::make_unique<std::string>("John"),
+                std::make_unique<std::string>("Doe"),
+                std::make_unique<std::string>("johndoe@example.com"),
+                std::make_unique<std::string>("password123")
+        );
+        EXPECT_EQ(user1->getFirstName(), "John");
+}
+
+TEST(UserAccountTest, GetLastName)
+{
+        std::unique_ptr<bank::data::models::UserAccount> user1 = bank::data::models::UserAccount::createInstance(
+                std::make_unique<unsigned int>(1),
+                std::make_unique<std::string>("John"),
+                std::make_unique<std::string>("Doe"),
+                std::make_unique<std::string>("johndoe@example.com"),
+                std::make_unique<std::string>("password123")
+        );
+
+        EXPECT_EQ(user1->getLastName(), "Doe");
+}
+
+TEST(UserAccountTest, GetBalances)
+{
+        std::unique_ptr<bank::data::models::UserAccount> user1 = bank::data::models::UserAccount::createInstance(
+                std::make_unique<unsigned int>(1),
+                std::make_unique<std::string>("John"),
+                std::make_unique<std::string>("Doe"),
+                std::make_unique<std::string>("johndoe@example.com"),
+                std::make_unique<std::string>("password123")
+        );
+
+        const std::vector<Balance*>& balances = user1->getBalances();
+        EXPECT_TRUE(balances.empty());
+}
+
+TEST(UserAccountTest, GetPayments)
+{
+        std::unique_ptr<bank::data::models::UserAccount> user1 = bank::data::models::UserAccount::createInstance(
+                std::make_unique<unsigned int>(1),
+                std::make_unique<std::string>("John"),
+                std::make_unique<std::string>("Doe"),
+                std::make_unique<std::string>("johndoe@example.com"),
+                std::make_unique<std::string>("password123")
+        );
+        const std::vector<Payment*>& payments = user1->getPayments();
+        EXPECT_TRUE(payments.empty());
+}
