@@ -119,7 +119,8 @@ namespace bank::data::models
     ExchangeRate& BankData::getRandomExchangeRate_BySeed(unsigned int seed)
     {
                 srand(seed);
-                int randomIndex = rand() % this->currentExchangeRates->size();
+                auto exCount = this->currentExchangeRates->size();
+                int randomIndex = rand() % exCount;
                 return *this->currentExchangeRates->at(randomIndex);
     }
 }
