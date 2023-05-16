@@ -10,7 +10,6 @@
 #include <memory>
 #include <thread>
 #include <fstream>
-#include <curl/curl.h>
 #include <random>
 
 #include "AuthStatus.h"
