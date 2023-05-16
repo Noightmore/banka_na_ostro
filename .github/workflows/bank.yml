@@ -30,7 +30,7 @@ jobs:
         # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
         run: | 
           cd bank
-          cmake -B ${{github.workspace}}/bank/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+          cmake -B ${{github.workspace}}/bank/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_CXX_FLAGS=--coverage -DCMAKE_C_FLAGS=--coverage
 
       - name: Build Bank
         # Build your program with the given configuration
@@ -53,7 +53,8 @@ jobs:
         run: |
           sudo chmod +x scripts/install_web_app.sh
           /bin/bash scripts/install_web_app.sh
-
+    
+      # sudo chmod +x tests/test_user_acc_load.sh
       - name: Test Bank As WebApp
         working-directory: ${{github.workspace}}/bank
         run: |
@@ -61,4 +62,6 @@ jobs:
           /bin/bash tests/test_http_get.sh
           sudo chmod +x tests/test_send_email.sh
           /bin/bash tests/test_send_email.sh
+          
+          /bin/bash tests/test_user_acc_load.sh
           

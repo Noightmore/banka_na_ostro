@@ -148,6 +148,54 @@ namespace bank::data::models
                 return *this->payments;
     }
 
+    bool UserAccount::doesUserOwnAccount_ForCurrency(std::string &currencyName)
+    {
+            for (auto& balance : *this->balances)
+            {
+                    if (balance->getName() == currencyName)
+                    {
+                            return true;
+                    }
+            }
+            return false;
+    }
+
+    bool UserAccount::doesUserHasSufficientFunds_ForCurrency(std::string &currencyName, double amount)
+    {
+            int index = 0;
+            for(auto balance : *this->balances)
+            {
+                    if (balance->getName() == currencyName)
+                    {
+                            if (balance->getAmount() - amount >= 0)
+                            {
+                                    balances->at(index)->setAmount(balance->getAmount() - amount);
+                                    return true;
+                            }
+                    }
+                    index++;
+            }
+
+            return false;
+    }
+
+    void UserAccount::addFunds(std::string &currencyName, double amount)
+    {
+            int index = 0;
+            for(auto balance : *this->balances)
+            {
+                    if (balance->getName() == currencyName)
+                    {
+                            if (balance->getAmount() - amount >= 0)
+                            {
+                                    balances->at(index)->setAmount(balance->getAmount() + amount);
+
+                            }
+                    }
+                    index++;
+            }
+    }
+
 //    std::string &UserAccountPage::toJson()
 //    {
 //            auto json = new std::string();

@@ -51,7 +51,7 @@ namespace bank::data::models
 
                 void removeLoggedInUser(unsigned int id);
 
-                void addCurrentExchangeRate(ExchangeRate *exchangeRate);
+                void addCurrentExchangeRate(std::unique_ptr<ExchangeRate> exchangeRate);
 
                 void emptyCurrentExchangeRates();
 
@@ -59,7 +59,11 @@ namespace bank::data::models
 
                 ExchangeRate& getCurrentExchangeRate_ByName(std::string& name);
 
+                ExchangeRate& getRandomExchangeRate_BySeed(unsigned int seed);
+
                 bool areExchangeRatesEmpty();
+
+                [[nodiscard]] unsigned long getExchangeRateSize() const;
 
                 ~BankData();
 

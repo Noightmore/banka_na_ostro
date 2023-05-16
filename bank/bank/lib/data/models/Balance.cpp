@@ -32,4 +32,9 @@ namespace bank::data::models
 
             return std::make_unique<Balance>(_name.release(), _amount.release());
         }
+
+    void Balance::setAmount(double amount)
+    {
+        *this->amount = amount;
+    }
 }

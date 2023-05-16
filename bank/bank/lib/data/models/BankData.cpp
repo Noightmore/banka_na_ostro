@@ -10,8 +10,13 @@ namespace bank::data::models
 
     BankData::~BankData()
     {
-            this->deleteLoggedInUsers();
-            this->deleteCurrentExchangeRates();
+
+            // apparently all of the following is not needed because the memory will get freed automatically
+            //this->deleteLoggedInUsers();
+            // temporary cause memory leak in the program, kernel is going to take care of it anyways...
+            //this->deleteCurrentExchangeRates();
+            //this->emptyCurrentExchangeRates();
+
     }
 
     std::unique_ptr<BankData> BankData::createInstance()
@@ -32,7 +37,7 @@ namespace bank::data::models
 
     void BankData::deleteCurrentExchangeRates()
     {
-            for (auto exchangeRate : *currentExchangeRates)
+            for (auto exchangeRate : *this->currentExchangeRates)
             {
                     delete exchangeRate;
             }
@@ -60,9 +65,9 @@ namespace bank::data::models
         throw std::invalid_argument("This user is currently not logged in");
     }
 
-    void BankData::addCurrentExchangeRate(ExchangeRate *exchangeRate)
+    void BankData::addCurrentExchangeRate(std::unique_ptr<ExchangeRate> exchangeRate)
     {
-        this->currentExchangeRates->push_back(exchangeRate);
+        this->currentExchangeRates->push_back(exchangeRate.release());
     }
 
     void BankData::emptyCurrentExchangeRates()
@@ -106,19 +111,16 @@ namespace bank::data::models
             return currentExchangeRates->empty();
     }
 
+    unsigned long BankData::getExchangeRateSize() const
+    {
+            return this->currentExchangeRates->size();
+    }
 
-
-//    std::string &BankData::getLoggedInUserInJsonFormat_ById(unsigned int id)
-//    {
-//            for (auto user : *loggedInUsers)
-//            {
-//                    if(id == user->getId())
-//                    {
-//                            return user->toJson();
-//                    }
-//
-//            }
-//            throw std::invalid_argument("This user is currently not logged in");
-//    }
+    ExchangeRate& BankData::getRandomExchangeRate_BySeed(unsigned int seed)
+    {
+                srand(seed);
+                int randomIndex = rand() % this->currentExchangeRates->size();
+                return *this->currentExchangeRates->at(randomIndex);
+    }
 }
 

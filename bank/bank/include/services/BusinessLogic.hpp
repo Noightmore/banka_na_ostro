@@ -13,17 +13,16 @@ namespace bank::services
                 std::string host_ip_address;
                 //const std::string default_error_message = "error error";
 
-                void fetchHostIpAddress() override;
-
-                const data::models::UserAccount& getUserAccount_ById(unsigned int id) override;
+        const data::models::UserAccount& getUserAccount_ById(unsigned int id) override;
 
                 //const AuthStatus& authorizeUserLogin_ByAccountIdAndPassword(unsigned int id,
                 //                                                   std::string& password) override;
 
-                AuthStatus verifyUserLogin_ByEmail(unsigned int userId) override;
 
+        std::unique_ptr<data::models::Payment> generateRandomPayment_ForAccount(data::models::UserAccount& user) override;
 
-                void generateRandomPayment_ForAccount(unsigned int id) override;
+                bool attemptToApplyPayment_ForAccount(data::models::UserAccount& account,
+                                                      data::models::Payment& payment) override;
 
         public:
                 BusinessLogic();
@@ -36,9 +35,9 @@ namespace bank::services
                 void run() override;
 
 
+        void fetchHostIpAddress() override;
 
-
-
+        AuthStatus verifyUserLogin_ByEmail(unsigned int userId) override;
     };
 }
 

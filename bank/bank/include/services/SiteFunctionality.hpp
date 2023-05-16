@@ -11,6 +11,7 @@
 #include <thread>
 #include <fstream>
 #include <curl/curl.h>
+#include <random>
 
 #include "AuthStatus.h"
 #include "../data/models/UserAccount.hpp"
@@ -29,7 +30,10 @@ namespace bank::services
                 //                                                                   std::string& password) = 0;
 
 
-                virtual void generateRandomPayment_ForAccount(unsigned int id) = 0;
+                virtual std::unique_ptr<data::models::Payment> generateRandomPayment_ForAccount(data::models::UserAccount& user) = 0;
+
+                virtual bool attemptToApplyPayment_ForAccount(data::models::UserAccount& account,
+                                                              data::models::Payment& payment) = 0;
 
 
         public:

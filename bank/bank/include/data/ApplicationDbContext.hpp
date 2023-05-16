@@ -36,9 +36,8 @@ namespace bank::data
     class ApplicationDbContext
     {
         private:
-                models::BankData *bankData;
 
-                // series of helper methods for loading and parsing user data from the database
+        // series of helper methods for loading and parsing user data from the database
                 std::unique_ptr<models::UserAccount> parseUserFromXML(xmlNode *userNode);
 
                 std::unique_ptr<models::UserAccount>
@@ -57,7 +56,7 @@ namespace bank::data
                 void loadUserFromDatabase_ByAccountId(unsigned int id);
 
 
-                // does exactly what the name implies
+        // does exactly what the name implies
                 static bool isFileOlderThanOneDay(const char* filename);
 
 
@@ -75,9 +74,13 @@ namespace bank::data
 
             std::unique_ptr<models::Payment> parsePaymentFromXML(xmlNodePtr pNode);
 
-            // method that downloads the exchange rates from url (only in specific time), in the form of a text file
-            // and parses the data into a vector of ExchangeRate objects
-            void loadExchangeRates();
+            // method that loads the exchange rates from the cache file
+            // and records them into the bank data -> currentExchangeRates
+            void loadExchangeRatesFromCacheFile(const std::string& path) const;
+
+            models::BankData *bankData;
+
+            void loadExchangeRates() const;
     };
 }
 
