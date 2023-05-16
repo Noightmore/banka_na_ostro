@@ -19,7 +19,7 @@ function ubuntu_install_deps()
   # link the vcpkg folder libraries to /usr/local/share/vcpkg (default vcpkg folder on ubuntu)
   #
 
-  sudo cp ./configs/msmtprc /etc/
+  sudo cp ./bank/configs/msmtprc /etc/
 #  # install cppcms (compilation included)
 #  # this takes insane amount of time
 #  # installation process taken from the official website: http://cppcms.com/wikipp/en/page/cppcms_1x_build
