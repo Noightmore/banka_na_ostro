@@ -209,6 +209,10 @@ TEST(ApplicationDbContextTest, LoadExchangeRates_CacheFileOutdated)
         // Add assertions to check if the exchange rates are properly loaded,
         // and the cache file is updated with new data
         // ASSERT_... statements to check the expected behavior
+
+        // DELETE THE CACHE FILE AFTER THE TEST IS FINISHED
+        // Otherwise, the next test will fail
+        std::remove("denni_kurz.txt");
 }
 
 // Test case for loading exchange rates when the cache file does not exist

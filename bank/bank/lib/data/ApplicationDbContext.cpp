@@ -308,11 +308,11 @@ namespace bank::data
             return nullptr;
     }
 
-    [[maybe_unused]]
-    void ApplicationDbContext::addPaymentRecordToAUser_ByAccountId(unsigned int id, models::Payment paymentRecord)
-    {
-            throw std::runtime_error("Not implemented yet");
-    }
+//    [[maybe_unused]]
+//    void ApplicationDbContext::addPaymentRecordToAUser_ByAccountId(unsigned int id, models::Payment paymentRecord)
+//    {
+//            throw std::runtime_error("Not implemented yet");
+//    }
 
     void ApplicationDbContext::loadExchangeRates() const
     {
@@ -448,9 +448,9 @@ namespace bank::data
                     );
 
                     // print the contents of each exchange rate
-                    std::cout << exchangeRate->getName() <<std::endl;
-                    std::cout << exchangeRate->getAmount() <<std::endl;
-                    std::cout << exchangeRate->getRate() <<std::endl;
+//                    std::cout << exchangeRate->getName() <<std::endl;
+//                    std::cout << exchangeRate->getAmount() <<std::endl;
+//                    std::cout << exchangeRate->getRate() <<std::endl;
                     this->bankData->addCurrentExchangeRate(std::move(exchangeRate));
 
             }
