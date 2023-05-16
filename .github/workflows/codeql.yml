@@ -65,14 +65,14 @@ jobs:
       - name: Configure CMake
         run : |
           cd bank
-          cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_CXX_FLAGS=--coverage -DCMAKE_C_FLAGS=--coverage
+          cmake -B ${{github.workspace}}/bank/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_CXX_FLAGS=--coverage -DCMAKE_C_FLAGS=--coverage
 
       - name: Build Bank
         # Build your program with the given configuration
-        run: cmake --build ${{github.workspace}}/build/
+        run: cmake --build ${{github.workspace}}/bank/build
 
       - name: Test Bank
-        working-directory: ${{github.workspace}}/build/
+        working-directory: ${{github.workspace}}/bank/build
         # Execute tests defined by the CMake configuration.
         # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
         run: ctest -C --extra-verbose --output-on-failure  ${{env.BUILD_TYPE}}
@@ -80,8 +80,8 @@ jobs:
       - name: Compute Test Coverage
         working-directory: ${{github.workspace}}
         run: |
-          sudo chmod +x bank/scripts/compute_test_coverage.sh
-          /bin/bash bank/scripts/compute_test_coverage.sh
+          sudo chmod +x scripts/compute_test_coverage.sh
+          /bin/bash scripts/compute_test_coverage.sh
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
