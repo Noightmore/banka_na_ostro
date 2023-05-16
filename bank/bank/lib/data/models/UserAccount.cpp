@@ -195,29 +195,4 @@ namespace bank::data::models
                     index++;
             }
     }
-
-//    std::string &UserAccountPage::toJson()
-//    {
-//            auto json = new std::string();
-//            json->append("{");
-//            json->append("\"id\": " + std::to_string(*this->id) + ",");
-//            json->append(R"("firstName": ")" + *this->firstName + "\",");
-//            json->append(R"("lastName": ")" + *this->lastName + "\",");
-//            json->append(R"("email": ")" + *this->email + "\",");
-//            json->append("\"balances\": [");
-//            for (auto balance : *this->balances)
-//            {
-//                    json->append(balance->toJson() + ",");
-//            }
-//            json->append("],");
-//            json->append("\"payments\": [");
-//            for (auto payment : *this->payments)
-//            {
-//                    json->append(payment->toJson() + ",");
-//            }
-//            json->append("]");
-//            json->append("}");
-//
-//            return *json;
-//    }
 }

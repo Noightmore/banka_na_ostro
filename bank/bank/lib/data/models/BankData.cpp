@@ -30,9 +30,11 @@ namespace bank::data::models
     {
             for (auto user : *loggedInUsers)
             {
-                    delete user;
+                        delete user;
+                        loggedInUsers->erase(loggedInUsers->begin());
             }
-            delete this->loggedInUsers;
+            //delete this->loggedInUsers;
+
     }
 
     void BankData::deleteCurrentExchangeRates()
@@ -40,8 +42,9 @@ namespace bank::data::models
             for (auto exchangeRate : *this->currentExchangeRates)
             {
                     delete exchangeRate;
+                    this->currentExchangeRates->erase(this->currentExchangeRates->begin());
             }
-            delete this->currentExchangeRates;
+            //delete this->currentExchangeRates;
     }
 
     void BankData::addLoggedInUser(UserAccount *user)
@@ -58,7 +61,7 @@ namespace bank::data::models
                 {
                         delete user;
                         loggedInUsers->erase(loggedInUsers->begin() + index);
-                        break;
+                        return;
                 }
                 index++;
         }
@@ -113,6 +116,7 @@ namespace bank::data::models
 
     unsigned long BankData::getExchangeRateSize() const
     {
+            // return amount of exchange rates
             return this->currentExchangeRates->size();
     }
 
@@ -122,6 +126,11 @@ namespace bank::data::models
                 auto exCount = this->currentExchangeRates->size();
                 int randomIndex = rand() % exCount;
                 return *this->currentExchangeRates->at(randomIndex);
+    }
+
+    unsigned int BankData::getLoggedInUsersSize() const
+    {
+            return this->loggedInUsers->size();
     }
 }
 

@@ -91,49 +91,7 @@ namespace bank::services
                     // check if user exists
                     // send verification email
                     // with a link to user account page
-                    try
-                    {
-                            std::cout << "verification email" << std::endl;
-                            // parse form data
-                            std::string form_data;
-                            getline(std::cin, form_data);
 
-                            // Split the form data into individual fields
-                            std::string accountid;
-                            char* data = strdup(form_data.c_str());
-                            char* field = strtok(data, "&");
-                            while (field != NULL)
-                            {
-                                    std::cout << field << std::endl;
-                                    char* name_value = strtok(field, "=");
-                                    char* value = strtok(NULL, "=");
-                                    if (strcmp(name_value, "id") == 0)
-                                    {
-                                            accountid = value;
-                                    }
-
-                                    field = strtok(NULL, "&");
-                            }
-
-                            // parse account id to int
-                            int id = std::stoi(accountid);
-
-                            std::cout << "account id: " << id << std::endl;
-
-                            //std::string email = "bitcoin.tul.cz@outlook.com";
-                            auto st = verifyUserLogin_ByEmail(id);
-
-                            message = "Verification email sent with status of:" +
-                                    std::to_string(static_cast<double>(st));
-
-                            verificationPage.generatePage(this->host_ip_address, message);
-
-                    }
-                    catch(std::runtime_error& e)
-                    {
-                            std::string mess = e.what();
-                            errorPage.generatePage(this->host_ip_address, mess);
-                    }
                     return;
                 }
 
@@ -352,5 +310,4 @@ namespace bank::services
             std::string token = query.substr(delimiterPos + delimiter.length());
             return std::stoi(token);
     }
-
 }
