@@ -11,13 +11,13 @@ RUN ls -la
 WORKDIR /bankApp
 
 # Copy the entire repository into the container at /app
-COPY bank /bankApp
+COPY . /bankApp
 
 RUN ls -la
 
 # Run your scripts or commands inside the container
-RUN chmod +x install_dependencies.sh  # Make the scripts executable
-RUN ./install_dependencies.sh  # Replace with your script/command
+RUN chmod +x scripts/install_dependencies.sh  # Make the scripts executable
+RUN scripts/install_dependencies.sh  # Replace with your script/command
 #RUN ./script2.sh  # Replace with your script/command
 
 # Define any additional configuration or settings
