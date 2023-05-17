@@ -198,3 +198,29 @@ TEST(BusinessLogic, TestRunGetUserAccount1)
     // Act and Assert
     EXPECT_NO_THROW(bl.run());
 }
+
+TEST(BusinessLogic, TestRunGetUserAccount1PostAddTransaction)
+{
+    // Arrange
+    bank::services::BusinessLogic bl;
+
+    // Set the environment variable
+    const char* envVarName1 = "REQUEST_METHOD";
+    const char* envVarName2 = "QUERY_STRING";
+    const char* envVarValue1 = "POST";
+    const char* envVarValue2 = "login=1";
+
+    if (setenv(envVarName1, envVarValue1, 1) != 0)
+    {
+        std::cerr << "Failed to set environment variable." << std::endl;
+        // test failed
+    }
+
+    if (setenv(envVarName2, envVarValue2, 1) != 0)
+    {
+        std::cerr << "Failed to set environment variable." << std::endl;
+        // test failed
+    }
+    // Act and Assert
+    EXPECT_NO_THROW(bl.run());
+}
