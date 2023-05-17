@@ -20,9 +20,7 @@ RUN  wget -qO vcpkg.tar.gz https://github.com/microsoft/vcpkg/archive/master.tar
       /opt/vcpkg/bootstrap-vcpkg.sh \
       ln -s /opt/vcpkg/vcpkg /usr/local/bin/vcpkg
 
-
 # VERIFY VCPKG
-
 RUN  echo "Verifying dependencies" \
   # check if vcpkg is installed
   if ! command -v /usr/local/bin/vcpkg &> /dev/null \
@@ -30,7 +28,7 @@ RUN  echo "Verifying dependencies" \
       echo "vcpkg could not be found" \
       exit \
   fi \
-  echo "vcpkg ok" \
+  echo "vcpkg ok"
 
 RUN ls -la
 
@@ -41,8 +39,6 @@ WORKDIR /bankApp
 COPY . /bankApp
 
 RUN ls -la
-
-
 
 # Define any additional configuration or settings
 EXPOSE 80
