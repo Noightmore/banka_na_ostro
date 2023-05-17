@@ -46,6 +46,8 @@ The SBS must meet the following requirements:
 an option to convert the currency to another currency that the user has in their account.
   The exchange rates are downloaded from
 an external data source — czech national bank.
+  With the source being:
+  https://www.cnb.cz/cs/financni-trhy/devizovy-trh/kurzy-devizoveho-trhu/kurzy-devizoveho-trhu/denni_kurz.txt?date=12.05.2023
   The exchange rates are updated every day between 12:00 PM to 2:00 PM.
 
 ## User Interface
@@ -78,7 +80,16 @@ including libxml for XML parsing and gtest for unit testing.
   and there are no plans to implement installation on Windows.
   However, the Docker container in WSL should work.
 - Deployment: The application will be deployed inside a Docker container, based on the official Ubuntu image.
-- Client Requirements: The client-side of the application only requires a modern and up-to-date web browser.
+- Client Requirements: The client-side of the application only requires a modern and up-to-date web browser 
+such as Firefox or Chrome.
+
+# Potential Errors and Possible Exceptions
+
+The following errors and exceptions may occur during the operation of the system:
+- Invalid account ID: if the user enters an invalid account ID or password, an error message will be displayed when trying to log in.
+- invalid email address: if there's an error with the user's email address, an error message gets displayed and also logged into a file.
+- In case there's a problem with downloading the file or the file integrity, exception will be thrown and logged into a file.
+- the user has insufficient funds -> the transaction will not complete, and a message will be displayed for the user.
 
 ## Conclusion
 
@@ -87,4 +98,4 @@ and basic transactional features. The system requires users to enter their accou
 and password to access their account information, and users will receive an email to verify their login.
 The SBS allows users to have multiple balances in their account, each representing a certain type of currency,
 and provides a transaction history feature that displays all incoming and outgoing payments.
-Additionally, the SBS provides a random payment generator for testing purposes.
+Additionally, the SBS provides a random payment generator for testing purposes. The Time it takes to implement the system is estimated to be 20 hours.

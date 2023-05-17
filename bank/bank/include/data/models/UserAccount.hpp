@@ -82,7 +82,7 @@ namespace bank::data::models
 
             const std::string& getLastName();
 
-            const std::string & getEmail() const;
+            const std::string& getEmail() const;
 
             const std::vector<Balance*>& getBalances();
 

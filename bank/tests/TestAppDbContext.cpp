@@ -154,7 +154,7 @@ TEST(ApplicationDbContextTest, GetUserAccountById_NonExistingUser)
         unsigned int id = 5315; // Specify a non-existing user ID
 
         // Perform assertions to verify that an exception is thrown
-        EXPECT_THROW(db.getUserAccountById(id), std::invalid_argument);
+        EXPECT_THROW(db.getUserAccountById(id), std::runtime_error);
         // You can also check the error message of the exception if necessary
 }
 

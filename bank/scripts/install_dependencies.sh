@@ -6,7 +6,7 @@ function ubuntu_install_deps()
   echo "Installing dependencies"
   sudo apt update
   # essential tools - missing obvious ones like c++ compiler and cmake
-  sudo apt install -y zip unzip build-essential pkg-config libpthread-stubs0-dev lcov libxml2 gcc cmake curl libcurl4 libcurl4-gnutls-dev gcovr wget
+  sudo apt install -y zip unzip build-essential pkg-config libpthread-stubs0-dev lcov libxml2 gcc cmake curl libcurl4 libcurl4-gnutls-dev gcovr wget msmtp
 
 
   # download and unpack vcpkg
@@ -19,6 +19,7 @@ function ubuntu_install_deps()
   # link the vcpkg folder libraries to /usr/local/share/vcpkg (default vcpkg folder on ubuntu)
   #
 
+  sudo cp ./bank/configs/msmtprc /etc/
 #  # install cppcms (compilation included)
 #  # this takes insane amount of time
 #  # installation process taken from the official website: http://cppcms.com/wikipp/en/page/cppcms_1x_build

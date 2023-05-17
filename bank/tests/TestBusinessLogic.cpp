@@ -133,173 +133,94 @@ TEST(BusinessLogicTest, GenerateRandomPayment_ForIncomingPayment)
         EXPECT_GT(payment->getBalance()->getAmount(), 0.0);
 }
 
-// Test case for generating a random outgoing payment
-//TEST(BusinessLogicTest, GenerateRandomPayment_ForOutgoingPayment) {
-//        // Create a BusinessLogic object
-//        BusinessLogic logic;
-//
-//        // Create a UserAccount object
-//        data::models::UserAccount account;
-//
-//        // Add a currency balance to the user's account
-//        account.addCurrencyBalance("USD", 1000.0);
-//
-//        // Generate a random payment
-//        std::unique_ptr<data::models::Payment> payment = logic.generateRandomPayment_ForAccount(account);
-//
-//        // Assert that the payment is not null
-//        ASSERT_TRUE(payment);
-//
-//        // Assert that the payment type is "OUTGOING"
-//        EXPECT_EQ(*payment->getPaymentType(), "OUTGOING");
-//
-//        // Assert that the payment account ID is not zero
-//        EXPECT_NE(*payment->getAccountId(), 0);
-//
-//        // Assert that the payment balance is not null
-//        ASSERT_TRUE(payment->getBalance());
-//
-//        // Assert that the payment balance currency is valid
-//        EXPECT_FALSE(payment->getBalance()->getName()->empty());
-//
-//        // Assert that the payment balance amount is greater than zero
-//        EXPECT_GT(*payment->getBalance()->getAmount(), 0.0);
-//}
-//
-// Test case for generating a random payment with insufficient fund
-//TEST(BusinessLogicTest, GenerateRandomPayment_WithInsufficientFunds)
-//{
-//        // Create a BusinessLogic object
-//        bank::services::BusinessLogic logic;
-//
-//        // create a new user account with a password of "password123"
-//        std::unique_ptr<bank::data::models::UserAccount> user = bank::data::models::UserAccount::createInstance(
-//                std::make_unique<unsigned int>(1),
-//                std::make_unique<std::string>("John"),
-//                std::make_unique<std::string>("Doe"),
-//                std::make_unique<std::string>("johndoe@example.com"),
-//                std::make_unique<std::string>("password123")
-//        );
-//
-//        bank::data::models::UserAccount* account = user.release();
-//
-//        // Add a currency balance to the user's account
-//        std::string currencyName = "CZK";
-//
-//        // having sufficient funds
-//        double amount = 0;
-//
-//        auto balance = bank::data::models::Balance::createInstance(
-//                std::make_unique<std::string>(currencyName),
-//                std::make_unique<double>(amount));
-//
-//        account->addBalance(std::move(balance));
-//
-//        // Generate a random payment
-//        std::unique_ptr<bank::data::models::Payment> payment = logic.generateRandomPayment_ForAccount(*account);
-//
-//        // Assert that the payment is not null
-//        ASSERT_TRUE(payment);
-//
-//        // Assert that the payment type is "INCOMING"
-//        //EXPECT_EQ(*payment->getPaymentType(), "INCOMING");
-//
-//        // Assert that the payment account ID is not zero
-//        EXPECT_NE(*payment->getAccountId(), 0);
-//
-//        // Assert that the payment balance is not null
-//        ASSERT_TRUE(payment->getBalance());
-//
-//        // Assert that the payment balance currency is valid
-//        EXPECT_FALSE(payment->getBalance()->getName().empty());
-//
-//        // Assert that the payment balance amount is greater than zero
-//        EXPECT_GT(payment->getBalance()->getAmount(), 0.0);
-//}
+// test smooth email sending
+TEST(BusinessLogicTest, SendVerificationEmailSuccess)
+{
+        // Arrange
+        bank::services::BusinessLogic bl;
 
-// Test case for applying incoming payment
-//TEST(BusinessLogicTest, AttemptToApplyPayment_ForIncomingPayment)
-//{
-//        // Create a BusinessLogic object
-//        bank::services::BusinessLogic logic;
-//
-//        // Create a UserAccount object
-//        auto account = bank::data::models::UserAccount::createInstance(
-//                std::make_unique<unsigned int>(1),
-//                std::make_unique<std::string>("John"),
-//                std::make_unique<std::string>("Doe"),
-//                std::make_unique<std::string>("mail@example.com"),
-//                std::make_unique<std::string>("password123"));
-//
-//        int timestamp = 0;
-//        bool isIncoming = true;
-//        int random_account_id = 1;
-//
-//        // Add a currency balance to the user's account
-//        std::string currencyName = "USD";
-//        double amount = 100.0;
-//
-//        auto balance = bank::data::models::Balance::createInstance(
-//                std::make_unique<std::string>(currencyName),
-//                std::make_unique<double>(amount));
-//
-//        auto payment = bank::data::models::Payment::createInstance(
-//                std::make_unique<time_t>(timestamp),
-//                std::make_unique<std::string> (isIncoming ? "INCOMING" : "OUTGOING"),
-//                std::make_unique<unsigned int>(random_account_id = 1),
-//                std::move(balance)
-//        );
-//
-//        // Call the function under test
-//        bool result = logic.attemptToApplyPayment_ForAccount(account, payment);
-//
-//        // Assert that the payment was successfully applied
-//        EXPECT_TRUE(result);
-//        EXPECT_EQ(account.getBalance("USD"), 100.0);
-//}
-//
-//// Test case for applying outgoing payment with sufficient funds
-//TEST(BusinessLogicTest, AttemptToApplyPayment_ForOutgoingPaymentWithSufficientFunds) {
-//        // Create a BusinessLogic object
-//        BusinessLogic logic;
-//
-//        // Create a UserAccount object
-//        data::models::UserAccount account;
-//
-//        // Add a currency balance to the user's account
-//        account.addCurrencyBalance("USD", 200.0);
-//
-//        // Create an outgoing payment
-//        data::models::Payment payment("OUTGOING");
-//        payment.setBalance(std::make_unique<data::models::CurrencyBalance>("USD", 100.0));
-//
-//        // Call the function under test
-//        bool result = logic.attemptToApplyPayment_ForAccount(account, payment);
-//
-//        // Assert that the payment was successfully applied
-//        EXPECT_TRUE(result);
-//        EXPECT_EQ(account.getBalance("USD"), 100.0);
-//}
-//
-//// Test case for applying outgoing payment with insufficient funds
-//TEST(BusinessLogicTest, AttemptToApplyPayment_ForOutgoingPaymentWithInsufficientFunds) {
-//        // Create a BusinessLogic object
-//        BusinessLogic logic;
-//
-//        // Create a UserAccount object
-//        data::models::UserAccount account;
-//
-//        // Add a currency balance to the user's account
-//        account.addCurrencyBalance("USD", 50.0);
-//
-//        // Create an outgoing payment with a higher amount than the available balance
-//        data::models::Payment payment("OUTGOING");
-//        payment.setBalance(std::make_unique<data::models::CurrencyBalance>("USD", 100.0));
-//
-//        // Call the function under test
-//        bool result = logic.attemptToApplyPayment_ForAccount(account, payment);
-//
-//        // Assert that the payment was not applied due to insufficient funds
-//        EXPECT_FALSE(result);
-//        EXPECT_EQ(account.getBalance("USD"), 50.0);
-//}
+        auto user = bl.database->getUserAccountById(1);
+
+        // Act and Assert
+        EXPECT_NO_THROW(bl.verifyUserLogin_ByEmail(1));
+
+}
+
+// mockovani
+TEST(BusinessLogic, TestRunGetLoginPage)
+{
+    // Arrange
+    bank::services::BusinessLogic bl;
+
+    // Set the environment variable
+    const char* envVarName1 = "REQUEST_METHOD";
+    const char* envVarName2 = "QUERY_STRING";
+    const char* envVarValue1 = "GET";
+    const char* envVarValue2 = "login=-1";
+
+    if (setenv(envVarName1, envVarValue1, 1) != 0)
+    {
+        std::cerr << "Failed to set environment variable." << std::endl;
+        // test failed
+    }
+
+    if (setenv(envVarName2, envVarValue2, 1) != 0)
+    {
+        std::cerr << "Failed to set environment variable." << std::endl;
+        // test failed
+    }
+    // Act and Assert
+    EXPECT_NO_THROW(bl.run());
+}
+
+TEST(BusinessLogic, TestRunGetUserAccount1)
+{
+    // Arrange
+    bank::services::BusinessLogic bl;
+
+    // Set the environment variable
+    const char* envVarName1 = "REQUEST_METHOD";
+    const char* envVarName2 = "QUERY_STRING";
+    const char* envVarValue1 = "GET";
+    const char* envVarValue2 = "login=1";
+
+    if (setenv(envVarName1, envVarValue1, 1) != 0)
+    {
+        std::cerr << "Failed to set environment variable." << std::endl;
+        // test failed
+    }
+
+    if (setenv(envVarName2, envVarValue2, 1) != 0)
+    {
+        std::cerr << "Failed to set environment variable." << std::endl;
+        // test failed
+    }
+    // Act and Assert
+    EXPECT_NO_THROW(bl.run());
+}
+
+TEST(BusinessLogic, TestRunGetUserAccount1PostAddTransaction)
+{
+    // Arrange
+    bank::services::BusinessLogic bl;
+
+    // Set the environment variable
+    const char* envVarName1 = "REQUEST_METHOD";
+    const char* envVarName2 = "QUERY_STRING";
+    const char* envVarValue1 = "POST";
+    const char* envVarValue2 = "login=1";
+
+    if (setenv(envVarName1, envVarValue1, 1) != 0)
+    {
+        std::cerr << "Failed to set environment variable." << std::endl;
+        // test failed
+    }
+
+    if (setenv(envVarName2, envVarValue2, 1) != 0)
+    {
+        std::cerr << "Failed to set environment variable." << std::endl;
+        // test failed
+    }
+    // Act and Assert
+    EXPECT_NO_THROW(bl.run());
+}

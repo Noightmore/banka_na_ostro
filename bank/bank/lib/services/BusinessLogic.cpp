@@ -55,6 +55,7 @@ namespace bank::services
             if (requestMethod == nullptr)
             {
                     std::cerr << "Error getting request method.\n";
+                    throw std::runtime_error("Error getting request method.\n");
                     return;
             }
 
@@ -91,49 +92,43 @@ namespace bank::services
                     // check if user exists
                     // send verification email
                     // with a link to user account page
-                    try
-                    {
-                            std::cout << "verification email" << std::endl;
-                            // parse form data
-                            std::string form_data;
-                            getline(std::cin, form_data);
 
-                            // Split the form data into individual fields
-                            std::string accountid;
-                            char* data = strdup(form_data.c_str());
-                            char* field = strtok(data, "&");
-                            while (field != NULL)
-                            {
-                                    std::cout << field << std::endl;
-                                    char* name_value = strtok(field, "=");
-                                    char* value = strtok(NULL, "=");
-                                    if (strcmp(name_value, "id") == 0)
-                                    {
-                                            accountid = value;
-                                    }
+                        try
+                        {
+                                //std::cout << "verification email" << std::endl;
+                                // parse form data
+                                std::string form_data;
+                                getline(std::cin, form_data);
+                                // Split the form data into individual fields
+                                std::string accountid;
+                                char* data = strdup(form_data.c_str());
+                                char* field = strtok(data, "&");
+                                while (field != NULL)
+                                {
+                                        //std::cout << field << std::endl;
+                                        char* name_value = strtok(field, "=");
+                                        char* value = strtok(NULL, "=");
+                                        if (strcmp(name_value, "id") == 0)
+                                        {
+                                                accountid = value;
+                                        }
+                                        field = strtok(NULL, "&");
+                                }
+                                // parse account id to int
+                                int id = std::stoi(accountid);
+                                //std::cout << "account id: " << id << std::endl;
+                                //std::string email = "bitcoin.tul.cz@outlook.com";
+                                auto st = verifyUserLogin_ByEmail(id);
+                                message = "Verification email sent with status of:" +
+                                          std::to_string(static_cast<double>(st));
+                                verificationPage.generatePage(this->host_ip_address, message);
+                        }
+                        catch(std::runtime_error& e)
+                        {
+                                std::string mess = "user does not exist";
+                                verificationPage.generatePage(this->host_ip_address, mess);
+                        }
 
-                                    field = strtok(NULL, "&");
-                            }
-
-                            // parse account id to int
-                            int id = std::stoi(accountid);
-
-                            std::cout << "account id: " << id << std::endl;
-
-                            //std::string email = "bitcoin.tul.cz@outlook.com";
-                            auto st = verifyUserLogin_ByEmail(id);
-
-                            message = "Verification email sent with status of:" +
-                                    std::to_string(static_cast<double>(st));
-
-                            verificationPage.generatePage(this->host_ip_address, message);
-
-                    }
-                    catch(std::runtime_error& e)
-                    {
-                            std::string mess = e.what();
-                            errorPage.generatePage(this->host_ip_address, mess);
-                    }
                     return;
                 }
 
@@ -192,7 +187,13 @@ namespace bank::services
             std::string email;
             try
             {
+                    //std::cout << "user id: " << userId << std::endl;
                     email = this->database->getUserAccountById(userId).getEmail();
+                    //std::cout << email << std::endl;
+                    if (email.empty())
+                    {
+                            throw std::runtime_error("User with id " + std::to_string(userId) + " does not have an email.");
+                    }
             }
 
             catch(std::runtime_error& e)
@@ -224,8 +225,12 @@ namespace bank::services
                             + std::to_string(status));
                     }
 
-                    std::string file_contents((std::istreambuf_iterator<char>(file)),
-                                              std::istreambuf_iterator<char>());
+                    // read file contents of error.log.txt into a string
+                    std::string file_contents;
+                    file.seekg(0, std::ios::end);
+                    file_contents.reserve(file.tellg());
+                    file.seekg(0, std::ios::beg);
+
 
                     file.close();
 
@@ -352,5 +357,4 @@ namespace bank::services
             std::string token = query.substr(delimiterPos + delimiter.length());
             return std::stoi(token);
     }
-
 }

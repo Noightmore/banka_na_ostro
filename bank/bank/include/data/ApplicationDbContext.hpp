@@ -17,7 +17,7 @@
 
 #define DOWNLOAD_FILE_WITH_TIMESTAMP(url, file_path) \
     do { \
-        std::string command = "wget -O " + file_path + " " + url; \
+        std::string command = "wget -O " + file_path + " " + url + "2> error.log"; \
         std::system(command.c_str()); \
     } while (0)
 

@@ -9,8 +9,7 @@ namespace bank::services
     class BusinessLogic : public SiteFunctionality
     {
         private:
-                data::ApplicationDbContext* database;
-                std::string host_ip_address;
+        std::string host_ip_address;
                 //const std::string default_error_message = "error error";
 
         const data::models::UserAccount& getUserAccount_ById(unsigned int id) override;
@@ -38,6 +37,8 @@ namespace bank::services
         AuthStatus verifyUserLogin_ByEmail(unsigned int userId) override;
 
         std::unique_ptr<data::models::Payment> generateRandomPayment_ForAccount(data::models::UserAccount& user) override;
+
+        data::ApplicationDbContext* database;
     };
 }
 

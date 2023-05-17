@@ -29,15 +29,7 @@ namespace bank::data::models
                  */
                 std::vector<ExchangeRate*> *currentExchangeRates;
 
-                // deletes all the users that are currently logged in
-                // called on destruction
-                void deleteLoggedInUsers();
-
-                // deletes all the exchange rates that are currently in use
-                // called on destruction
-                void deleteCurrentExchangeRates();
-
-        public:
+    public:
 
                 BankData(std::vector<UserAccount*> *loggedInUsers, std::vector<ExchangeRate*> *currentExchangeRates);
 
@@ -67,6 +59,15 @@ namespace bank::data::models
 
                 ~BankData();
 
+        // deletes all the users that are currently logged in
+        // called on destruction
+        void deleteLoggedInUsers();
+
+        unsigned int getLoggedInUsersSize() const;
+
+        // deletes all the exchange rates that are currently in use
+                // called on destruction
+                void deleteCurrentExchangeRates();
     };
 }
 
