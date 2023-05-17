@@ -25,8 +25,8 @@ RUN a2enmod cgi \
     cp db/*.xml /usr/lib/db \
     cp ./build/BankApp.cgi /usr/lib/cgi-bin/ \
     chmod 755 /usr/lib/cgi-b \
-    chmod 755 /usr/lib/db/ \
-    chmod 755 /usr/lib/db/* \
+    #chmod 755 /usr/lib/db/ \
+    #chmod 755 /usr/lib/db/* \
     mkdir -p /etc/apache2/conf.d/ \
     cp ./configs/ubuntu_apache.conf /etc/apache2/conf.d/ \
     cp ./configs/msmtprc /etc/ \
