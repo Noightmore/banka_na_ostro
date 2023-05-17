@@ -55,6 +55,7 @@ namespace bank::services
             if (requestMethod == nullptr)
             {
                     std::cerr << "Error getting request method.\n";
+                    throw std::runtime_error("Error getting request method.\n");
                     return;
             }
 
@@ -224,8 +225,12 @@ namespace bank::services
                             + std::to_string(status));
                     }
 
-                    std::string file_contents((std::istreambuf_iterator<char>(file)),
-                                              std::istreambuf_iterator<char>());
+                    // read file contents of error.log.txt into a string
+                    std::string file_contents;
+                    file.seekg(0, std::ios::end);
+                    file_contents.reserve(file.tellg());
+                    file.seekg(0, std::ios::beg);
+
 
                     file.close();
 
