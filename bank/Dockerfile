@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
     gcc  \
     cmake  \
     wget  \
-    msmtp \
+    msmtp
 
 # install vcpkg
 RUN  wget -qO vcpkg.tar.gz https://github.com/microsoft/vcpkg/archive/master.tar.gz \
