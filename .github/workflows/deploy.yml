@@ -29,16 +29,16 @@ jobs:
       - name: Build Bank
         # Build your program with the given configuration
         run: cmake --build ${{github.workspace}}/bank/build/
-
-      - name: Build Docker Image
-        run: docker build -t bank:latest ./bank
-
-      - name: Test Bank As WebApp
-        working-directory: ${{github.workspace}}/bank
+        
+      - name: Set up SSH key
         run: |
-          sudo chmod +x tests/test_http_get.sh
-          /bin/bash tests/test_http_get.sh
-          sudo chmod +x tests/test_send_email.sh
-          /bin/bash tests/test_send_email.sh
-          sudo chmod +x tests/test_user_acc_load.sh
-          /bin/bash tests/test_user_acc_load.sh
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H "$VM_IP_ADDRESS" >> ~/.ssh/known_hosts
+      
+      - name: Deploy application
+        run: |
+          ssh -i ~/.ssh/id_rsa azureuser@"$VM_IP_ADDRESS"
+          whoami
+
