@@ -48,7 +48,4 @@ jobs:
       - name: Deploy application
         run: |
           ssh -i $SSH_KEY_PATH azureuser@bankapp.switzerlandnorth.cloudapp.azure.com
-          whoami
-        env:
-          LO: ${{secrets.LOGIN}}
 
