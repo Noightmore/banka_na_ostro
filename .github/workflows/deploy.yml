@@ -47,6 +47,8 @@ jobs:
  
       - name: Deploy application
         run: |
-          ssh -i ~/.ssh/id_rsa azureuser@${{ secrets.VM_IP_ADDRESS }}
+          ssh -i ~/.ssh/id_rsa $LO
           whoami
+        env:
+          LO: ${{secrets.LOGIN}}
 
