@@ -48,4 +48,6 @@ jobs:
       - name: Deploy application
         run: |
           ssh -i $SSH_KEY_PATH azureuser@bankapp.switzerlandnorth.cloudapp.azure.com
+        env: 
+          SSH_KEY_PATH: ${{ github.workspace }}/../private.key
 
