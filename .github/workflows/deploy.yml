@@ -47,7 +47,7 @@ jobs:
  
       - name: Deploy application
         run: |
-          ssh -i ~/.ssh/id_rsa $LO
+          ssh -i $SSH_KEY_PATH $LO
           whoami
         env:
           LO: ${{secrets.LOGIN}}
