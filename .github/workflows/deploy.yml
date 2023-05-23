@@ -35,11 +35,16 @@ jobs:
         
       - name: Set up SSH key
         run: |
-          mkdir -p ~/.ssh
-          echo $SSH_PRIVATE_KEY > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H  ${{ secrets.VM_IP_ADDRESS }} >> ~/.ssh/known_hosts
-      
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY" > ../private.key
+          sudo chmod 600 ../private.key
+          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+        shell: bash
+        env:
+          SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+          SSH_KNOWN_HOSTS: ${{secrets.VM_IP_ADDRESS}}
+          SSH_KEY_PATH: ${{ github.workspace }}/../private.key
+ 
       - name: Deploy application
         run: |
           ssh -i ~/.ssh/id_rsa azureuser@${{ secrets.VM_IP_ADDRESS }}
