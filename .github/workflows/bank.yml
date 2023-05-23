@@ -2,7 +2,7 @@ name: Bank
 
 on:
   push:
-    branches: [ "master", "feature/*" ]
+    branches: [ "master", "feature/*", "debian-support" ]
   pull_request:
     branches: [ "master", "feature/*" ]
 
