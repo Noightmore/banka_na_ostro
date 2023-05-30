@@ -115,7 +115,11 @@ namespace bank::data::models
 
             bool doesUserHasSufficientFunds_ForCurrency(std::string& currencyName, double amount);
 
+            bool canUserTakeLoan_ForCurrency(std::string& currencyName, double amount);
+
             void addFunds(std::string& currencyName, double amount);
+
+            double getBalanceAmount_ByCurrencyName(std::string& currencyName);
 
         };
 }

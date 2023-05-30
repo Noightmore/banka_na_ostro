@@ -195,4 +195,27 @@ namespace bank::data::models
                     index++;
             }
     }
+
+    bool UserAccount::canUserTakeLoan_ForCurrency(std::string &currencyName, double amount)
+    {
+        int index = 0;
+        for(auto balance : *this->balances)
+        {
+            if (balance->getName() == currencyName)
+            {
+                    // the maxium allowed debt transaction is 10% of the current balance
+                if ((balance->getAmount() * 1.1) - amount >= 0)
+                {
+                        // calculate debt
+                        auto debt = amount - balance->getAmount();
+                        auto debt_with_interest = debt * 1.1;
+
+                        balances->at(index)->setAmount(-debt_with_interest);
+                        return true;
+                }
+            }
+            index++;
+        }
+        return false;
+    }
 }

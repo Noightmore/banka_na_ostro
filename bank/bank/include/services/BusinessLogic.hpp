@@ -21,6 +21,8 @@ namespace bank::services
         bool attemptToApplyPayment_ForAccount(data::models::UserAccount& account,
                                                       data::models::Payment& payment) override;
 
+        bool attemptToApplyLoan_ForAccount(data::models::UserAccount& account, data::models::Payment& payment) override;
+
         public:
                 BusinessLogic();
                 ~BusinessLogic();

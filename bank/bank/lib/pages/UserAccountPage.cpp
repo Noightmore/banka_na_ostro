@@ -17,7 +17,7 @@ namespace bank::pages
         this->generateUserData(userAccount);
         //std::cout << "<p>Error Message: " << errorMessage << "</p>\n";
         std::cout << "<form action=\"http://" + hostIpAddress + PAGE_ROUTE + "?login=" + id + "\" method=\"post\">\n";
-        std::cout << "<input type=\"submit\" value=\"Submit\">\n";
+        std::cout << "<input type=\"submit\" value=\"Generate Random Payment\">\n";
         std::cout << "</form>\n";
         std::cout << "</body>\n";
         std::cout << "</html>\n";
