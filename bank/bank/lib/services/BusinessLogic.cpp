@@ -291,13 +291,17 @@ namespace bank::services
 
                         if(dis(gen) % 2 == 0)
                         {
-                                random_payment_sum = 1101;
                                 used_currency = "USD";
-                                std::cout << " Attempting to apply usd loan but for way too much " << 1101 << std::endl;
+                                random_payment_sum = user.getBalanceAmount_ByCurrencyName(used_currency);
+                                random_payment_sum = random_payment_sum * 1.2;
+
+                                std::cout << " Attempting to apply usd loan but for way too much " << random_payment_sum << std::endl;
                         }
                         else
                         {
-                                random_payment_sum = 10010;
+                                std::string czk = "CZK";
+                                random_payment_sum = user.getBalanceAmount_ByCurrencyName(czk);
+                                random_payment_sum = random_payment_sum * 1.09;
 
                                 // compute prev val
                                 prev_val = random_payment_sum * rate.getAmount() / rate.getRate();

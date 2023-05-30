@@ -218,4 +218,17 @@ namespace bank::data::models
         }
         return false;
     }
+
+    double UserAccount::getBalanceAmount_ByCurrencyName(std::string &currencyName)
+    {
+            // loop through balances and find the balance with the given currency name
+                for (auto& balance : *this->balances)
+                {
+                        if (balance->getName() == currencyName)
+                        {
+                                return balance->getAmount();
+                        }
+                }
+                return 0;
+    }
 }
