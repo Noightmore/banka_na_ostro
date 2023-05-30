@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "master",  "docker_work" ]
   pull_request:
-    branches: [ "master",  "docker_work"  ]
+    branches: [ "master",  "docker_work" ]
 
 jobs:
   build:
@@ -12,7 +12,6 @@ jobs:
     env:
       SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -32,7 +31,7 @@ jobs:
       - name: Build Bank
         # Build your program with the given configuration
         run: cmake --build ${{github.workspace}}/bank/build/
-        
+
       - name: Set up SSH key
         run: |
           mkdir -p ~/.ssh/
@@ -45,10 +44,11 @@ jobs:
           SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
           SSH_KNOWN_HOSTS: ${{secrets.VM_IP_ADDRESS}}
           SSH_KEY_PATH: ${{ github.workspace }}/../private.key
- 
+
       - name: Deploy application
         run: |
-          ssh -i $SSH_KEY_PATH azureuser@bankapp.switzerlandnorth.cloudapp.azure.com
-        env: 
+          scp -i $SSH_KEY_PATH azureuser@bankapp.switzerlandnorth.cloudapp.azure.com *.*
+          ssh -i $SSH_KEY_PATH azureuser@bankapp.switzerlandnorth.cloudapp.azure.com /bin/bash ./scripts/deploy.sh
+        env:
           SSH_KEY_PATH: ${{ github.workspace }}/../private.key
 
