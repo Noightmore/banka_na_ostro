@@ -50,7 +50,7 @@ namespace bank::services
             //std::cout << "Query string: " << query_string << std::endl;
 
             std::string query = std::string(query_string);
-            loginId= this->getParsedUrl(query);
+            loginId = this->getParsedUrl(query);
 
             if (requestMethod == nullptr)
             {

@@ -1,0 +1,54 @@
+name: Docker Build
+
+on:
+  push:
+    branches: [ "master",  "docker_work" ]
+  pull_request:
+    branches: [ "master",  "docker_work" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: |
+          sudo chmod +x ./bank/scripts/install_dependencies.sh
+          /bin/bash ./bank/scripts/install_dependencies.sh
+
+      - name: Configure CMake
+        # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
+        # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
+        run: |
+          cd bank
+          cmake -B ${{github.workspace}}/bank/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+      - name: Build Bank
+        # Build your program with the given configuration
+        run: cmake --build ${{github.workspace}}/bank/build/
+
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY" > ../private.key
+          sudo chmod 600 ../private.key
+          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          ssh -o StrictHostKeyChecking=no bankapp.switzerlandnorth.cloudapp.azure.com
+        shell: bash
+        env:
+          SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+          SSH_KNOWN_HOSTS: ${{secrets.VM_IP_ADDRESS}}
+          SSH_KEY_PATH: ${{ github.workspace }}/../private.key
+
+      - name: Deploy application
+        run: |
+          scp -i $SSH_KEY_PATH azureuser@bankapp.switzerlandnorth.cloudapp.azure.com *.*
+          ssh -i $SSH_KEY_PATH azureuser@bankapp.switzerlandnorth.cloudapp.azure.com /bin/bash ./scripts/deploy.sh
+        env:
+          SSH_KEY_PATH: ${{ github.workspace }}/../private.key
+
