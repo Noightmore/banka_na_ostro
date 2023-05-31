@@ -32,11 +32,24 @@ jobs:
         # Build your program with the given configuration
         run: cmake --build ${{github.workspace}}/bank/build/
 
-      - name: Create SSH key
+#      - name: Create SSH key
+#        run: |
+#            install -m 600 -D /dev/null ~/.ssh/id_rsa
+#            echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+#            echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+#
+#      - name: Deploy with rsync
+#        run: scp -r ${{github.workspace}}/bank/ azureuser@bankapp.switzerlandnorth.cloudapp.azure.com:/
+
+      - name: Configure SSH
         run: |
-            install -m 600 -D /dev/null ~/.ssh/id_rsa
-            echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-            echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" | base64 --decode > ~/.ssh/private_key
+          chmod 600 ~/.ssh/private_key
+          eval $(ssh-agent)
+          ssh-add ~/.ssh/private_key
+          ssh-keyscan -t rsa bankapp.switzerlandnorth.cloudapp.azure.com >> ~/.ssh/known_hosts
 
       - name: Deploy with rsync
-        run: rsync -rav --delete bank/ bankapp.switzerlandnorth.cloudapp.azure.com:/
+        run: |
+          rsync -r --delete-after --quiet ${{github.workspace}}/bank/
