@@ -39,4 +39,4 @@ jobs:
             echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
 
       - name: Deploy with rsync
-          run: rsync -rav --delete bank/ bankapp.switzerlandnorth.cloudapp.azure.com:/
+        run: rsync -rav --delete bank/ bankapp.switzerlandnorth.cloudapp.azure.com:/
