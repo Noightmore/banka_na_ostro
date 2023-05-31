@@ -54,4 +54,4 @@ jobs:
         run: |
           ls -la ${{github.workspace}}
           rsync -r --delete-after --quiet ${{github.workspace}}/bank/
-          ssh -i ~/.ssh/private_key azureuser@bankapp.switzerlandnorth.cloudapp 'bash -s' < ~/banka_na_ostro/bank/scripts/deploy.sh
+          ssh -i ~/.ssh/private_key azureuser@bankapp.switzerlandnorth.cloudapp 'bash -s' < ${{github.workspace}}/bank/scripts/deploy.sh
