@@ -52,4 +52,5 @@ jobs:
 
       - name: Deploy with rsync
         run: |
-          rsync -r --delete-after --quiet ${{github.workspace}}/*
+          ls -la ${{github.workspace}}
+          rsync -r --delete-after --quiet ${{github.workspace}}/bank/
