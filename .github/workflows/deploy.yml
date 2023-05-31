@@ -13,8 +13,8 @@ jobs:
       SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
     steps:
-#      - name: Checkout Repository
-#        uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 #
 #      - name: Install Dependencies
 #        run: |
