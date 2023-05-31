@@ -15,22 +15,22 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-#
-#      - name: Install Dependencies
-#        run: |
-#          sudo chmod +x ./bank/scripts/install_dependencies.sh
-#          /bin/bash ./bank/scripts/install_dependencies.sh
-#
-#      - name: Configure CMake
-#        # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
-#        # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-#        run: |
-#          cd bank
-#          cmake -B ${{github.workspace}}/bank/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-#
-#      - name: Build Bank
-#        # Build your program with the given configuration
-#        run: cmake --build ${{github.workspace}}/bank/build/
+
+      - name: Install Dependencies
+        run: |
+          sudo chmod +x ./bank/scripts/install_dependencies.sh
+          /bin/bash ./bank/scripts/install_dependencies.sh
+
+      - name: Configure CMake
+        # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
+        # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
+        run: |
+          cd bank
+          cmake -B ${{github.workspace}}/bank/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+      - name: Build Bank
+        # Build your program with the given configuration
+        run: cmake --build ${{github.workspace}}/bank/build/
 
 #      - name: Create SSH key
 #        run: |
@@ -53,5 +53,5 @@ jobs:
       - name: Deploy with rsync
         run: |
           ls -la ${{github.workspace}}
-          rsync -r --delete-after --quiet ${{github.workspace}}/bank/
+          rsync -r --quiet ${{github.workspace}}/bank/
           ssh -i ~/.ssh/private_key azureuser@bankapp.switzerlandnorth.cloudapp.azure.com 'bash -s' < ${{github.workspace}}/bank/scripts/deploy.sh
