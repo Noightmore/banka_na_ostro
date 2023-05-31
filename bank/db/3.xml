@@ -8,7 +8,7 @@
     <balances>
         <balance>
             <balance_type>CZK</balance_type>
-            <amount>10000</amount>
+            <amount>10</amount>
         </balance>
         <balance>
             <balance_type>USD</balance_type>

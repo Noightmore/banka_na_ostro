@@ -1,10 +1,10 @@
-name: Docker Build
+name: Deploy
 
 on:
   push:
-    branches: [ "master",  "docker_work" ]
+    branches: [ "master",  "feature/*" ]
   pull_request:
-    branches: [ "master",  "docker_work" ]
+    branches: [ "master",  "feature/*" ]
 
 jobs:
   build:
@@ -32,23 +32,26 @@ jobs:
         # Build your program with the given configuration
         run: cmake --build ${{github.workspace}}/bank/build/
 
-      - name: Set up SSH key
-        run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_PRIVATE_KEY" > ../private.key
-          sudo chmod 600 ../private.key
-          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-          ssh -o StrictHostKeyChecking=no bankapp.switzerlandnorth.cloudapp.azure.com
-        shell: bash
-        env:
-          SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
-          SSH_KNOWN_HOSTS: ${{secrets.VM_IP_ADDRESS}}
-          SSH_KEY_PATH: ${{ github.workspace }}/../private.key
+#      - name: Create SSH key
+#        run: |
+#            install -m 600 -D /dev/null ~/.ssh/id_rsa
+#            echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+#            echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+#
+#      - name: Deploy with rsync
+#        run: scp -r ${{github.workspace}}/bank/ azureuser@bankapp.switzerlandnorth.cloudapp.azure.com:/
 
-      - name: Deploy application
+      - name: Configure SSH
         run: |
-          scp -i $SSH_KEY_PATH azureuser@bankapp.switzerlandnorth.cloudapp.azure.com *.*
-          ssh -i $SSH_KEY_PATH azureuser@bankapp.switzerlandnorth.cloudapp.azure.com /bin/bash ./scripts/deploy.sh
-        env:
-          SSH_KEY_PATH: ${{ github.workspace }}/../private.key
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/private_key
+          chmod 600 ~/.ssh/private_key
+          eval $(ssh-agent)
+          ssh-add ~/.ssh/private_key
+          ssh-keyscan -t rsa bankapp.switzerlandnorth.cloudapp.azure.com >> ~/.ssh/known_hosts
 
+      - name: Deploy with rsync
+        run: |
+          ls -la ${{github.workspace}}
+          rsync -r --quiet ${{github.workspace}}/bank/
+          ssh -i ~/.ssh/private_key azureuser@bankapp.switzerlandnorth.cloudapp.azure.com 'bash -s' < ${{github.workspace}}/bank/scripts/deploy.sh

@@ -261,25 +261,66 @@ namespace bank::services
         unsigned int random_num = dis(gen) % 100 + 1;
         data::models::ExchangeRate rate = this->database->bankData->getRandomExchangeRate_BySeed(random_num);
 
-        // apply random payment for each random exchange rate
-        double random_payment_sum = dis(gen) % 1000 + 1;
-
         // get a random account id
         unsigned int random_account_id = random_num;
 
         // get current linux timestamp
         unsigned int timestamp = static_cast<unsigned int>(std::time(nullptr));
 
-        // incomming our outgoing payment?
-        bool isIncoming = dis(gen) % 2 == 0;
 
         std::string used_currency = rate.getName();
+
+
+        // apply random payment for each random exchange rate
+
+        bool isIncoming = dis(gen) % 2 == 0;
+        double random_payment_sum = dis(gen) % 1000 + 1;
+
+
 
         if(!user.doesUserOwnAccount_ForCurrency(rate.getName()))
         {
                 // convert the currency to czech
-                random_payment_sum = random_payment_sum * rate.getRate() / rate.getAmount();
-                used_currency = "CZK";
+                auto prev_val = random_payment_sum;
+                random_payment_sum = prev_val * rate.getRate() / rate.getAmount();
+
+                // fifty percent chance for the payment to go into a loan mode (this test only works for user account1)
+                if(dis(gen) % 2 == 0)
+                {
+                        isIncoming = false;
+
+                        if(dis(gen) % 2 == 0)
+                        {
+                                used_currency = "USD";
+                                random_payment_sum = user.getBalanceAmount_ByCurrencyName(used_currency);
+                                random_payment_sum = random_payment_sum * 1.2;
+
+                                std::cout << " Attempting to apply usd loan but for way too much " << random_payment_sum << std::endl;
+                        }
+                        else
+                        {
+                                std::string czk = "CZK";
+                                random_payment_sum = user.getBalanceAmount_ByCurrencyName(czk);
+                                random_payment_sum = random_payment_sum * 1.09;
+
+                                // compute prev val
+                                prev_val = random_payment_sum * rate.getAmount() / rate.getRate();
+
+                                std::cout << "Converted to CZK amount " << random_payment_sum << " From: " << used_currency << " -- amount " << prev_val << std::endl;
+                                used_currency = "CZK";
+                        }
+                }
+                else
+                {
+                        prev_val = random_payment_sum;
+                        random_payment_sum = random_payment_sum * rate.getRate() / rate.getAmount();
+                        std::cout << "Converted to CZK amount " << random_payment_sum << " From: " << used_currency << " -- amount " << prev_val << std::endl;
+                        used_currency = "CZK";
+
+
+                }
+
+
         }
 
 
@@ -301,6 +342,14 @@ namespace bank::services
         if(this->attemptToApplyPayment_ForAccount(user, *payment))
         {
 
+                // if successful, save the payment to the database
+                // update the balance amount of the account of the user
+                return payment;
+        }
+
+        // if attempting to apply the payment was not successful; then we try to apply for a loan
+        if(this->attemptToApplyLoan_ForAccount(user, *payment))
+        {
                 // if successful, save the payment to the database
                 // update the balance amount of the account of the user
                 return payment;
@@ -340,6 +389,16 @@ namespace bank::services
         return false;
     }
 
+    bool
+    BusinessLogic::attemptToApplyLoan_ForAccount(data::models::UserAccount &account, data::models::Payment &payment)
+    {
+        if(account.canUserTakeLoan_ForCurrency(payment.getBalance()->getName(),
+                                               payment.getBalance()->getAmount()))
+        {
+                return true;
+        }
+        return false;
+    }
 
     int BusinessLogic::getParsedUrl(std::string& query)
     {
@@ -357,4 +416,5 @@ namespace bank::services
             std::string token = query.substr(delimiterPos + delimiter.length());
             return std::stoi(token);
     }
+
 }

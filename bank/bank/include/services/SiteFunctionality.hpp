@@ -34,6 +34,9 @@ namespace bank::services
                 virtual bool attemptToApplyPayment_ForAccount(data::models::UserAccount& account,
                                                               data::models::Payment& payment) = 0;
 
+                virtual bool attemptToApplyLoan_ForAccount(data::models::UserAccount& account,
+                                                           data::models::Payment& payment) = 0;
+
 
         public:
                 // url is entered in the following format:
