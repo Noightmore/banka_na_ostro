@@ -2,9 +2,9 @@ name: Docker Build
 
 on:
   push:
-    branches: [ "master",  "docker_work" ]
+    branches: [ "master",  "feature/*" ]
   pull_request:
-    branches: [ "master",  "docker_work" ]
+    branches: [ "master",  "feature/*" ]
 
 jobs:
   build:
