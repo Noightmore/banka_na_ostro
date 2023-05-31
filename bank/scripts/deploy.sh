@@ -1,6 +1,7 @@
 #!/bin/bash
 
 echo "deploying"
+ls -al
 sudo mkdir -p ~/usr/lib/cgi-bin/
 sudo mkdir -p ~/usr/lib/db
 sudo cp db/*.xml ~/usr/lib/db
