@@ -1,4 +1,4 @@
-name: Docker Build
+name: Deploy
 
 on:
   push:
@@ -32,23 +32,11 @@ jobs:
         # Build your program with the given configuration
         run: cmake --build ${{github.workspace}}/bank/build/
 
-      - name: Set up SSH key
+      - name: Create SSH key
         run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_PRIVATE_KEY" > ../private.pem
-          sudo chmod 600 ../private.pem
-          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-          ssh -o StrictHostKeyChecking=no azureuser@bankapp.switzerlandnorth.cloudapp.azure.com
-        shell: bash
-        env:
-          SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
-          SSH_KNOWN_HOSTS: ${{secrets.VM_IP_ADDRESS}}
-          SSH_KEY_PATH: ${{ github.workspace }}/../private.pem
+            install -m 600 -D /dev/null ~/.ssh/id_rsa
+            echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+            echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
 
-      - name: Deploy application
-        run: |
-          scp -i $SSH_KEY_PATH azureuser@bankapp.switzerlandnorth.cloudapp.azure.com ./bank
-          ssh -i $SSH_KEY_PATH azureuser@bankapp.switzerlandnorth.cloudapp.azure.com /bin/bash ./scripts/deploy.sh
-        env:
-          SSH_KEY_PATH: ${{ github.workspace }}/../private.pem
-
+      - name: Deploy with rsync
+          run: rsync -rav --delete bank/ bankapp.switzerlandnorth.cloudapp.azure.com:/
