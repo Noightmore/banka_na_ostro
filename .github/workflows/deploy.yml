@@ -50,9 +50,10 @@ jobs:
           ssh-add ~/.ssh/private_key
           ssh-keyscan -t rsa bankapp.switzerlandnorth.cloudapp.azure.com >> ~/.ssh/known_hosts
 
+      #scp -i ~/.ssh/private_key ${{github.workspace}}/bank.tar azureuser@bankapp.switzerlandnorth.cloudapp.azure.com:/home/azuresuer/
       - name: Deploy with SCP
         run: |
           ls -la ${{github.workspace}}
           tar -cvf bank.tar ${{github.workspace}}/bank
-          scp -i ~/.ssh/private_key ${{github.workspace}}/bank.tar azureuser@bankapp.switzerlandnorth.cloudapp.azure.com:/home/azuresuer/
+          rsync -avz -e "ssh -i ~/.ssh/private_key" ${{github.workspace}}/bank.tar
           ssh -i ~/.ssh/private_key azureuser@bankapp.switzerlandnorth.cloudapp.azure.com 'bash -s' < ${{github.workspace}}/bank/scripts/deploy.sh
