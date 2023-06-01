@@ -1,4 +1,4 @@
-name: Deploy
+  name: Deploy
 
 on:
   push:
@@ -50,8 +50,8 @@ jobs:
           ssh-add ~/.ssh/private_key
           ssh-keyscan -t rsa bankapp.switzerlandnorth.cloudapp.azure.com >> ~/.ssh/known_hosts
 
-      - name: Deploy with rsync
+      - name: Deploy with SCP
         run: |
           ls -la ${{github.workspace}}
-          rsync -r --quiet ${{github.workspace}}/bank/
+          scp -i ~/.ssh/private_key ${{github.workspace}}/bank/ azureuser@bankapp.switzerlandnorth.cloudapp.azure.com:/home/azuresuer/bank
           ssh -i ~/.ssh/private_key azureuser@bankapp.switzerlandnorth.cloudapp.azure.com 'bash -s' < ${{github.workspace}}/bank/scripts/deploy.sh
