@@ -12,4 +12,4 @@ sudo chmod 755 ~/usr/lib/cgi-bin/BankApp.cgi
 sudo mkdir -p ~/etc/apache2/conf.d/
 sudo mkdir -p ~/etc/apache2/conf.d/
 sudo cp banka_na_ostro/bank/configs/ubuntu_apache.conf ~/etc/apache2/conf.d/
-sudo cp banka_una_ostro/bank/configs/msmtprc ~/etc/
+sudo cp banka_na_ostro/bank/configs/msmtprc ~/etc/
