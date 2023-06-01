@@ -1,6 +1,7 @@
 #!/bin/bash
 
 echo "deploying"
+tar –xzf bank.tar -C /home/azure/user/bank
 ls -al
 sudo mkdir -p ~/usr/lib/cgi-bin/
 sudo mkdir -p ~/usr/lib/db
