@@ -11,5 +11,5 @@ sudo cp ~/BankApp.cgi ~/usr/lib/cgi-bin/
 sudo chmod 755 ~/usr/lib/cgi-bin/BankApp.cgi
 sudo mkdir -p ~/etc/apache2/conf.d/
 sudo mkdir -p ~/etc/apache2/conf.d/
-sudo cp bank_na_ostro/bank/configs/ubuntu_apache.conf ~/etc/apache2/conf.d/
-sudo cp bank_una_ostro/bank/configs/msmtprc ~/etc/
+#sudo cp bank_na_ostro/bank/configs/ubuntu_apache.conf ~/etc/apache2/conf.d/
+#sudo cp bank_una_ostro/bank/configs/msmtprc ~/etc/
