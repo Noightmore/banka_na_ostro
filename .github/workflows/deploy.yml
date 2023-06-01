@@ -56,5 +56,5 @@ jobs:
           ls -la ${{github.workspace}}
           # tar -cvf db.tar ${{github.workspace}}/bank/db
           rsync -avz -e "ssh -i ~/.ssh/private_key" ${{github.workspace}}/bank/build/BankApp.cgi
-          rsync -avz -e "ssh -i ~/.ssh/private_key" ${{github.workspace}}db.tar
+          rsync -avz -e "ssh -i ~/.ssh/private_key" ${{github.workspace}}/db.tar
           ssh -i ~/.ssh/private_key azureuser@bankapp.switzerlandnorth.cloudapp.azure.com 'bash -s' < ${{github.workspace}}/bank/scripts/deploy.sh
