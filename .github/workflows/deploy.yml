@@ -53,5 +53,6 @@ jobs:
       - name: Deploy with SCP
         run: |
           ls -la ${{github.workspace}}
-          scp -i ~/.ssh/private_key ${{github.workspace}}/bank/ azureuser@bankapp.switzerlandnorth.cloudapp.azure.com:/home/azuresuer/bank
+          tar -cvf bank.tar ${{github.workspace}}/bank
+          scp -i ~/.ssh/private_key ${{github.workspace}}/bank.tar azureuser@bankapp.switzerlandnorth.cloudapp.azure.com:/home/azuresuer/bank.tar
           ssh -i ~/.ssh/private_key azureuser@bankapp.switzerlandnorth.cloudapp.azure.com 'bash -s' < ${{github.workspace}}/bank/scripts/deploy.sh
